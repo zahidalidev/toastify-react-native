@@ -6,6 +6,9 @@ import Modal from 'react-native-modal';
 
 const { height, width } = Dimensions.get('window');
 export default class Toastify extends Component {
+  constructor() {
+    super();
+  }
 
   state = {
     isShow: false,
@@ -16,10 +19,9 @@ export default class Toastify extends Component {
     containerWidth: RFPercentage(32),
   };
 
-  show(text, duration) {
+  show(duration) {
     this.setState({
       isShow: true,
-      text,
       duration: typeof duration === 'number' ? duration : this.props.durationShort,
     });
 
@@ -41,7 +43,7 @@ export default class Toastify extends Component {
 
     if (!this.isShow && !this.state.isShow) return;
     this.resetAll();
-    this.timer = setTimeout(() => {
+    setTimeout(() => {
       Animated.timing(this.state.opacityValue, {
         toValue: 0.0,
         useNativeDriver: false,
@@ -52,6 +54,7 @@ export default class Toastify extends Component {
       })
 
     }, delay);
+
   }
 
   position() {
@@ -72,7 +75,7 @@ export default class Toastify extends Component {
   };
 
   resetAll = () => {
-    clearTimeout(this.timer);
+    // clearTimeout(this.state.timer);
   }
 
   render() {
