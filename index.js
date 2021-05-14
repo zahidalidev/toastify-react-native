@@ -1,10 +1,10 @@
-import React, { Component, useRef } from 'react';
+import React, { Component } from 'react';
 import { View, Text, Animated, Dimensions } from 'react-native';
 import { RFPercentage } from 'react-native-responsive-fontsize';
-import * as Progress from 'react-native-progress';
 import Modal from 'react-native-modal';
 
-const { height, width } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
+
 export default class Toastify extends Component {
 
   state = {
@@ -17,7 +17,7 @@ export default class Toastify extends Component {
     textColor: "#fff",
   };
 
-  show(text = '', type = "default") {
+  show(text = '', type = "default", textType = "default") {
     let duration = this.props.duration;
     const backGroundTypes = {
       default: "#3498db",
@@ -28,16 +28,17 @@ export default class Toastify extends Component {
       error: "#e74c3c"
     };
     const textTypes = {
-      default: "#fff ",
-      dark: "#fff"
+      default: "#fff",
+      dark: "black"
     };
 
     this.state.barWidth.setValue(this.state.containerWidth)  //reset barWidth value
     this.setState({
       isShow: true,
-      duration: duration,
-      backgroundColor: backGroundTypes[type],
-      text
+      duration,
+      text,
+      backgroundColor: backGroundTypes[type] || backGroundTypes.default,
+      textColor: textTypes[textType] || textTypes.default
     });
     this.isShow = true;
     if (duration !== this.props.end) this.close(duration);
@@ -76,7 +77,7 @@ export default class Toastify extends Component {
     return (
       <Modal onModalHide={() => this.resetAll()} style={{ flex: 1, height, alignItems: "center" }} animationIn="slideInRight" animationOut="slideOutLeft" isVisible={this.state.isShow} coverScreen={false} hasBackdrop={false} >
         <View style={{ borderTopLeftRadius: 5, borderTopRightRadius: 5, position: "absolute", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: this.state.containerWidth, height: RFPercentage(9), backgroundColor: this.state.backgroundColor, top: this.position(), ...this.props.style }} >
-          <Text style={{ color: this.state.textColor, marginLeft: RFPercentage(1), fontSize: RFPercentage(2.5) }} >{this.state.text}</Text>
+          <Text style={{ fontWeight: "bold", color: this.state.textColor, marginLeft: RFPercentage(2), marginRight: RFPercentage(2), fontSize: RFPercentage(2.7) }} >{this.state.text}</Text>
           <View style={{ flexDirection: "row", position: "absolute", height: 4, width: '100%', bottom: 0 }}>
             <Animated.View style={{ opacity: 0.7, backgroundColor: "rgba(255,255,255,.7)", width: this.state.barWidth }} />
           </View>
