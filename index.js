@@ -13,15 +13,31 @@ export default class Toastify extends Component {
     opacityValue: new Animated.Value(1),
     barWidth: new Animated.Value(RFPercentage(32)),
     containerWidth: RFPercentage(32),
-    backgroundColor: "#07bc0c",
-    textColor: "white"
+    backgroundColor: "#3498db",
+    textColor: "#fff",
   };
 
-  show(duration) {
+  show(text = '', type = "default") {
+    let duration = this.props.duration;
+    const backGroundTypes = {
+      default: "#3498db",
+      dark: "#121212",
+      info: "#3498db",
+      success: "#07bc0c",
+      warning: "#f1c40f",
+      error: "#e74c3c"
+    };
+    const textTypes = {
+      default: "#fff ",
+      dark: "#fff"
+    };
+
     this.state.barWidth.setValue(this.state.containerWidth)  //reset barWidth value
     this.setState({
       isShow: true,
       duration: duration,
+      backgroundColor: backGroundTypes[type],
+      text
     });
     this.isShow = true;
     if (duration !== this.props.end) this.close(duration);
@@ -38,9 +54,8 @@ export default class Toastify extends Component {
 
   position() {
     if (this.props.position === 'top') return this.props.positionValue;
-    if (this.props.position === 'center') return height / 2;
-    return this.props.positionValue;
-    // return (height / 2) - RFPercentage(10);
+    if (this.props.position === 'center') return (height / 2) - RFPercentage(9);
+    return (height / 2) - RFPercentage(10);
   }
 
   handleBar = () => {
@@ -60,10 +75,10 @@ export default class Toastify extends Component {
     this.handleBar();
     return (
       <Modal onModalHide={() => this.resetAll()} style={{ flex: 1, height, alignItems: "center" }} animationIn="slideInRight" animationOut="slideOutLeft" isVisible={this.state.isShow} coverScreen={false} hasBackdrop={false} >
-        <View style={{ borderTopLeftRadius: 5, borderTopRightRadius: 5, position: "absolute", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: this.state.containerWidth, height: RFPercentage(9), backgroundColor: this.state.backgroundColor, top: this.position() }} >
-          <Text style={{ color: this.state.textColor, marginLeft: RFPercentage(1), fontSize: RFPercentage(2.5) }} >Success</Text>
+        <View style={{ borderTopLeftRadius: 5, borderTopRightRadius: 5, position: "absolute", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: this.state.containerWidth, height: RFPercentage(9), backgroundColor: this.state.backgroundColor, top: this.position(), ...this.props.style }} >
+          <Text style={{ color: this.state.textColor, marginLeft: RFPercentage(1), fontSize: RFPercentage(2.5) }} >{this.state.text}</Text>
           <View style={{ flexDirection: "row", position: "absolute", height: 4, width: '100%', bottom: 0 }}>
-            <Animated.View style={{ opacity: this.state.opacityValue, backgroundColor: "red", width: this.state.barWidth }} />
+            <Animated.View style={{ opacity: 0.7, backgroundColor: "rgba(255,255,255,.7)", width: this.state.barWidth }} />
           </View>
         </View>
       </Modal>
@@ -73,9 +88,8 @@ export default class Toastify extends Component {
 
 Toastify.defaultProps = {
   style: {},
-  position: 'top',
+  position: 'bottom',
   positionValue: 50,
-  opacity: 1,
-  defaultCloseDelay: 250,
   end: 0,
+  duration: 3000
 };
