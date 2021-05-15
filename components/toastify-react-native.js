@@ -74,7 +74,7 @@ export default class Toastify extends Component {
         let duration = this.state.duration;
         if (!this.isShow && !this.state.isShow) return;
         this.resetAll();
-        setTimeout(() => {
+        this.timer = setTimeout(() => {
             this.setState({ isShow: false });
             this.isShow = false;
         }, duration);
@@ -117,20 +117,19 @@ export default class Toastify extends Component {
 
     hideToast = () => {
         this.resetAll();
-        console.log("h")
         this.setState({ isShow: false });
         this.isShow = false;
         if (!this.isShow && !this.state.isShow) return;
     }
 
     resetAll = () => {
-        // clearTimeout(timer);
+        clearTimeout(this.timer);
     }
 
     render() {
         this.handleBar();
         return (
-            <Modal animationIn={this.props.animationIn || this.state.animationStyle[this.props.animationStyle].animationIn} animationOut={this.props.animationOut || this.state.animationStyle[this.props.animationStyle].animationOut} backdropTransitionOutTiming={this.props.backdropTransitionOutTiming} backdropTransitionInTiming={this.props.backdropTransitionInTiming} animationInTiming={this.props.animationInTiming} animationOutTiming={this.props.animationOutTiming} onTouchEnd={() => this.resume()} onTouchStart={() => this.pause()} swipeDirection={['up', 'down', 'left', 'right']} onModalHide={() => this.resetAll()} style={styles.modelContainer} isVisible={this.state.isShow} coverScreen={false} hasBackdrop={false} >
+            <Modal animationIn={this.props.animationIn || this.state.animationStyle[this.props.animationStyle].animationIn} animationOut={this.props.animationOut || this.state.animationStyle[this.props.animationStyle].animationOut} backdropTransitionOutTiming={this.props.backdropTransitionOutTiming} backdropTransitionInTiming={this.props.backdropTransitionInTiming} animationInTiming={this.props.animationInTiming} animationOutTiming={this.props.animationOutTiming} onTouchEnd={() => this.resume()} onTouchStart={() => this.pause()} swipeDirection={['up', 'down', 'left', 'right']} onModalHide={() => this.resetAll()} style={styles.modelContainer} isVisible={this.state.isShow} coverScreen={false} backdropColor={this.props.backdropColor} backdropOpacity={this.props.backdropOpacity} hasBackdrop={this.props.hasBackdrop} >
                 <View style={[styles.mainContainer, { width: this.props.width, height: this.props.height, backgroundColor: this.state.backgroundColor, top: this.position(), ...this.props.style }]} >
 
                     <TouchableOpacity onPress={() => this.hideToast()} activeOpacity={0.9} style={styles.hideButton} >
@@ -201,4 +200,7 @@ Toastify.defaultProps = {
     animationIn: '',
     animationOut: '',
     animationStyle: 'rightInLeftOut',
+    hasBackdrop: false,
+    backdropColor: 'black',
+    backdropOpacity: 0.5
 };
