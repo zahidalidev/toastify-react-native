@@ -17,34 +17,46 @@ export default class Toastify extends Component {
     textColor: "#fff",
   };
 
-  show(text = '', type = "default", textType = "default") {
+  default = (text) => {
+    this.show(text, "#3498db", "#fff");
+  }
+  dark = (text) => {
+    this.show(text, "#121212", "#fff");
+  }
+
+  info = (text) => {
+    this.show(text, "#3498db", "#fff");
+  }
+
+  success = (text) => {
+    this.show(text, "#07bc0c", "#fff");
+  }
+
+  warning = (text) => {
+    this.show(text, "#f1c40f", "#fff");
+  }
+
+  error = (text) => {
+    this.show(text, "#e74c3c", "#fff");
+  }
+
+  show(text = '', backgroundColor = "#3498db", textColor = "#fff") {
     let duration = this.props.duration;
-    const backGroundTypes = {
-      default: "#3498db",
-      dark: "#121212",
-      info: "#3498db",
-      success: "#07bc0c",
-      warning: "#f1c40f",
-      error: "#e74c3c"
-    };
-    const textTypes = {
-      default: "#fff",
-      dark: "black"
-    };
 
     this.state.barWidth.setValue(this.state.containerWidth)  //reset barWidth value
     this.setState({
       isShow: true,
       duration,
       text,
-      backgroundColor: backGroundTypes[type] || backGroundTypes.default,
-      textColor: textTypes[textType] || textTypes.default
+      backgroundColor,
+      textColor
     });
     this.isShow = true;
-    if (duration !== this.props.end) this.close(duration);
+    if (duration !== this.props.end) this.close();
   }
 
-  close(duration) {
+  close() {
+    let duration = this.state.duration;
     if (!this.isShow && !this.state.isShow) return;
     this.resetAll();
     setTimeout(() => {
@@ -56,7 +68,7 @@ export default class Toastify extends Component {
   position() {
     if (this.props.position === 'top') return this.props.positionValue;
     if (this.props.position === 'center') return (height / 2) - RFPercentage(9);
-    return (height / 2) - RFPercentage(10);
+    return height - this.props.positionValue - RFPercentage(10);
   }
 
   handleBar = () => {
@@ -68,6 +80,28 @@ export default class Toastify extends Component {
     }).start();
   };
 
+  pause = () => {
+    const oldDuration = this.state.duration;
+    this.setState({ oldDuration, duration: 10000 });
+    Animated.timing(
+      this.state.barWidth
+    ).stop();
+  }
+
+  resume = () => {
+    console.log("hi")
+    const oldDuration = this.state.oldDuration;
+    this.setState({ duration: oldDuration, oldDuration: 0 });
+
+    Animated.timing(
+      this.state.barWidth, {
+      toValue: 0,
+      duration: this.state.duration,
+      useNativeDriver: false,
+    }).start();
+  }
+
+
   resetAll = () => {
     // clearTimeout(this.state.timer);
   }
@@ -75,13 +109,15 @@ export default class Toastify extends Component {
   render() {
     this.handleBar();
     return (
-      <Modal onModalHide={() => this.resetAll()} style={{ flex: 1, height, alignItems: "center" }} animationIn="slideInRight" animationOut="slideOutLeft" isVisible={this.state.isShow} coverScreen={false} hasBackdrop={false} >
+      <Modal onTouchEnd={() => this.resume()} onTouchStart={() => this.pause()} swipeDirection={['up', 'down', 'left', 'right']} onModalHide={() => this.resetAll()} style={{ flex: 1, alignItems: "center" }} animationIn="slideInRight" animationOut="slideOutLeft" isVisible={this.state.isShow} coverScreen={false} hasBackdrop={false} >
+
         <View style={{ borderTopLeftRadius: 5, borderTopRightRadius: 5, position: "absolute", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: this.state.containerWidth, height: RFPercentage(9), backgroundColor: this.state.backgroundColor, top: this.position(), ...this.props.style }} >
           <Text style={{ fontWeight: "bold", color: this.state.textColor, marginLeft: RFPercentage(2), marginRight: RFPercentage(2), fontSize: RFPercentage(2.7) }} >{this.state.text}</Text>
           <View style={{ flexDirection: "row", position: "absolute", height: 4, width: '100%', bottom: 0 }}>
             <Animated.View style={{ opacity: 0.7, backgroundColor: "rgba(255,255,255,.7)", width: this.state.barWidth }} />
           </View>
         </View>
+
       </Modal>
     );
   }
@@ -89,7 +125,7 @@ export default class Toastify extends Component {
 
 Toastify.defaultProps = {
   style: {},
-  position: 'bottom',
+  position: 'top',
   positionValue: 50,
   end: 0,
   duration: 3000
