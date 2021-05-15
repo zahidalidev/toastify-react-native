@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Animated, Dimensions } from 'react-native';
+import { View, Text, Animated, Dimensions, TouchableOpacity } from 'react-native';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import Modal from 'react-native-modal';
 
+import colors from "../config/colors"
 const { height } = Dimensions.get('window');
+
 
 export default class Toastify extends Component {
 
@@ -13,34 +15,34 @@ export default class Toastify extends Component {
     opacityValue: new Animated.Value(1),
     barWidth: new Animated.Value(RFPercentage(32)),
     containerWidth: RFPercentage(32),
-    backgroundColor: "#3498db",
-    textColor: "#fff",
+    backgroundColor: colors.default,
+    textColor: colors.textDefault,
   };
 
   default = (text) => {
-    this.show(text, "#3498db", "#fff");
+    this.show(text, colors.default, colors.textDefault);
   }
   dark = (text) => {
-    this.show(text, "#121212", "#fff");
+    this.show(text, colors.dark, colors.textDefault);
   }
 
   info = (text) => {
-    this.show(text, "#3498db", "#fff");
+    this.show(text, colors.info, colors.textDefault);
   }
 
   success = (text) => {
-    this.show(text, "#07bc0c", "#fff");
+    this.show(text, colors.success, colors.textDefault);
   }
 
   warning = (text) => {
-    this.show(text, "#f1c40f", "#fff");
+    this.show(text, colors.warning, colors.textDefault);
   }
 
   error = (text) => {
-    this.show(text, "#e74c3c", "#fff");
+    this.show(text, colors.error, colors.textDefault);
   }
 
-  show(text = '', backgroundColor = "#3498db", textColor = "#fff") {
+  show(text = '', backgroundColor = colors.default, textColor = colors.textDefault) {
     let duration = this.props.duration;
 
     this.state.barWidth.setValue(this.state.containerWidth)  //reset barWidth value
@@ -89,7 +91,6 @@ export default class Toastify extends Component {
   }
 
   resume = () => {
-    console.log("hi")
     const oldDuration = this.state.oldDuration;
     this.setState({ duration: oldDuration, oldDuration: 0 });
 
@@ -101,17 +102,28 @@ export default class Toastify extends Component {
     }).start();
   }
 
+  hideToast = () => {
+    this.resetAll();
+    console.log("h")
+    this.setState({ isShow: false });
+    this.isShow = false;
+    if (!this.isShow && !this.state.isShow) return;
+  }
 
   resetAll = () => {
-    // clearTimeout(this.state.timer);
+    // clearTimeout(timer);
   }
 
   render() {
     this.handleBar();
     return (
       <Modal onTouchEnd={() => this.resume()} onTouchStart={() => this.pause()} swipeDirection={['up', 'down', 'left', 'right']} onModalHide={() => this.resetAll()} style={{ flex: 1, alignItems: "center" }} animationIn="slideInRight" animationOut="slideOutLeft" isVisible={this.state.isShow} coverScreen={false} hasBackdrop={false} >
-
         <View style={{ borderTopLeftRadius: 5, borderTopRightRadius: 5, position: "absolute", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: this.state.containerWidth, height: RFPercentage(9), backgroundColor: this.state.backgroundColor, top: this.position(), ...this.props.style }} >
+
+          <TouchableOpacity onPress={() => this.hideToast()} activeOpacity={0.9} style={{ position: "absolute", top: RFPercentage(0), right: RFPercentage(1) }} >
+            <Text style={{ transform: [{ rotate: '45deg' }], fontWeight: "bold", fontSize: RFPercentage(3.5), color: "white" }} >+</Text>
+          </TouchableOpacity>
+
           <Text style={{ fontWeight: "bold", color: this.state.textColor, marginLeft: RFPercentage(2), marginRight: RFPercentage(2), fontSize: RFPercentage(2.7) }} >{this.state.text}</Text>
           <View style={{ flexDirection: "row", position: "absolute", height: 4, width: '100%', bottom: 0 }}>
             <Animated.View style={{ opacity: 0.7, backgroundColor: "rgba(255,255,255,.7)", width: this.state.barWidth }} />
