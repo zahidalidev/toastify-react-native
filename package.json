@@ -46,7 +46,7 @@
     "babel-preset-expo": "~8.1.0",
     "metro-react-native-babel-preset": "^0.59.0"
   },
-  "repository": "git://github.com/companyname/toastify-react-native.git",
+  "repository": "git://github.com/zahidalidev/toastify-react-native.git",
   "author": "Zahid Ali <m.zahidalidev@gmail.com>",
   "license": "MIT"
 }
