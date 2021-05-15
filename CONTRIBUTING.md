@@ -26,7 +26,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 Clone the repository and create a local branch:
 
 ```sh
-git clone https://github.com/zahidalidev/react-native-toastify.git
+git clone https://github.com/zahidalidev/toastify-react-native.git
 cd react-toastify
 
 git checkout -b my-branch
@@ -52,7 +52,7 @@ npm start
 
 #### Example dir
 
-The playground let you test your changes, it's like the demo of react-native-toastify. Most of the time you don't need to modify it unless you add new features.
+The playground let you test your changes, it's like the demo of toastify-react-native. Most of the time you don't need to modify it unless you add new features.
 
 ## License
 By contributing, you agree that your contributions will be licensed under its MIT License.

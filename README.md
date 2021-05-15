@@ -1,9 +1,9 @@
-# react-native-toastify
+# toastify-react-native
 
-[![npm version](https://badge.fury.io/js/react-native-toastify.svg)](https://badge.fury.io/js/react-native-toastify)
+[![npm version](https://badge.fury.io/js/toastify-react-native.svg)](https://badge.fury.io/js/toastify-react-native)
 
 
-🎉 React-Native-Toastify allows you to add notifications to your react-native app (ios, android) with ease. No more nonsense!
+🎉 toastify-react-native allows you to add notifications to your react-native app (ios, android) with ease. No more nonsense!
 
 ## Demo
 
@@ -33,14 +33,14 @@ https://user-images.githubusercontent.com/46484008/118373325-aec5fa00-b5cf-11eb-
 
 ## Installation
 ```sh
-$ npm install @zahid/react-native-toastify
+$ npm install @zahid/toastify-react-native
 ```
 ## The gist
 
 ```javascript
 import React, { useState } from 'react';
 import { Button } from 'react-native';
-import Toast from 'react-native-toastify';
+import Toast from 'toastify-react-native';
 
 export default function App() {
   const [toastify, setToastify] = useState()
@@ -137,4 +137,4 @@ Pull requests, feedbacks and suggestions are welcome!
 
 ## License
 
-react-native-toastify is [MIT licensed](https://github.com/zahidalidev/react-native-toastify/blob/master/LICENSE) and built with :heart: by Zahid Ali.
+toastify-react-native is [MIT licensed](https://github.com/zahidalidev/toastify-react-native/blob/master/LICENSE) and built with :heart: by Zahid Ali.
