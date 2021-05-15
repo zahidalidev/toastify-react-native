@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Animated, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, Animated, Dimensions, TouchableOpacity, StyleSheet } from 'react-native';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import Modal from 'react-native-modal';
 
@@ -117,16 +117,16 @@ export default class Toastify extends Component {
   render() {
     this.handleBar();
     return (
-      <Modal onTouchEnd={() => this.resume()} onTouchStart={() => this.pause()} swipeDirection={['up', 'down', 'left', 'right']} onModalHide={() => this.resetAll()} style={{ flex: 1, alignItems: "center" }} animationIn="slideInRight" animationOut="slideOutLeft" isVisible={this.state.isShow} coverScreen={false} hasBackdrop={false} >
-        <View style={{ borderTopLeftRadius: 5, borderTopRightRadius: 5, position: "absolute", flexDirection: "column", alignItems: "flex-start", justifyContent: "center", width: this.state.containerWidth, height: RFPercentage(9), backgroundColor: this.state.backgroundColor, top: this.position(), ...this.props.style }} >
+      <Modal animationIn="slideInRight" animationOut="slideOutLeft" animationInTiming={this.props.animationInTiming} animationOutTiming={this.props.animationOutTiming} onTouchEnd={() => this.resume()} onTouchStart={() => this.pause()} swipeDirection={['up', 'down', 'left', 'right']} onModalHide={() => this.resetAll()} style={styles.modelContainer} isVisible={this.state.isShow} coverScreen={false} hasBackdrop={false} >
+        <View style={[styles.mainContainer, { width: this.state.containerWidth, height: RFPercentage(9), backgroundColor: this.state.backgroundColor, top: this.position(), ...this.props.style }]} >
 
-          <TouchableOpacity onPress={() => this.hideToast()} activeOpacity={0.9} style={{ position: "absolute", top: RFPercentage(0), right: RFPercentage(1) }} >
+          <TouchableOpacity onPress={() => this.hideToast()} activeOpacity={0.9} style={styles.hideButton} >
             <Text style={{ transform: [{ rotate: '45deg' }], fontWeight: "bold", fontSize: RFPercentage(3.5), color: "white" }} >+</Text>
           </TouchableOpacity>
 
-          <Text style={{ fontWeight: "bold", color: this.state.textColor, marginLeft: RFPercentage(2), marginRight: RFPercentage(2), fontSize: RFPercentage(2.7) }} >{this.state.text}</Text>
-          <View style={{ flexDirection: "row", position: "absolute", height: 4, width: '100%', bottom: 0 }}>
-            <Animated.View style={{ opacity: 0.7, backgroundColor: "rgba(255,255,255,.7)", width: this.state.barWidth }} />
+          <Text style={[styles.textStyle, { color: this.state.textColor }]} >{this.state.text}</Text>
+          <View style={styles.progressBarContainer}>
+            <Animated.View style={[styles.progressBar, { width: this.state.barWidth }]} />
           </View>
         </View>
 
@@ -135,10 +135,53 @@ export default class Toastify extends Component {
   }
 }
 
+const styles = StyleSheet.create({
+  modelContainer: {
+    flex: 1,
+    alignItems: "center"
+  },
+  mainContainer: {
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    position: "absolute",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center",
+
+  },
+  hideButton: {
+    position: "absolute",
+    top: RFPercentage(0),
+    right: RFPercentage(1)
+  },
+  textStyle: {
+    fontWeight: "bold",
+    marginLeft: RFPercentage(2),
+    marginRight: RFPercentage(2),
+    fontSize: RFPercentage(2.7)
+  },
+  progressBarContainer: {
+    flexDirection: "row",
+    position: "absolute",
+    height: 4,
+    width: '100%',
+    bottom: 0
+  },
+  progressBar: {
+    opacity: 0.7,
+    backgroundColor: "rgba(255,255,255,.7)"
+  }
+});
+
 Toastify.defaultProps = {
   style: {},
   position: 'top',
   positionValue: 50,
   end: 0,
-  duration: 3000
+  duration: 3000,
+  animationInTiming: 300,
+  animationOutTiming: 300,
+  animationIn: '',
+  animationOut: ''
+
 };
