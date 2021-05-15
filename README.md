@@ -7,7 +7,9 @@
 
 ## Demo
 
-https://user-images.githubusercontent.com/46484008/118373325-aec5fa00-b5cf-11eb-8486-652939881c9b.mp4
+## [View examples on snack.expo.io](https://snack.expo.io/@zahidalidev/toastify-react-native)
+
+![20210515_231132](https://user-images.githubusercontent.com/46484008/118374176-1bdb8e80-b5d4-11eb-8ffa-aee7a465a058.gif)
 
 
 ## Features
