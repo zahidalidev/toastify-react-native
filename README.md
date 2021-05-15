@@ -35,7 +35,7 @@
 
 ## Installation
 ```sh
-$ npm install @zahid/toastify-react-native
+$ npm install toastify-react-native
 ```
 ## The gist
 
@@ -65,7 +65,7 @@ export default function App() {
 
 import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
-import Toast from './app/components/toastify-react-native';
+import Toast from 'toastify-react-native';
 
 export default function App() {
   const [toastify, setToastify] = useState()
