@@ -1,2 +1,2 @@
-import Toastify from "./components/toastify-react-native";
-export default Toastify;
+import Toast from "./components/react-native-toastify";
+export default Toast;

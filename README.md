@@ -33,21 +33,21 @@ https://user-images.githubusercontent.com/46484008/118373325-aec5fa00-b5cf-11eb-
 
 ## Installation
 ```sh
-$ npm install react-native-toastify
+$ npm install @zahid/react-native-toastify
 ```
 ## The gist
 
 ```javascript
 import React, { useState } from 'react';
 import { Button } from 'react-native';
-import Toastify from 'react-native-toastify';
+import Toast from 'react-native-toastify';
 
 export default function App() {
   const [toastify, setToastify] = useState()
 
   return (
     <View>
-      <Toastify ref={(c) => setToastify(c)} />
+      <Toast ref={(c) => setToastify(c)} />
 
       <Button onPress={() => toastify.success("Success")} />
     </View>
@@ -63,7 +63,7 @@ export default function App() {
 
 import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
-import Toastify from './app/components/toastify-react-native';
+import Toast from './app/components/toastify-react-native';
 
 export default function App() {
   const [toastify, setToastify] = useState()
@@ -79,9 +79,9 @@ export default function App() {
   return (
     <View style={styles.container} >
       {/* Toasts */}
-      <Toastify ref={(c) => setToastify(c)} />
-      <Toastify position="center" animationStyle="fancy" ref={(c) => setToastify2(c)} />
-      <Toastify position="bottom" animationStyle="rightInOut" ref={(c) => setToastify3(c)} />
+      <Toast ref={(c) => setToastify(c)} />
+      <Toast position="center" animationStyle="fancy" ref={(c) => setToastify2(c)} />
+      <Toast position="bottom" animationStyle="rightInOut" ref={(c) => setToastify3(c)} />
 
       {/* Button */}
       <TouchableOpacity style={{ marginTop: 200, backgroundColor: "white", borderColor: "green", borderWidth: 2, padding: 10 }} onPress={() => showToasts()} >

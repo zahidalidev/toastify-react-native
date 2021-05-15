@@ -7,7 +7,7 @@ import colors from "../config/colors"
 const { height } = Dimensions.get('window');
 
 
-export default class Toastify extends Component {
+export default class Toast extends Component {
 
     state = {
         isShow: false,
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     }
 });
 
-Toastify.defaultProps = {
+Toast.defaultProps = {
     width: RFPercentage(32),
     height: RFPercentage(8.5),
     style: {},
