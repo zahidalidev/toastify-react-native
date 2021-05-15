@@ -1,5 +1,5 @@
 {
-  "name": "toastify-react-native",
+  "name": "@zahidalidev/toastify-react-native",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/@zahidalidev"
   },
