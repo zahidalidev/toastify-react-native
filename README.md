@@ -5,6 +5,11 @@
 
 🎉 React-Native-Toastify allows you to add notifications to your react-native app (ios, android) with ease. No more nonsense!
 
+## Demo
+
+https://user-images.githubusercontent.com/46484008/118373325-aec5fa00-b5cf-11eb-8486-652939881c9b.mp4
+
+
 ## Features
 
 - Smooth enter/exit animations
