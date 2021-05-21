@@ -46,7 +46,7 @@ import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 
 import Another from './app/components/Another';
-import ToastManager, { Toast } from './app/components/ToastManager';
+import ToastManager, { Toast } from 'toastify-react-native';
 
 export default function App() {
 
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
 ```javascript
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
-import { Toast } from './ToastManager';
+import { Toast } from 'toastify-react-nativer';
 export default function Another() {
 
     return (
