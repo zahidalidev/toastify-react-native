@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/@zahidalidev"
   },
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "🎉 toastify-react-native allows you to add notifications to your react-native app (ios, android) with ease. No more nonsense!",
   "main": "index.js",
   "scripts": {
