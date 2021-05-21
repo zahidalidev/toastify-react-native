@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Animated, Dimensions, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { View, Text, Animated, Dimensions, TouchableOpacity, StyleSheet } from 'react-native';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import Modal from 'react-native-modal';
 
@@ -7,7 +7,7 @@ import colors from "../config/colors"
 const { height } = Dimensions.get('window');
 
 
-export default class Toast extends Component {
+class ToastManager extends Component {
 
     state = {
         isShow: false,
@@ -32,27 +32,32 @@ export default class Toast extends Component {
         }
     };
 
-    default = (text) => {
-        this.show(text, colors.default, colors.textDefault);
-    }
-    dark = (text) => {
-        this.show(text, colors.dark, colors.textDefault);
+    constructor(props) {
+        super(props);
+        ToastManager.__singletonRef = this;
     }
 
-    info = (text) => {
-        this.show(text, colors.info, colors.textDefault);
+    static default = (text) => {
+        ToastManager.__singletonRef.show(text, colors.default, colors.textDefault);
+    }
+    static dark = (text) => {
+        ToastManager.__singletonRef.show(text, colors.dark, colors.textDefault);
     }
 
-    success = (text) => {
-        this.show(text, colors.success, colors.textDefault);
+    static info = (text) => {
+        ToastManager.__singletonRef.show(text, colors.info, colors.textDefault);
     }
 
-    warning = (text) => {
-        this.show(text, colors.warning, colors.textDefault);
+    static success = (text) => {
+        ToastManager.__singletonRef.show(text, colors.success, colors.textDefault);
     }
 
-    error = (text) => {
-        this.show(text, colors.error, colors.textDefault);
+    static warning = (text) => {
+        ToastManager.__singletonRef.show(text, colors.warning, colors.textDefault);
+    }
+
+    static error = (text) => {
+        ToastManager.__singletonRef.show(text, colors.error, colors.textDefault);
     }
 
     show(text = '', backgroundColor = colors.default, textColor = colors.textDefault) {
@@ -185,7 +190,7 @@ const styles = StyleSheet.create({
     }
 });
 
-Toast.defaultProps = {
+ToastManager.defaultProps = {
     width: RFPercentage(32),
     height: RFPercentage(8.5),
     style: {},
@@ -204,3 +209,7 @@ Toast.defaultProps = {
     backdropColor: 'black',
     backdropOpacity: 0.5
 };
+
+export default ToastManager;
+
+

@@ -37,63 +37,35 @@
 ```sh
 $ npm install toastify-react-native
 ```
-## The gist
-
-```javascript
-import React, { useState } from 'react';
-import { Button } from 'react-native';
-import Toast from 'toastify-react-native';
-
-export default function App() {
-  const [toastify, setToastify] = useState()
-
-  return (
-    <View>
-      <Toast ref={(c) => setToastify(c)} />
-
-      <Button onPress={() => toastify.success("Success")} />
-    </View>
-  );
-
-}
-
-```
 
 ## A complete example
 
+### App.js
 ```javascript
-
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
-import Toast from 'toastify-react-native';
+
+import Another from './app/components/Another';
+import ToastManager, { Toast } from './app/components/ToastManager';
 
 export default function App() {
-  const [toastify, setToastify] = useState()
-  const [toastify2, setToastify2] = useState()
-  const [toastify3, setToastify3] = useState()
-
-  const showToasts = async () => {
-    toastify.success("Success");
-    toastify2.info("Some info");
-    toastify3.error("This is an Error");
-  }
 
   return (
     <View style={styles.container} >
-      {/* Toasts */}
-      <Toast ref={(c) => setToastify(c)} />
-      <Toast position="center" animationStyle="fancy" ref={(c) => setToastify2(c)} />
-      <Toast position="bottom" animationStyle="rightInOut" ref={(c) => setToastify3(c)} />
+      {/* Toast Manager */}
+      <ToastManager />
+
+      {/* another component */}
+      <Another />
 
       {/* Button */}
-      <TouchableOpacity style={{ marginTop: 200, backgroundColor: "white", borderColor: "green", borderWidth: 2, padding: 10 }} onPress={() => showToasts()} >
+      <TouchableOpacity onPress={() => Toast.success("This is success message")} style={styles.buttonStyle} >
         <Text>
           SHOW SOME AWESOMENESS !
         </Text>
       </TouchableOpacity>
     </View>
   );
-
 }
 
 const styles = StyleSheet.create({
@@ -102,7 +74,50 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  buttonStyle: {
+    marginTop: 10,
+    backgroundColor: "white",
+    borderColor: "green",
+    borderWidth: 2,
+    padding: 10
   }
+});
+
+```
+
+### another.js
+```javascript
+import React from 'react';
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { Toast } from './ToastManager';
+export default function Another() {
+
+    return (
+        <View style={styles.container} >
+            <TouchableOpacity onPress={() => Toast.dark("This is dark Message")} style={styles.buttonStyle} >
+                <Text>
+                    SHOW SOME AWESOMENESS!
+                </Text>
+            </TouchableOpacity>
+        </View>
+    );
+
+}
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonStyle: {
+        marginTop: 10,
+        backgroundColor: "white",
+        borderColor: "green",
+        borderWidth: 2,
+        padding: 10
+    }
 });
 
 ```
