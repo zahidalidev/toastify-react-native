@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
 ```javascript
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
-import { Toast } from 'toastify-react-nativer';
+import { Toast } from 'toastify-react-native';
 export default function Another() {
 
     return (
