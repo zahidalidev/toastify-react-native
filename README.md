@@ -9,8 +9,7 @@
 
 ## [View examples on snack.expo.io](https://snack.expo.io/@zahidalidev/toastify-react-native)
 
-![20210515_231132](https://user-images.githubusercontent.com/46484008/118374176-1bdb8e80-b5d4-11eb-8ffa-aee7a465a058.gif)
-
+https://user-images.githubusercontent.com/46484008/190667640-02a77a0c-8aed-4dc9-a1d3-abf9cb5b3c0a.mp4
 
 ## Features
 
