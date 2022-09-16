@@ -23,6 +23,7 @@ class ToastManager extends Component {
     barWidth: new Animated.Value(RFPercentage(32)),
     barColor: Colors.default,
     icon: 'checkmark-circle',
+    position: this.props.position,
     animationStyle: {
       upInUpOut: {
         animationIn: 'slideInDown',
@@ -39,23 +40,23 @@ class ToastManager extends Component {
     },
   }
 
-  static info = (text) => {
-    ToastManager.__singletonRef.show(text, Colors.info, 'ios-information-circle')
+  static info = (text, position) => {
+    ToastManager.__singletonRef.show(text, Colors.info, 'ios-information-circle', position)
   }
 
-  static success = (text) => {
-    ToastManager.__singletonRef.show(text, Colors.success, 'checkmark-circle')
+  static success = (text, position) => {
+    ToastManager.__singletonRef.show(text, Colors.success, 'checkmark-circle', position)
   }
 
-  static warn = (text) => {
-    ToastManager.__singletonRef.show(text, Colors.warn, 'warning')
+  static warn = (text, position) => {
+    ToastManager.__singletonRef.show(text, Colors.warn, 'warning', position)
   }
 
-  static error = (text) => {
-    ToastManager.__singletonRef.show(text, Colors.error, 'alert-circle')
+  static error = (text, position) => {
+    ToastManager.__singletonRef.show(text, Colors.error, 'alert-circle', position)
   }
 
-  show = (text = '', barColor = Colors.default, icon) => {
+  show = (text = '', barColor = Colors.default, icon, position) => {
     const { duration } = this.props
     this.state.barWidth.setValue(this.props.width)
     this.setState({
@@ -65,6 +66,7 @@ class ToastManager extends Component {
       barColor,
       icon,
     })
+    if (position) this.setState({ position })
     this.isShow = true
     if (duration !== this.props.end) this.close(duration)
   }
@@ -78,8 +80,9 @@ class ToastManager extends Component {
   }
 
   position = () => {
-    if (this.props.position === 'top') return this.props.positionValue
-    if (this.props.position === 'center') return height / 2 - RFPercentage(9)
+    const { position } = this.state
+    if (position === 'top') return this.props.positionValue
+    if (position === 'center') return height / 2 - RFPercentage(9)
     return height - this.props.positionValue - RFPercentage(10)
   }
 

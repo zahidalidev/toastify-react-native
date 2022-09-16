@@ -1,4 +1,4 @@
-import ToastManager from "./components/ToastManager";
+import ToastManager from './components/ToastManager'
 
 export const Toast = {
     info: ToastManager.info,
@@ -6,4 +6,4 @@ export const Toast = {
     warn: ToastManager.warn,
     error: ToastManager.error
 };
-export default ToastManager;
+export default ToastManager

@@ -30,7 +30,7 @@
 - Possibility to update a toast
 - You can control the progress bar a la nprogress 😲
 - You can display multiple toast at the same time
-- Dark mode 🌒
+- Dark and light mode 🌒
 - And much more !
 
 ## Installation
@@ -42,30 +42,34 @@ $ npm install toastify-react-native
 
 ### App.js
 ```javascript
-import React from 'react';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import React from 'react'
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
+import ToastManager, { Toast } from 'toastify-react-native'
 
-import Another from './app/components/Another';
-import ToastManager, { Toast } from 'toastify-react-native';
+import Another from './Another'
 
-export default function App() {
+const App = ()  =>{
+  const showToasts = () => {
+    Toast.success('Promised is resolved')
+  }
 
   return (
-    <View style={styles.container} >
-      {/* Toast Manager */}
+    <View style={styles.container}>
       <ToastManager />
-
-      {/* another component */}
       <Another />
-
-      {/* Button */}
-      <TouchableOpacity onPress={() => Toast.success("This is success message")} style={styles.buttonStyle} >
-        <Text>
-          SHOW SOME AWESOMENESS !
-        </Text>
+      <TouchableOpacity
+        onPress={showToasts}
+        style={{
+          backgroundColor: 'white',
+          borderColor: 'green',
+          borderWidth: 1,
+          padding: 10,
+        }}
+      >
+        <Text>SHOW SOME AWESOMENESS!</Text>
       </TouchableOpacity>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -75,35 +79,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonStyle: {
-    marginTop: 10,
-    backgroundColor: "white",
-    borderColor: "green",
-    borderWidth: 2,
-    padding: 10
-  }
-});
+})
+
+export default App
 
 ```
 
-### another.js
+### Another.js
 ```javascript
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Toast } from 'toastify-react-native';
-export default function Another() {
+Another = () => (
+  <View style={styles.container} >
+    <TouchableOpacity onPress={() => Toast.info('Lorem ipsum info', 'bottom')} style={styles.buttonStyle} >
+    <Text>
+        SHOW SOME AWESOMENESS!
+    </Text>
+    </TouchableOpacity>
+  </View>
+);
 
-    return (
-        <View style={styles.container} >
-            <TouchableOpacity onPress={() => Toast.dark("This is dark Message")} style={styles.buttonStyle} >
-                <Text>
-                    SHOW SOME AWESOMENESS!
-                </Text>
-            </TouchableOpacity>
-        </View>
-    );
-
-}
 
 const styles = StyleSheet.create({
     container: {
@@ -120,6 +116,8 @@ const styles = StyleSheet.create({
     }
 });
 
+export default Another
+
 ```
 
 For a more complex example take a look at the `/example` directory.
@@ -134,7 +132,7 @@ For a more complex example take a look at the `/example` directory.
 | position                | top, center or bottom           | top                           | Position of toast                                                                                             |
 | positionValue     | number           | 50                            | position value of toast                                                                                                           |
 | duration    | number           | 3000                            | The display time of toast.                                                                                                           |
-| animationStyle                 | rightInLeftOut, rightInOut or fancy             | rightInLeftOut                           | The animation style of toast                                                                                                                |
+| animationStyle                 | upInUpOut, rightInOut or zoomInOut             | upInUpOut                           | The animation style of toast                                                                                                                |
 | animationIn                       | string or object             | 'slideInRight'                   | Toast show animation                                                                                                                          |
 | animationOut                   | string or object           | 'slideOutLeft'                           | Toast hide animation                                                                         |
 | animationInTiming                    | number           | 300                           | Timing for the Toast show animation (in ms)                                                                          |
@@ -143,8 +141,8 @@ For a more complex example take a look at the `/example` directory.
 | backdropTransitionOutTiming                | number             | 300                     | The backdrop hide timing (in ms)                                                                                                        |
 | hasBackdrop                | bool             | false                     | Render the backdrop                                                                                              |
 | backdropColor                    | string             | 'black'                     | The backdrop background color                                                                                                 |
-| backdropOpacity                | number             | 0.5                     | The backdrop opacity when the toast is visible                                                                                              |
-| 
+| backdropOpacity                | number             | 0.2                     | The backdrop opacity when the toast is visible                                                                                              |
+|
 
 ## Available animations
 
