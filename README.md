@@ -89,7 +89,7 @@ export default App
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { Toast } from 'toastify-react-native';
-Another = () => (
+const Another = () => (
   <View style={styles.container} >
     <TouchableOpacity onPress={() => Toast.info('Lorem ipsum info', 'bottom')} style={styles.buttonStyle} >
     <Text>
