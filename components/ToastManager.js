@@ -6,7 +6,7 @@ import { View, Text, Animated, Dimensions, TouchableOpacity } from 'react-native
 
 import defaultProps from '../utils/defaultProps'
 import { Colors } from '../config/theme'
-import styles from './styles'
+import { styles, customContentStyles } from './styles'
 
 const { height } = Dimensions.get('window')
 
@@ -135,7 +135,7 @@ class ToastManager extends Component {
       width,
       height,
       style,
-      contentStyle,
+      contentStyle = customContentStyles,
       theme,
     } = this.props
 
@@ -166,7 +166,7 @@ class ToastManager extends Component {
         backdropColor={backdropColor}
         backdropOpacity={backdropOpacity}
         hasBackdrop={hasBackdrop}
-        style={[styles.modalContainer, ...contentStyle?.modalContainer ]}
+        style={[styles.modalContainer, ...contentStyle?.modalContainer]}
       >
         <View
           style={[

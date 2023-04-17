@@ -57,4 +57,17 @@ const styles = StyleSheet.create({
   }
 })
 
-export default styles
+const customContentStyles = {
+  modalContainer: {},
+  mainContainer: {},
+  hideButton: {},
+  textStyle: {},
+  progressBarContainer: {},
+  content: {},
+  iconWrapper: {},
+}
+
+export {
+  styles,
+  customContentStyles
+}
