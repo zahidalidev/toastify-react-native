@@ -135,6 +135,7 @@ class ToastManager extends Component {
       width,
       height,
       style,
+      contentStyle,
       theme,
     } = this.props
 
@@ -165,11 +166,11 @@ class ToastManager extends Component {
         backdropColor={backdropColor}
         backdropOpacity={backdropOpacity}
         hasBackdrop={hasBackdrop}
-        style={styles.modalContainer}
+        style={contentStyle?.modalContainer ?? styles.modalContainer}
       >
         <View
           style={[
-            styles.mainContainer,
+            contentStyle?.mainContainer ?? styles.mainContainer,
             {
               width,
               height,
@@ -179,16 +180,16 @@ class ToastManager extends Component {
             },
           ]}
         >
-          <TouchableOpacity onPress={this.hideToast} activeOpacity={0.9} style={styles.hideButton}>
+          <TouchableOpacity onPress={this.hideToast} activeOpacity={0.9} style={contentStyle?.hideButton ?? styles.hideButton}>
             <Icon name='ios-close-outline' size={22} color={Colors[theme].text} />
           </TouchableOpacity>
-          <View style={styles.content}>
+          <View style={contentStyle?.content ?? styles.content}>
             <Icon name={icon} size={22} color={barColor} style={styles.iconWrapper} />
-            <Text style={[styles.textStyle, { color: Colors[theme].text }]}>{text}</Text>
+            <Text style={[contentStyle?.textStyle ?? styles.textStyle, { color: Colors[theme].text }]}>{text}</Text>
           </View>
-          <View style={styles.progressBarContainer}>
+          <View style={contentStyle?.progressBarContainer ?? styles.progressBarContainer}>
             <Animated.View
-              style={[styles.progressBar, { width: barWidth, backgroundColor: barColor }]}
+              style={[contentStyle?.progressBar ?? styles.progressBar, { width: barWidth, backgroundColor: barColor }]}
             />
           </View>
         </View>
