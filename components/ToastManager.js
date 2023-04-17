@@ -166,11 +166,12 @@ class ToastManager extends Component {
         backdropColor={backdropColor}
         backdropOpacity={backdropOpacity}
         hasBackdrop={hasBackdrop}
-        style={contentStyle?.modalContainer ?? styles.modalContainer}
+        style={[styles.modalContainer, ...contentStyle?.modalContainer ]}
       >
         <View
           style={[
-            contentStyle?.mainContainer ?? styles.mainContainer,
+            styles.mainContainer,
+            ...contentStyle?.mainContainer,
             {
               width,
               height,
@@ -180,16 +181,16 @@ class ToastManager extends Component {
             },
           ]}
         >
-          <TouchableOpacity onPress={this.hideToast} activeOpacity={0.9} style={contentStyle?.hideButton ?? styles.hideButton}>
+          <TouchableOpacity onPress={this.hideToast} activeOpacity={0.9} style={[styles.hideButton, ...contentStyle?.hideButton]}>
             <Icon name='ios-close-outline' size={22} color={Colors[theme].text} />
           </TouchableOpacity>
-          <View style={contentStyle?.content ?? styles.content}>
-            <Icon name={icon} size={22} color={barColor} style={styles.iconWrapper} />
-            <Text style={[contentStyle?.textStyle ?? styles.textStyle, { color: Colors[theme].text }]}>{text}</Text>
+          <View style={[styles.content, ...contentStyle?.content]}>
+            <Icon name={icon} size={22} color={barColor} style={[styles.iconWrapper, ...contentStyle?.iconWrapper]} />
+            <Text style={[styles.textStyle, ...contentStyle?.textStyle, { color: Colors[theme].text }]}>{text}</Text>
           </View>
-          <View style={contentStyle?.progressBarContainer ?? styles.progressBarContainer}>
+          <View style={[styles.progressBarContainer, ...contentStyle?.progressBarContainer]}>
             <Animated.View
-              style={[contentStyle?.progressBar ?? styles.progressBar, { width: barWidth, backgroundColor: barColor }]}
+              style={[styles.progressBar, ...contentStyle?.progressBar, { width: barWidth, backgroundColor: barColor }]}
             />
           </View>
         </View>
