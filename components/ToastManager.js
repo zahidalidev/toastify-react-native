@@ -135,9 +135,11 @@ class ToastManager extends Component {
       width,
       height,
       style,
-      contentStyle = customContentStyles,
+      contentStyle,
       theme,
     } = this.props
+
+    const allContentStyles = { ...customContentStyles, ...contentStyle }
 
     const {
       isShow,
@@ -166,12 +168,12 @@ class ToastManager extends Component {
         backdropColor={backdropColor}
         backdropOpacity={backdropOpacity}
         hasBackdrop={hasBackdrop}
-        style={[styles.modalContainer, ...contentStyle?.modalContainer]}
+        style={[styles.modalContainer, allContentStyles?.modalContainer]}
       >
         <View
           style={[
             styles.mainContainer,
-            ...contentStyle?.mainContainer,
+            allContentStyles?.mainContainer,
             {
               width,
               height,
@@ -181,16 +183,16 @@ class ToastManager extends Component {
             },
           ]}
         >
-          <TouchableOpacity onPress={this.hideToast} activeOpacity={0.9} style={[styles.hideButton, ...contentStyle?.hideButton]}>
+          <TouchableOpacity onPress={this.hideToast} activeOpacity={0.9} style={[styles.hideButton, allContentStyles?.hideButton]}>
             <Icon name='ios-close-outline' size={22} color={Colors[theme].text} />
           </TouchableOpacity>
-          <View style={[styles.content, ...contentStyle?.content]}>
-            <Icon name={icon} size={22} color={barColor} style={[styles.iconWrapper, ...contentStyle?.iconWrapper]} />
-            <Text style={[styles.textStyle, ...contentStyle?.textStyle, { color: Colors[theme].text }]}>{text}</Text>
+          <View style={[styles.content, allContentStyles?.content]}>
+            <Icon name={icon} size={22} color={barColor} style={[styles.iconWrapper, allContentStyles?.iconWrapper]} />
+            <Text style={[styles.textStyle, allContentStyles?.textStyle, { color: Colors[theme].text }]}>{text}</Text>
           </View>
-          <View style={[styles.progressBarContainer, ...contentStyle?.progressBarContainer]}>
+          <View style={[styles.progressBarContainer, allContentStyles?.progressBarContainer]}>
             <Animated.View
-              style={[styles.progressBar, ...contentStyle?.progressBar, { width: barWidth, backgroundColor: barColor }]}
+              style={[styles.progressBar, allContentStyles?.progressBar, { width: barWidth, backgroundColor: barColor }]}
             />
           </View>
         </View>
