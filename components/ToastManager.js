@@ -6,7 +6,7 @@ import { View, Text, Animated, Dimensions, TouchableOpacity } from 'react-native
 
 import defaultProps from '../utils/defaultProps'
 import { Colors } from '../config/theme'
-import styles from './styles'
+import { styles, customContentStyles } from './styles'
 
 const { height } = Dimensions.get('window')
 
@@ -40,23 +40,27 @@ class ToastManager extends Component {
     },
   }
 
-  static info = (text, position) => {
-    ToastManager.__singletonRef.show(text, Colors.info, 'ios-information-circle', position)
+  static info = ({ text: text, position: position, icon: icon = 'ios-information-circle', iconColor = Colors.info, textColor: textColor = '#000000', background: background = '#FFFFFF' }) => {
+    ToastManager.__singletonRef.show(text, iconColor, icon, position, background, textColor)
   }
 
-  static success = (text, position) => {
-    ToastManager.__singletonRef.show(text, Colors.success, 'checkmark-circle', position)
+  static success = ({ text: text, position: position, icon: icon = 'checkmark-circle', iconColor = Colors.success, textColor: textColor = '#000000', background: background = '#FFFFFF' }) => {
+    ToastManager.__singletonRef.show(text, iconColor, icon, position, background, textColor)
   }
 
-  static warn = (text, position) => {
-    ToastManager.__singletonRef.show(text, Colors.warn, 'warning', position)
+  static warn = ({ text: text, position: position, icon: icon = 'warning', iconColor = Colors.warn, textColor: textColor = '#000000', background: background = '#FFFFFF' }) => {
+    ToastManager.__singletonRef.show(text, iconColor, icon, position, background, textColor)
   }
 
-  static error = (text, position) => {
-    ToastManager.__singletonRef.show(text, Colors.error, 'alert-circle', position)
+  static error = ({ text: text, position: position, icon: icon = 'alert-circle', iconColor = Colors.error, textColor: textColor = '#000000', background: background = '#FFFFFF' }) => {
+    ToastManager.__singletonRef.show(text, iconColor, icon, position, background, textColor)
   }
 
-  show = (text = '', barColor = Colors.default, icon, position) => {
+  static custom = ({ text: text, position: position, icon: icon = 'alert-circle', iconColor: iconColor = Colors.error, textColor: textColor = '#000000', background: background = '#FFFFFF' }) => {
+    ToastManager.__singletonRef.show(text, iconColor, icon, position, background, textColor)
+  }
+
+  show = (text = '', barColor = Colors.default, icon, position, background, textColor) => {
     const { duration } = this.props
     this.state.barWidth.setValue(this.props.width)
     this.setState({
@@ -65,6 +69,8 @@ class ToastManager extends Component {
       text,
       barColor,
       icon,
+      background,
+      textColor
     })
     if (position) this.setState({ position })
     this.isShow = true
@@ -135,8 +141,12 @@ class ToastManager extends Component {
       width,
       height,
       style,
+      contentStyle,
+      testID,
       theme,
     } = this.props
+
+    const allContentStyles = { ...customContentStyles, ...contentStyle }
 
     const {
       isShow,
@@ -145,6 +155,8 @@ class ToastManager extends Component {
       icon,
       text,
       barWidth,
+      background,
+      textColor
     } = this.state
 
     return (
@@ -165,30 +177,31 @@ class ToastManager extends Component {
         backdropColor={backdropColor}
         backdropOpacity={backdropOpacity}
         hasBackdrop={hasBackdrop}
-        style={styles.modalContainer}
+        style={[styles.modalContainer, allContentStyles?.modalContainer]}
       >
         <View
           style={[
             styles.mainContainer,
+            allContentStyles?.mainContainer,
             {
               width,
               height,
-              backgroundColor: Colors[theme].back,
+              backgroundColor: background,
               top: this.position(),
               ...style,
             },
           ]}
         >
-          <TouchableOpacity onPress={this.hideToast} activeOpacity={0.9} style={styles.hideButton}>
-            <Icon name='ios-close-outline' size={22} color={Colors[theme].text} />
+          <TouchableOpacity onPress={this.hideToast} activeOpacity={0.9} style={[styles.hideButton, allContentStyles?.hideButton]}>
+            <Icon name='ios-close-outline' size={22} color={textColor} />
           </TouchableOpacity>
-          <View style={styles.content}>
-            <Icon name={icon} size={22} color={barColor} style={styles.iconWrapper} />
-            <Text style={[styles.textStyle, { color: Colors[theme].text }]}>{text}</Text>
+          <View style={[styles.content, allContentStyles?.content]}>
+            <Icon name={icon} size={22} color={barColor} style={[styles.iconWrapper, allContentStyles?.iconWrapper]} />
+            <Text style={[styles.textStyle, allContentStyles?.textStyle, { color: textColor }]} testID={testID}>{text}</Text>
           </View>
-          <View style={styles.progressBarContainer}>
+          <View style={[styles.progressBarContainer, allContentStyles?.progressBarContainer]}>
             <Animated.View
-              style={[styles.progressBar, { width: barWidth, backgroundColor: barColor }]}
+              style={[styles.progressBar, allContentStyles?.progressBar, { width: barWidth, backgroundColor: barColor }]}
             />
           </View>
         </View>
