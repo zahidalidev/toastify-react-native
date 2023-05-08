@@ -142,6 +142,7 @@ class ToastManager extends Component {
       height,
       style,
       contentStyle,
+      testID,
       theme,
     } = this.props
 
@@ -196,7 +197,7 @@ class ToastManager extends Component {
           </TouchableOpacity>
           <View style={[styles.content, allContentStyles?.content]}>
             <Icon name={icon} size={22} color={barColor} style={[styles.iconWrapper, allContentStyles?.iconWrapper]} />
-            <Text style={[styles.textStyle, allContentStyles?.textStyle, { color: textColor }]}>{text}</Text>
+            <Text style={[styles.textStyle, allContentStyles?.textStyle, { color: textColor }]} testID={testID}>{text}</Text>
           </View>
           <View style={[styles.progressBarContainer, allContentStyles?.progressBarContainer]}>
             <Animated.View
