@@ -5,6 +5,7 @@ export default {
   width: RFPercentage(32),
   height: RFPercentage(8.5),
   style: {},
+  textStyle: {},
   position: 'top',
   positionValue: 50,
   end: 0,

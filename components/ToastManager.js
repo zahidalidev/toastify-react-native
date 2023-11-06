@@ -2,7 +2,13 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import Modal from 'react-native-modal'
 import React, { Component } from 'react'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import { View, Text, Animated, Dimensions, TouchableOpacity } from 'react-native'
+import {
+  View,
+  Text,
+  Animated,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native'
 
 import defaultProps from '../utils/defaultProps'
 import { Colors } from '../config/theme'
@@ -41,11 +47,21 @@ class ToastManager extends Component {
   }
 
   static info = (text, position) => {
-    ToastManager.__singletonRef.show(text, Colors.info, 'ios-information-circle', position)
+    ToastManager.__singletonRef.show(
+      text,
+      Colors.info,
+      'ios-information-circle',
+      position
+    )
   }
 
   static success = (text, position) => {
-    ToastManager.__singletonRef.show(text, Colors.success, 'checkmark-circle', position)
+    ToastManager.__singletonRef.show(
+      text,
+      Colors.success,
+      'checkmark-circle',
+      position
+    )
   }
 
   static warn = (text, position) => {
@@ -53,7 +69,12 @@ class ToastManager extends Component {
   }
 
   static error = (text, position) => {
-    ToastManager.__singletonRef.show(text, Colors.error, 'alert-circle', position)
+    ToastManager.__singletonRef.show(
+      text,
+      Colors.error,
+      'alert-circle',
+      position
+    )
   }
 
   show = (text = '', barColor = Colors.default, icon, position) => {
@@ -135,6 +156,7 @@ class ToastManager extends Component {
       width,
       height,
       style,
+      textStyle,
       theme,
     } = this.props
 
@@ -149,8 +171,12 @@ class ToastManager extends Component {
 
     return (
       <Modal
-        animationIn={animationIn || stateAnimationStyle[animationStyle].animationIn}
-        animationOut={animationOut || stateAnimationStyle[animationStyle].animationOut}
+        animationIn={
+          animationIn || stateAnimationStyle[animationStyle].animationIn
+        }
+        animationOut={
+          animationOut || stateAnimationStyle[animationStyle].animationOut
+        }
         backdropTransitionOutTiming={backdropTransitionOutTiming}
         backdropTransitionInTiming={backdropTransitionInTiming}
         animationInTiming={animationInTiming}
@@ -179,16 +205,39 @@ class ToastManager extends Component {
             },
           ]}
         >
-          <TouchableOpacity onPress={this.hideToast} activeOpacity={0.9} style={styles.hideButton}>
-            <Icon name='ios-close-outline' size={22} color={Colors[theme].text} />
+          <TouchableOpacity
+            onPress={this.hideToast}
+            activeOpacity={0.9}
+            style={styles.hideButton}
+          >
+            <Icon
+              name='ios-close-outline'
+              size={22}
+              color={Colors[theme].text}
+            />
           </TouchableOpacity>
           <View style={styles.content}>
-            <Icon name={icon} size={22} color={barColor} style={styles.iconWrapper} />
-            <Text style={[styles.textStyle, { color: Colors[theme].text }]}>{text}</Text>
+            <Icon
+              name={icon}
+              size={22}
+              color={barColor}
+              style={styles.iconWrapper}
+            />
+            <Text
+              style={[
+                styles.textStyle,
+                { color: Colors[theme].text, ...textStyle },
+              ]}
+            >
+              {text}
+            </Text>
           </View>
           <View style={styles.progressBarContainer}>
             <Animated.View
-              style={[styles.progressBar, { width: barWidth, backgroundColor: barColor }]}
+              style={[
+                styles.progressBar,
+                { width: barWidth, backgroundColor: barColor },
+              ]}
             />
           </View>
         </View>
