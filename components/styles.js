@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 
   textStyle: {
     fontSize: RFPercentage(2.5),
-    fontWeight: '400'
+    fontWeight: '400',
   },
 
   progressBarContainer: {
@@ -49,12 +49,12 @@ const styles = StyleSheet.create({
     padding: RFPercentage(1.5),
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
 
   iconWrapper: {
-    marginRight: RFPercentage(0.7)
-  }
+    marginRight: RFPercentage(0.7),
+  },
 })
 
 export default styles
