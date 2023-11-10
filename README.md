@@ -153,4 +153,4 @@ Pull requests, feedbacks and suggestions are welcome!
 
 ## License
 
-toastify-react-native is [MIT licensed](https://github.com/zahidalidev/toastify-react-native/blob/master/LICENSE) and built with :heart: by Zahid Ali.
+toastify-react-native is [MIT licensed](https://github.com/zahidalidev/toastify-react-native/blob/master/LICENSE) .
