@@ -2,74 +2,29 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import Modal from 'react-native-modal'
 import React, { Component } from 'react'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import {
-  View,
-  Text,
-  Animated,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native'
+import { View, Text, Animated, Dimensions, TouchableOpacity } from 'react-native'
 
 import defaultProps from '../utils/defaultProps'
 import { Colors } from '../config/theme'
 import styles from './styles'
+import { ToastManagerProps, ToastManagerState } from '../utils/interfaces'
 
-const { height } = Dimensions.get("window");
-
-type AnimationStyle = any;
-
-interface ToastManagerProps {
-  positionValue: number;
-  width: number;
-  duration: number;
-  end: number;
-  animationIn?: any;
-  animationOut?: any;
-  backdropTransitionOutTiming: number;
-  backdropTransitionInTiming: number;
-  animationInTiming: number;
-  animationOutTiming: number;
-  backdropColor: string;
-  backdropOpacity: number;
-  hasBackdrop: boolean;
-  height: number;
-  style: any;
-  textStyle: any;
-  theme: any;
-  animationStyle?: AnimationStyle;
-  position? :any
-}
-
-interface ToastManagerState {
-  isShow: boolean;
-  text: string;
-  opacityValue: any;
-  barWidth: any;
-  barColor: string;
-  icon: string;
-  position: string;
-  duration: number;
-  oldDuration: number;
-  animationStyle: Record<
-    AnimationStyle,
-    { animationIn: string; animationOut: string }
-  >;
-}
+const { height } = Dimensions.get('window')
 
 class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
-  private timer: NodeJS.Timeout;
-  private isShow: boolean;
-  static defaultProps = defaultProps;
-  static __singletonRef: ToastManager | null;
+  private timer: NodeJS.Timeout
+  private isShow: boolean
+  static defaultProps = defaultProps
+  static __singletonRef: ToastManager | null
 
-  
   constructor(props: ToastManagerProps) {
-    super(props);
-    ToastManager.__singletonRef = this;
-    this.timer = setTimeout(() => {}, 0); // Initialize timer with a dummy value
-    this.isShow = false;
+    super(props)
+    ToastManager.__singletonRef = this
+    this.timer = setTimeout(() => {}, 0) // Initialize timer with a dummy value
+    this.isShow = false
   }
-  state:any = {
+
+  state: any = {
     isShow: false,
     text: '',
     opacityValue: new Animated.Value(1),
@@ -94,21 +49,11 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
   }
 
   static info = (text: string, position: string) => {
-    ToastManager.__singletonRef?.show(
-      text,
-      Colors.info,
-      'ios-information-circle',
-      position
-    )
+    ToastManager.__singletonRef?.show(text, Colors.info, 'ios-information-circle', position)
   }
 
   static success = (text: string, position?: string) => {
-    ToastManager.__singletonRef?.show(
-      text,
-      Colors.success,
-      'checkmark-circle',
-      position
-    )
+    ToastManager.__singletonRef?.show(text, Colors.success, 'checkmark-circle', position)
   }
 
   static warn = (text: string, position: string) => {
@@ -116,12 +61,7 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
   }
 
   static error = (text: string, position: string) => {
-    ToastManager.__singletonRef?.show(
-      text,
-      Colors.error,
-      'alert-circle',
-      position
-    )
+    ToastManager.__singletonRef?.show(text, Colors.error, 'alert-circle', position)
   }
 
   show = (text = '', barColor = Colors.default, icon: string, position?: string) => {
@@ -164,7 +104,7 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
 
   pause = () => {
     this.setState({ oldDuration: this.state.duration, duration: 10000 })
-    Animated.timing(this.state.barWidth,{
+    Animated.timing(this.state.barWidth, {
       toValue: 0,
       duration: this.state.duration,
       useNativeDriver: false,
@@ -222,12 +162,8 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
 
     return (
       <Modal
-        animationIn={
-          animationIn || stateAnimationStyle[animationStyle].animationIn
-        }
-        animationOut={
-          animationOut || stateAnimationStyle[animationStyle].animationOut
-        }
+        animationIn={animationIn || stateAnimationStyle[animationStyle].animationIn}
+        animationOut={animationOut || stateAnimationStyle[animationStyle].animationOut}
         backdropTransitionOutTiming={backdropTransitionOutTiming}
         backdropTransitionInTiming={backdropTransitionInTiming}
         animationInTiming={animationInTiming}
@@ -256,37 +192,17 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
             },
           ]}
         >
-          <TouchableOpacity
-            onPress={this.hideToast}
-            activeOpacity={0.9}
-            style={styles.hideButton}
-          >
-            <Icon
-              name='ios-close-outline'
-              size={22}
-              color={Colors[theme].text}
-            />
+          <TouchableOpacity onPress={this.hideToast} activeOpacity={0.9} style={styles.hideButton}>
+            <Icon name='ios-close-outline' size={22} color={Colors[theme].text} />
           </TouchableOpacity>
           <View style={styles.content}>
-            <Icon
-              name={icon}
-              size={22}
-              color={barColor}
-              style={styles.iconWrapper}
-            />
-            <Text
-              style={[
-                styles.textStyle,
-                { color: Colors[theme].text, ...textStyle },
-              ]}
-            >
+            <Icon name={icon} size={22} color={barColor} style={styles.iconWrapper} />
+            <Text style={[styles.textStyle, { color: Colors[theme].text, ...textStyle }]}>
               {text}
             </Text>
           </View>
           <View style={styles.progressBarContainer}>
-            <Animated.View
-              style={{ width: barWidth, backgroundColor: barColor }}
-            />
+            <Animated.View style={{ width: barWidth, backgroundColor: barColor }} />
           </View>
         </View>
       </Modal>
