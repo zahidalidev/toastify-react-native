@@ -27,7 +27,7 @@ Clone the repository and create a local branch:
 
 ```sh
 git clone https://github.com/zahidalidev/toastify-react-native.git
-cd react-toastify
+cd toastify-react-native
 
 git checkout -b my-branch
 ```
