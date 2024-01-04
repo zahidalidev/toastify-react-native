@@ -193,7 +193,7 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
           ]}
         >
           <TouchableOpacity onPress={this.hideToast} activeOpacity={0.9} style={styles.hideButton}>
-            <Icon name='ios-close-outline' size={22} color={Colors[theme].text} />
+            <Icon name='close-outline' size={22} color={Colors[theme].text} />
           </TouchableOpacity>
           <View style={styles.content}>
             <Icon name={icon} size={22} color={barColor} style={styles.iconWrapper} />
