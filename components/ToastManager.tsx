@@ -12,35 +12,19 @@ import Modal from "react-native-modal";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Colors } from "../config/theme";
 
-import { defaultProps, defaultToastData } from "../utils/default";
+import {
+  animationStyleOptions,
+  defaultProps,
+  defaultToastData,
+} from "../utils/default";
 import generateUUID from "../utils/generateUUID";
 import {
-  AnimationStyleProps,
   NotificationArgumentsType,
   ToastManagerProps,
   ToastManagerState,
   ToastType,
 } from "../utils/interfaces";
 import styles from "./styles";
-
-const animationStyleOptions: AnimationStyleProps = {
-  upInUpOut: {
-    animationIn: "slideInDown",
-    animationOut: "slideOutUp",
-  },
-  rightInOut: {
-    animationIn: "slideInRight",
-    animationOut: "slideOutRight",
-  },
-  zoomInOut: {
-    animationIn: "zoomInDown",
-    animationOut: "zoomOutUp",
-  },
-  slide: {
-    animationIn: "slideInUp",
-    animationOut: "slideOutDown",
-  },
-};
 
 class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
   static defaultProps = defaultProps;

@@ -1,6 +1,6 @@
 import { Animated } from "react-native";
 import { RFPercentage } from "react-native-responsive-fontsize";
-import { ToastType } from "./interfaces";
+import { AnimationStyleProps, ToastType } from "./interfaces";
 import { Colors } from "../config/theme";
 
 export const defaultProps = {
@@ -30,4 +30,23 @@ export const defaultToastData: Partial<ToastType> = {
   barWidthAnimation: new Animated.Value(RFPercentage(32)),
   width: RFPercentage(32),
   height: RFPercentage(8.5),
+};
+
+export const animationStyleOptions: AnimationStyleProps = {
+  upInUpOut: {
+    animationIn: "slideInDown",
+    animationOut: "slideOutUp",
+  },
+  rightInOut: {
+    animationIn: "slideInRight",
+    animationOut: "slideOutRight",
+  },
+  zoomInOut: {
+    animationIn: "zoomInDown",
+    animationOut: "zoomOutUp",
+  },
+  slide: {
+    animationIn: "slideInUp",
+    animationOut: "slideOutDown",
+  },
 };
