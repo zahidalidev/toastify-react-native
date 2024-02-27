@@ -50,7 +50,7 @@ import Another from './Another'
 
 const App = () => {
   const showToasts = () => {
-    Toast.success('Promised is resolved')
+    Toast.success({ text: 'Promised is resolved' })
   }
 
   return (
@@ -93,7 +93,7 @@ import { Toast } from 'toastify-react-native'
 const Another = () => (
   <View style={styles.container}>
     <TouchableOpacity
-      onPress={() => Toast.info('Lorem ipsum info', 'bottom')}
+      onPress={() => Toast.info({ text: 'Lorem ipsum info' })}
       style={styles.buttonStyle}
     >
       <Text>SHOW SOME AWESOMENESS!</Text>
@@ -124,12 +124,12 @@ For a more complex example take a look at the `/example` directory.
 ## Available props
 
 | Name                        | Type                               | Default        | Description                                    |
-| --------------------------- | ---------------------------------- | -------------- | ---------------------------------------------- |
+| --------------------------- |------------------------------------| -------------- | ---------------------------------------------- |
 | width                       | number                             | 256            | Width of toast                                 |
 | height                      | number                             | 68             | Height of the toast                            |
 | style                       | any                                | null           | Style applied to the toast                     |
 | textStyle                   | any                                | null           | Style applied to the toast content             |
-| position                    | top, center or bottom              | top            | Position of toast                              |
+| position                    | top or bottom                      | top            | Position of toast                              |
 | positionValue               | number                             | 50             | position value of toast                        |
 | duration                    | number                             | 3000           | The display time of toast.                     |
 | animationStyle              | upInUpOut, rightInOut or zoomInOut | upInUpOut      | The animation style of toast                   |
