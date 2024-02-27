@@ -1,36 +1,52 @@
-type AnimationStyle = any
+import {Animated} from "react-native";
+import {ModalProps} from "react-native-modal/dist/modal";
+
+type AnimationStyle = "upInUpOut" | "rightInOut" | "zoomInOut"
+
+type Position = "top" | 'bottom'
 
 export interface ToastManagerProps {
-  positionValue: number
-  width: number
-  duration: number
-  end: number
-  animationIn?: any
-  animationOut?: any
-  backdropTransitionOutTiming: number
-  backdropTransitionInTiming: number
-  animationInTiming: number
-  animationOutTiming: number
-  backdropColor: string
-  backdropOpacity: number
-  hasBackdrop: boolean
-  height: number
-  style: any
-  textStyle: any
-  theme: any
-  animationStyle?: AnimationStyle
-  position?: any
+    positionValue: number
+    position?: Position
+    animationIn?: ModalProps['animationIn']
+    animationOut?: ModalProps['animationOut']
+    backdropTransitionOutTiming: number
+    backdropTransitionInTiming: number
+    animationInTiming: number
+    animationOutTiming: number
+    backdropColor: string
+    backdropOpacity: number
+    hasBackdrop: boolean
+    style: any
+    textStyle: any
+    theme: any
+    animationStyle?: AnimationStyle
 }
 
 export interface ToastManagerState {
-  isShow: boolean
-  text: string
-  opacityValue: any
-  barWidth: any
-  barColor: string
-  icon: string
-  position: string
-  duration: number
-  oldDuration: number
-  animationStyle: Record<AnimationStyle, { animationIn: string; animationOut: string }>
+    toasts: ToastType[];
+    keyboardHeight: number;
 }
+
+export interface ToastType {
+    position: string;
+    duration: number;
+    text: string;
+    barColor: string;
+    icon: string;
+    id: string;
+    barWidthAnimation: Animated.Value;
+    width: number;
+    height?: number;
+};
+
+export interface NotificationArgumentsType extends ToastType {
+    key?: string;
+    positionOffset?: number;
+};
+
+
+export type AnimationStyleProps = Record<string, {
+    animationIn: ModalProps['animationIn'],
+    animationOut: ModalProps['animationOut'],
+}>

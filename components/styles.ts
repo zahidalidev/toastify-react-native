@@ -12,8 +12,8 @@ const styles = StyleSheet.create({
   mainContainer: {
     borderRadius: 6,
     position: 'absolute',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
     shadowOffset: {
@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: RFPercentage(0.5),
     right: RFPercentage(0.5),
+    zIndex:1
   },
 
   textStyle: {
