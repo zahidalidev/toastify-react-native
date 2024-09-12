@@ -20,6 +20,8 @@ export interface ToastManagerProps {
   theme: any
   animationStyle?: AnimationStyle
   position?: any
+  showCloseIcon: boolean;
+  showProgressBar: boolean;
 }
 
 export interface ToastManagerState {
