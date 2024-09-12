@@ -20,4 +20,6 @@ export default {
   hasBackdrop: false,
   backdropColor: 'black',
   backdropOpacity: 0.2,
+  showCloseIcon: true,
+  showProgressBar: true,
 }

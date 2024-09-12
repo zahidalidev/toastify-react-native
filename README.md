@@ -142,6 +142,8 @@ For a more complex example take a look at the `/example` directory.
 | hasBackdrop                 | bool                               | false          | Render the backdrop                            |
 | backdropColor               | string                             | 'black'        | The backdrop background color                  |
 | backdropOpacity             | number                             | 0.2            | The backdrop opacity when the toast is visible |
+| showCloseIcon               | boolean                            | true           | Shows the close icon in the right corner       |
+| showProgressBar             | boolean                            | true           | Shows the progress bar in the toast            |
 
 ## Available animations
 
