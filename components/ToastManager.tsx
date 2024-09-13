@@ -49,7 +49,7 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
   }
 
   static info = (text: string, position: string) => {
-    ToastManager.__singletonRef?.show(text, Colors.info, 'ios-information-circle', position)
+    ToastManager.__singletonRef?.show(text, Colors.info, 'information-circle', position)
   }
 
   static success = (text: string, position?: string) => {
