@@ -2,7 +2,7 @@ type AnimationStyle = any
 
 export interface ToastManagerProps {
   positionValue: number
-  width: number
+  width: number | 'auto'
   duration: number
   end: number
   animationIn?: any
