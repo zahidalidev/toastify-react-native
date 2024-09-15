@@ -48,23 +48,23 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
     },
   }
 
-  static info = (text: string, position: string) => {
+  static info = (text: string, position?: ToastManagerProps['position']) => {
     ToastManager.__singletonRef?.show(text, Colors.info, 'information-circle', position)
   }
 
-  static success = (text: string, position?: string) => {
+  static success = (text: string, position?: ToastManagerProps['position']) => {
     ToastManager.__singletonRef?.show(text, Colors.success, 'checkmark-circle', position)
   }
 
-  static warn = (text: string, position: string) => {
+  static warn = (text: string, position?: ToastManagerProps['position']) => {
     ToastManager.__singletonRef?.show(text, Colors.warn, 'warning', position)
   }
 
-  static error = (text: string, position: string) => {
+  static error = (text: string, position?: ToastManagerProps['position']) => {
     ToastManager.__singletonRef?.show(text, Colors.error, 'alert-circle', position)
   }
 
-  show = (text = '', barColor = Colors.default, icon: string, position?: string) => {
+  show = (text = '', barColor = Colors.default, icon: string, position?: ToastManagerProps['position']) => {
     const { duration } = this.props
     this.state.barWidth.setValue(this.props.width)
     this.setState({

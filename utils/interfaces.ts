@@ -19,7 +19,7 @@ export interface ToastManagerProps {
   textStyle: any
   theme: any
   animationStyle?: AnimationStyle
-  position?: any
+  position?: 'top' | 'center' | 'bottom'
   showCloseIcon: boolean;
   showProgressBar: boolean;
 }
