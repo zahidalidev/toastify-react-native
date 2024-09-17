@@ -2,7 +2,7 @@ type AnimationStyle = any
 
 export interface ToastManagerProps {
   positionValue: number
-  width: number
+  width: number | 'auto'
   duration: number
   end: number
   animationIn?: any
@@ -19,7 +19,7 @@ export interface ToastManagerProps {
   textStyle: any
   theme: any
   animationStyle?: AnimationStyle
-  position?: any
+  position?: 'top' | 'center' | 'bottom'
   showCloseIcon: boolean;
   showProgressBar: boolean;
 }
