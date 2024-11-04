@@ -1,8 +1,8 @@
-# Contributing 
+# Contributing
 
 👍🎉 First off, thanks for taking the time to contribute! 🎉👍
 
-When contributing to this repository, please first discuss the change you wish to make via issue before making a change. 
+When contributing to this repository, please first discuss the change you wish to make via issue before making a change.
 
 Please note we have a code of conduct, please follow it in all your interactions with the project.
 
@@ -18,8 +18,8 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 ### Pre-requisites
 
-- *Node:* `12.20.0`
-- *npm*
+- _Node:_ `12.20.0`
+- _npm_
 
 ### Install
 
@@ -42,7 +42,6 @@ npm install
 
 How it works ? The library don't use a state management library like redux or mobx to dispatch the notifications.
 
-
 ```sh
 # launch the playground
 npm start
@@ -55,4 +54,5 @@ npm start
 The playground let you test your changes, it's like the demo of toastify-react-native. Most of the time you don't need to modify it unless you add new features.
 
 ## License
+
 By contributing, you agree that your contributions will be licensed under its MIT License.

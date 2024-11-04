@@ -1,12 +1,12 @@
-import { RFPercentage } from 'react-native-responsive-fontsize'
+import { RFPercentage } from "react-native-responsive-fontsize";
 
 export default {
-  theme: 'light',
+  theme: "light",
   width: RFPercentage(32),
   height: RFPercentage(8.5),
   style: {},
   textStyle: {},
-  position: 'top',
+  position: "top",
   positionValue: 50,
   end: 0,
   duration: 3000,
@@ -14,12 +14,12 @@ export default {
   animationOutTiming: 300,
   backdropTransitionInTiming: 300,
   backdropTransitionOutTiming: 300,
-  animationIn: '',
-  animationOut: '',
-  animationStyle: 'upInUpOut',
+  animationIn: "",
+  animationOut: "",
+  animationStyle: "upInUpOut",
   hasBackdrop: false,
-  backdropColor: 'black',
+  backdropColor: "black",
   backdropOpacity: 0.2,
   showCloseIcon: true,
   showProgressBar: true,
-}
+};
