@@ -1,138 +1,139 @@
-import Icon from 'react-native-vector-icons/Ionicons'
-import Modal from 'react-native-modal'
-import React, { Component } from 'react'
-import { RFPercentage } from 'react-native-responsive-fontsize'
-import { View, Text, Animated, Dimensions, TouchableOpacity } from 'react-native'
+import Icon from "react-native-vector-icons/Ionicons";
+import Modal from "react-native-modal";
+import React, { Component } from "react";
+import { RFPercentage } from "react-native-responsive-fontsize";
+import { View, Text, Animated, Dimensions, TouchableOpacity } from "react-native";
 
-import defaultProps from '../utils/defaultProps'
-import { Colors } from '../config/theme'
-import styles from './styles'
-import { ToastManagerProps, ToastManagerState } from '../utils/interfaces'
+import { Colors } from "../config/theme";
+import defaultProps from "../utils/defaultProps";
+import { ToastManagerProps, ToastManagerState } from "../utils/interfaces";
 
-const { height } = Dimensions.get('window')
+import styles from "./styles";
+
+const { height } = Dimensions.get("window");
 
 class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
-  private timer: NodeJS.Timeout
-  private isShow: boolean
-  static defaultProps = defaultProps
-  static __singletonRef: ToastManager | null
+  private timer: NodeJS.Timeout;
+  private isShow: boolean;
+  static defaultProps = defaultProps;
+  static __singletonRef: ToastManager | null;
 
   constructor(props: ToastManagerProps) {
-    super(props)
-    ToastManager.__singletonRef = this
-    this.timer = setTimeout(() => {}, 0) // Initialize timer with a dummy value
-    this.isShow = false
+    super(props);
+    ToastManager.__singletonRef = this;
+    this.timer = setTimeout(() => {}, 0); // Initialize timer with a dummy value
+    this.isShow = false;
   }
 
-  state: any = {
+  state: ToastManagerState = {
     isShow: false,
-    text: '',
+    text: "",
     opacityValue: new Animated.Value(1),
     barWidth: new Animated.Value(RFPercentage(32)),
     barColor: Colors.default,
-    icon: 'checkmark-circle',
+    icon: "checkmark-circle",
     position: this.props.position,
     animationStyle: {
       upInUpOut: {
-        animationIn: 'slideInDown',
-        animationOut: 'slideOutUp',
+        animationIn: "slideInDown",
+        animationOut: "slideOutUp",
       },
       rightInOut: {
-        animationIn: 'slideInRight',
-        animationOut: 'slideOutRight',
+        animationIn: "slideInRight",
+        animationOut: "slideOutRight",
       },
       zoomInOut: {
-        animationIn: 'zoomInDown',
-        animationOut: 'zoomOutUp',
+        animationIn: "zoomInDown",
+        animationOut: "zoomOutUp",
       },
     },
-  }
+  };
 
-  static info = (text: string, position?: ToastManagerProps['position']) => {
-    ToastManager.__singletonRef?.show(text, Colors.info, 'information-circle', position)
-  }
+  static info = (text: string, position?: ToastManagerProps["position"]) => {
+    ToastManager.__singletonRef?.show(text, Colors.info, "information-circle", position);
+  };
 
-  static success = (text: string, position?: ToastManagerProps['position']) => {
-    ToastManager.__singletonRef?.show(text, Colors.success, 'checkmark-circle', position)
-  }
+  static success = (text: string, position?: ToastManagerProps["position"]) => {
+    ToastManager.__singletonRef?.show(text, Colors.success, "checkmark-circle", position);
+  };
 
-  static warn = (text: string, position?: ToastManagerProps['position']) => {
-    ToastManager.__singletonRef?.show(text, Colors.warn, 'warning', position)
-  }
+  static warn = (text: string, position?: ToastManagerProps["position"]) => {
+    ToastManager.__singletonRef?.show(text, Colors.warn, "warning", position);
+  };
 
-  static error = (text: string, position?: ToastManagerProps['position']) => {
-    ToastManager.__singletonRef?.show(text, Colors.error, 'alert-circle', position)
-  }
+  static error = (text: string, position?: ToastManagerProps["position"]) => {
+    ToastManager.__singletonRef?.show(text, Colors.error, "alert-circle", position);
+  };
 
-  show = (text = '', barColor = Colors.default, icon: string, position?: ToastManagerProps['position']) => {
-    const { duration } = this.props
-    this.state.barWidth.setValue(this.props.width)
+  show = (text = "", barColor = Colors.default, icon: string, position?: ToastManagerProps["position"]) => {
+    const { duration } = this.props;
+    this.state.barWidth.setValue(this.props.width);
     this.setState({
       isShow: true,
       duration,
       text,
       barColor,
       icon,
-    })
-    if (position) this.setState({ position })
-    this.isShow = true
-    if (duration !== this.props.end) this.close(duration)
-  }
+    });
+    if (position) this.setState({ position });
+    this.isShow = true;
+    if (duration !== this.props.end) this.close(duration);
+  };
 
   close = (duration: number) => {
-    if (!this.isShow && !this.state.isShow) return
-    this.resetAll()
+    if (!this.isShow && !this.state.isShow) return;
+    this.resetAll();
     this.timer = setTimeout(() => {
-      this.setState({ isShow: false })
-    }, duration || this.state.duration)
-  }
+      this.setState({ isShow: false });
+    }, duration || this.state.duration);
+  };
 
   position = () => {
-    const { position } = this.state
-    if (position === 'top') return this.props.positionValue
-    if (position === 'center') return height / 2 - RFPercentage(9)
-    return height - this.props.positionValue - RFPercentage(10)
-  }
+    const { position } = this.state;
+    if (position === "top") return this.props.positionValue;
+    if (position === "center") return height / 2 - RFPercentage(9);
+    return height - this.props.positionValue - RFPercentage(10);
+  };
 
   handleBar = () => {
     Animated.timing(this.state.barWidth, {
       toValue: 0,
       duration: this.state.duration,
       useNativeDriver: false,
-    }).start()
-  }
+    }).start();
+  };
 
   pause = () => {
-    this.setState({ oldDuration: this.state.duration, duration: 10000 })
+    this.setState({ oldDuration: this.state.duration, duration: 10000 });
     Animated.timing(this.state.barWidth, {
       toValue: 0,
       duration: this.state.duration,
       useNativeDriver: false,
-    }).stop()
-  }
+    }).stop();
+  };
 
   resume = () => {
-    this.setState({ duration: this.state.oldDuration, oldDuration: 0 })
+    this.setState({ duration: this.state.oldDuration, oldDuration: 0 });
     Animated.timing(this.state.barWidth, {
       toValue: 0,
       duration: this.state.duration,
       useNativeDriver: false,
-    }).start()
-  }
+    }).start();
+  };
 
   hideToast = () => {
-    this.resetAll()
-    this.setState({ isShow: false })
-    this.isShow = false
-    if (!this.isShow && !this.state.isShow) return
-  }
+    this.resetAll();
+    this.setState({ isShow: false });
+    this.isShow = false;
+    if (!this.isShow && !this.state.isShow) return;
+  };
 
   resetAll = () => {
-    clearTimeout(this.timer)
-  }
+    clearTimeout(this.timer);
+  };
 
   render() {
-    this.handleBar()
+    this.handleBar();
     const {
       animationIn,
       animationStyle,
@@ -151,16 +152,9 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
       theme,
       showCloseIcon,
       showProgressBar,
-    } = this.props
+    } = this.props;
 
-    const {
-      isShow,
-      animationStyle: stateAnimationStyle,
-      barColor,
-      icon,
-      text,
-      barWidth,
-    } = this.state
+    const { isShow, animationStyle: stateAnimationStyle, barColor, icon, text, barWidth } = this.state;
 
     return (
       <Modal
@@ -172,7 +166,7 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
         animationOutTiming={animationOutTiming}
         onTouchEnd={this.resume}
         onTouchStart={this.pause}
-        swipeDirection={['up', 'down', 'left', 'right']}
+        swipeDirection={["up", "down", "left", "right"]}
         onSwipeComplete={this.hideToast}
         onModalHide={this.resetAll}
         isVisible={isShow}
@@ -196,14 +190,12 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
         >
           {showCloseIcon && (
             <TouchableOpacity onPress={this.hideToast} activeOpacity={0.9} style={styles.hideButton}>
-              <Icon name='close-outline' size={22} color={Colors[theme].text} />
+              <Icon name="close-outline" size={22} color={Colors[theme].text} />
             </TouchableOpacity>
           )}
           <View style={styles.content}>
             <Icon name={icon} size={22} color={barColor} style={styles.iconWrapper} />
-            <Text style={[styles.textStyle, { color: Colors[theme].text, ...textStyle }]}>
-              {text}
-            </Text>
+            <Text style={[styles.textStyle, { color: Colors[theme].text, ...textStyle }]}>{text}</Text>
           </View>
           {showProgressBar && (
             <View style={styles.progressBarContainer}>
@@ -212,10 +204,10 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
           )}
         </View>
       </Modal>
-    )
+    );
   }
 }
 
-ToastManager.defaultProps = defaultProps
+ToastManager.defaultProps = defaultProps;
 
-export default ToastManager
+export default ToastManager;
