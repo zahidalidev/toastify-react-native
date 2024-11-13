@@ -16,7 +16,7 @@ export interface ToastManagerProps {
   backdropColor: string;
   backdropOpacity: number;
   hasBackdrop: boolean;
-  height: number;
+  height: number | "auto";
   style: any;
   textStyle: any;
   theme: any;
