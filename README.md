@@ -123,7 +123,7 @@ For a more complex example take a look at the `/example` directory.
 | Name                        | Type                               | Default        | Description                                    |
 | --------------------------- | ---------------------------------- | -------------- | ---------------------------------------------- |
 | width                       | number or 'auto'                   | 256            | Width of toast                                 |
-| height                      | number                             | 68             | Height of the toast                            |
+| height                      | number or 'auto'                   | 68             | Height of the toast                            |
 | style                       | any                                | null           | Style applied to the toast                     |
 | textStyle                   | any                                | null           | Style applied to the toast content             |
 | position                    | top, center or bottom              | top            | Position of toast                              |
