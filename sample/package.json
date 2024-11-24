@@ -1,7 +1,7 @@
 {
-  "name": "sample",
+  "name": "my-app",
   "version": "1.0.0",
-  "main": "expo/AppEntry.js",
+  "main": "index.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -9,15 +9,14 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@types/react": "~18.2.79",
-    "expo": "~51.0.28",
-    "expo-status-bar": "~1.12.1",
-    "react": "18.2.0",
-    "react-native": "0.74.5",
-    "react-native-modal": "^13.0.1",
-    "react-native-responsive-fontsize": "^0.5.1",
-    "toastify-react-native": "file:../../../",
-    "typescript": "~5.3.3"
+    "expo": "~52.0.11",
+    "expo-status-bar": "~2.0.0",
+    "react-native-animatable": "^1.3.3",
+    "toastify-react-native": "file:..",
+    "react": "*",
+    "react-native": "*",
+    "react-native-modal": "*",
+    "react-native-responsive-fontsize": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

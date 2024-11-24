@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
-import { Toast } from "./toastify-react-native";
+import { Toast } from "toastify-react-native";
 
 const Another = () => (
   <View style={styles.container}>

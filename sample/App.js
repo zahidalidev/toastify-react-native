@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
-import ToastManager, { Toast } from "./toastify-react-native";
+import ToastManager, { Toast } from "toastify-react-native";
 
 import Another from "./Another";
 
