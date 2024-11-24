@@ -6,7 +6,7 @@ import Another from "./Another";
 
 const App = () => {
   const showToasts = () => {
-    Toast.success("Promised is resolved");
+    Toast.success("Promised is resolved", "top");
   };
 
   return (
