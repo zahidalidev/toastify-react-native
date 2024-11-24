@@ -9,14 +9,12 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "expo": "~52.0.11",
-    "expo-status-bar": "~2.0.0",
-    "react-native-animatable": "^1.3.3",
+    "expo": "*",
+    "expo-status-bar": "*",
+    "react-native-animatable": "*",
     "toastify-react-native": "file:..",
     "react": "*",
-    "react-native": "*",
-    "react-native-modal": "*",
-    "react-native-responsive-fontsize": "*"
+    "react-native": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
