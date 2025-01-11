@@ -2,7 +2,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import Modal from "react-native-modal";
 import React, { Component } from "react";
 import { RFPercentage } from "react-native-responsive-fontsize";
-import { View, Text, Animated, Dimensions, TouchableOpacity, Alert } from "react-native";
+import { View, Text, Animated, Dimensions, TouchableOpacity } from "react-native";
 
 import { Colors } from "../config/theme";
 import defaultProps from "../utils/defaultProps";
