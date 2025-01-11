@@ -2,7 +2,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import Modal from "react-native-modal";
 import React, { Component } from "react";
 import { RFPercentage } from "react-native-responsive-fontsize";
-import { View, Text, Animated, Dimensions, TouchableOpacity } from "react-native";
+import { View, Text, Animated, Dimensions, TouchableOpacity, Alert } from "react-native";
 
 import { Colors } from "../config/theme";
 import defaultProps from "../utils/defaultProps";
@@ -104,19 +104,30 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
   };
 
   pause = () => {
-    this.setState({ oldDuration: this.state.duration, duration: 10000 });
+    clearTimeout(this.timer); 
+    this.setState({ oldDuration: this.state.duration, duration: Number.MAX_VALUE });
     Animated.timing(this.state.barWidth, {
       toValue: 0,
-      duration: this.state.duration,
+      duration: Number.MAX_VALUE,
       useNativeDriver: false,
     }).stop();
+
+    if (this.props.onPress) {
+      this.props.onPress();
+    }
   };
 
   resume = () => {
-    this.setState({ duration: this.state.oldDuration, oldDuration: 0 });
+    const remainingDuration = this.state.oldDuration;
+    this.setState({ duration: remainingDuration, oldDuration: 0 });
+
+    this.timer = setTimeout(() => {
+      this.setState({ isShow: false });
+    }, remainingDuration);
+
     Animated.timing(this.state.barWidth, {
       toValue: 0,
-      duration: this.state.duration,
+      duration: remainingDuration,
       useNativeDriver: false,
     }).start();
   };
@@ -187,6 +198,7 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
               ...style,
             },
           ]}
+          onTouchEnd={this.props.onPress} // Add this line
         >
           {showCloseIcon && (
             <TouchableOpacity onPress={this.hideToast} activeOpacity={0.9} style={styles.hideButton}>
