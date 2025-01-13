@@ -111,10 +111,6 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
       duration: Number.MAX_VALUE,
       useNativeDriver: false,
     }).stop();
-
-    if (this.props.onPress) {
-      this.props.onPress();
-    }
   };
 
   resume = () => {
