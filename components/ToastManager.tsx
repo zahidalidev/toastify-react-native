@@ -104,19 +104,26 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
   };
 
   pause = () => {
-    this.setState({ oldDuration: this.state.duration, duration: 10000 });
+    clearTimeout(this.timer); 
+    this.setState({ oldDuration: this.state.duration, duration: Number.MAX_VALUE });
     Animated.timing(this.state.barWidth, {
       toValue: 0,
-      duration: this.state.duration,
+      duration: Number.MAX_VALUE,
       useNativeDriver: false,
     }).stop();
   };
 
   resume = () => {
-    this.setState({ duration: this.state.oldDuration, oldDuration: 0 });
+    const remainingDuration = this.state.oldDuration;
+    this.setState({ duration: remainingDuration, oldDuration: 0 });
+
+    this.timer = setTimeout(() => {
+      this.setState({ isShow: false });
+    }, remainingDuration);
+
     Animated.timing(this.state.barWidth, {
       toValue: 0,
-      duration: this.state.duration,
+      duration: remainingDuration,
       useNativeDriver: false,
     }).start();
   };
