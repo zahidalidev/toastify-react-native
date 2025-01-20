@@ -194,7 +194,6 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
               ...style,
             },
           ]}
-          onTouchEnd={this.props.onPress} // Add this line
         >
           {showCloseIcon && (
             <TouchableOpacity onPress={this.hideToast} activeOpacity={0.9} style={styles.hideButton}>
