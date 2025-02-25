@@ -158,6 +158,7 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
       textStyle,
       theme,
       showCloseIcon,
+      showActionIcon,
       showProgressBar,
     } = this.props;
 
@@ -200,10 +201,10 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
               <Icon name="close-outline" size={22} color={Colors[theme].text} />
             </TouchableOpacity>
           )}
-          <View style={styles.content}>
+          {showActionIcon && <View style={styles.content}>
             <Icon name={icon} size={22} color={barColor} style={styles.iconWrapper} />
             <Text style={[styles.textStyle, { color: Colors[theme].text, ...textStyle }]}>{text}</Text>
-          </View>
+          </View>}
           {showProgressBar && (
             <View style={styles.progressBarContainer}>
               <Animated.View style={{ width: barWidth, backgroundColor: barColor }} />
