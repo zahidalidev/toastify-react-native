@@ -23,6 +23,7 @@ export interface ToastManagerProps {
   animationStyle?: AnimationStyle;
   position?: Position;
   showCloseIcon: boolean;
+  showActionIcon: boolean;
   showProgressBar: boolean;
 }
 
