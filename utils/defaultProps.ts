@@ -21,5 +21,6 @@ export default {
   backdropColor: "black",
   backdropOpacity: 0.2,
   showCloseIcon: true,
+  showActionIcon: true,
   showProgressBar: true,
 };
