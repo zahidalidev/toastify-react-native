@@ -1,5 +1,5 @@
-import { RFPercentage } from "react-native-responsive-fontsize";
 import { StyleSheet } from "react-native";
+import { SCALE } from "../utils/helpers";
 
 const styles = StyleSheet.create({
   modalContainer: {
@@ -27,12 +27,12 @@ const styles = StyleSheet.create({
 
   hideButton: {
     position: "absolute",
-    top: RFPercentage(0.5),
-    right: RFPercentage(0.5),
+    top: SCALE(3.2),
+    right: SCALE(3.2),
   },
 
   textStyle: {
-    fontSize: RFPercentage(2.5),
+    fontSize: SCALE(16),
     fontWeight: "400",
   },
 
@@ -46,14 +46,14 @@ const styles = StyleSheet.create({
 
   content: {
     width: "100%",
-    padding: RFPercentage(1.5),
+    padding: SCALE(9.6),
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
   },
 
   iconWrapper: {
-    marginRight: RFPercentage(0.7),
+    marginRight: SCALE(4.48),
   },
 });
 

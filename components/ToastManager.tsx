@@ -1,13 +1,13 @@
+import React, { Component } from "react";
+import { View, Text, Animated, Dimensions, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import Modal from "react-native-modal";
-import React, { Component } from "react";
-import { RFPercentage } from "react-native-responsive-fontsize";
-import { View, Text, Animated, Dimensions, TouchableOpacity } from "react-native";
 
-import { Colors } from "../config/theme";
-import defaultProps from "../utils/defaultProps";
+
 import { ToastManagerProps, ToastManagerState } from "../utils/interfaces";
-
+import defaultProps from "../utils/defaultProps";
+import { Colors } from "../config/theme";
+import { SCALE } from "../utils/helpers";
 import styles from "./styles";
 
 const { height } = Dimensions.get("window");
@@ -21,7 +21,7 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
   constructor(props: ToastManagerProps) {
     super(props);
     ToastManager.__singletonRef = this;
-    this.timer = setTimeout(() => {}, 0); // Initialize timer with a dummy value
+    this.timer = setTimeout(() => { }, 0); // Initialize timer with a dummy value
     this.isShow = false;
   }
 
@@ -29,7 +29,7 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
     isShow: false,
     text: "",
     opacityValue: new Animated.Value(1),
-    barWidth: new Animated.Value(RFPercentage(32)),
+    barWidth: new Animated.Value(SCALE(204.8)),
     barColor: Colors.default,
     icon: "checkmark-circle",
     position: this.props.position,
@@ -91,8 +91,8 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
   position = () => {
     const { position } = this.state;
     if (position === "top") return this.props.positionValue;
-    if (position === "center") return height / 2 - RFPercentage(9);
-    return height - this.props.positionValue - RFPercentage(10);
+    if (position === "center") return height / 2 - SCALE(57.6);
+    return height - this.props.positionValue - SCALE(64);
   };
 
   handleBar = () => {
@@ -104,7 +104,7 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
   };
 
   pause = () => {
-    clearTimeout(this.timer); 
+    clearTimeout(this.timer);
     this.setState({ oldDuration: this.state.duration, duration: Number.MAX_VALUE });
     Animated.timing(this.state.barWidth, {
       toValue: 0,

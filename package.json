@@ -35,9 +35,7 @@
   "homepage": "https://github.com/zahidalidev/toastify-react-native/blob/master/README.md",
   "peerDependencies": {
     "react": "*",
-    "react-native": "*",
-    "react-native-modal": "*",
-    "react-native-responsive-fontsize": "*"
+    "react-native": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
@@ -49,6 +47,7 @@
   "author": "Zahid Ali <m.zahidalidev@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "react-native-vector-icons": "^10.2.0"
+    "react-native-modal": "*",
+    "react-native-vector-icons": "*"
   }
 }

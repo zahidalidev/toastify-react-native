@@ -11,13 +11,17 @@
   "dependencies": {
     "expo": "*",
     "expo-status-bar": "*",
-    "react-native-animatable": "*",
-    "toastify-react-native": "file:..",
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-animatable": "*",
+    "react-native-modal": "^13.0.1",
+    "react-native-vector-icons": "^10.2.0",
+    "toastify-react-native": "file:.."
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "typescript": "^5.3.3",
+    "@types/react": "~18.3.12"
   },
   "private": true
 }

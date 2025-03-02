@@ -37,6 +37,14 @@ https://user-images.githubusercontent.com/46484008/190667640-02a77a0c-8aed-4dc9-
 $ npm install toastify-react-native
 ```
 
+### Required Dependencies
+
+This package depends on the following packages which need to be installed separately:
+
+```sh
+$ npm install react-native-modal react-native-vector-icons
+```
+
 ## A complete example
 
 ### App.js

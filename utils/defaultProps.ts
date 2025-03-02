@@ -1,9 +1,9 @@
-import { RFPercentage } from "react-native-responsive-fontsize";
+import { SCALE } from "./helpers";
 
 export default {
   theme: "light",
-  width: RFPercentage(32),
-  height: RFPercentage(8.5),
+  width: SCALE(204.8),
+  height: SCALE(54.4),
   style: {},
   textStyle: {},
   position: "top",
