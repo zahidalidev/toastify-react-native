@@ -128,27 +128,28 @@ For a more complex example take a look at the `/example` directory.
 
 ## Available props
 
-| Name                        | Type                               | Default        | Description                                    |
-| --------------------------- | ---------------------------------- | -------------- | ---------------------------------------------- |
-| width                       | number or 'auto'                   | 256            | Width of toast                                 |
-| height                      | number or 'auto'                   | 68             | Height of the toast                            |
-| style                       | any                                | null           | Style applied to the toast                     |
-| textStyle                   | any                                | null           | Style applied to the toast content             |
-| position                    | top, center or bottom              | top            | Position of toast                              |
-| positionValue               | number                             | 50             | position value of toast                        |
-| duration                    | number                             | 3000           | The display time of toast.                     |
-| animationStyle              | upInUpOut, rightInOut or zoomInOut | upInUpOut      | The animation style of toast                   |
-| animationIn                 | string or object                   | 'slideInRight' | Toast show animation                           |
-| animationOut                | string or object                   | 'slideOutLeft' | Toast hide animation                           |
-| animationInTiming           | number                             | 300            | Timing for the Toast show animation (in ms)    |
-| animationOutTiming          | number                             | 300            | Timing for the toast hide animation (in ms)    |
-| backdropTransitionInTiming  | number                             | 300            | The backdrop show timing (in ms)               |
-| backdropTransitionOutTiming | number                             | 300            | The backdrop hide timing (in ms)               |
-| hasBackdrop                 | bool                               | false          | Render the backdrop                            |
-| backdropColor               | string                             | 'black'        | The backdrop background color                  |
-| backdropOpacity             | number                             | 0.2            | The backdrop opacity when the toast is visible |
-| showCloseIcon               | boolean                            | true           | Shows the close icon in the right corner       |
-| showProgressBar             | boolean                            | true           | Shows the progress bar in the toast            |
+| Name                        | Type                                           | Default        | Description                                     |
+| --------------------------- | ---------------------------------------------- | -------------- | ----------------------------------------------- |
+| width                       | number or 'auto'                               | 256            | Width of toast                                  |
+| height                      | number or 'auto'                               | 68             | Height of the toast                             |
+| style                       | any                                            | null           | Style applied to the toast                      |
+| textStyle                   | any                                            | null           | Style applied to the toast content              |
+| position                    | top, center or bottom                          | top            | Position of toast                               |
+| positionValue               | number                                         | 50             | position value of toast                         |
+| duration                    | number                                         | 3000           | The display time of toast.                      |
+| animationStyle              | slideInOut, upInUpOut, rightInOut or zoomInOut | slideInOut     | The animation style of toast                    |
+| animationIn                 | string or object                               | 'slideInRight' | Toast show animation                            |
+| animationOut                | string or object                               | 'slideOutLeft' | Toast hide animation                            |
+| animationInTiming           | number                                         | 300            | Timing for the Toast show animation (in ms)     |
+| animationOutTiming          | number                                         | 300            | Timing for the toast hide animation (in ms)     |
+| backdropTransitionInTiming  | number                                         | 300            | The backdrop show timing (in ms)                |
+| backdropTransitionOutTiming | number                                         | 300            | The backdrop hide timing (in ms)                |
+| hasBackdrop                 | bool                                           | false          | Render the backdrop                             |
+| backdropColor               | string                                         | 'black'        | The backdrop background color                   |
+| backdropOpacity             | number                                         | 0.2            | The backdrop opacity when the toast is visible  |
+| showCloseIcon               | boolean                                        | true           | Shows the close icon in the right corner        |
+| showProgressBar             | boolean                                        | true           | Shows the progress bar in the toast             |
+| isRTL                       | boolean                                        | false          | Right to left support for languages like Arabic |
 
 ## Available animations
 

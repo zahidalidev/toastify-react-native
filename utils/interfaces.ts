@@ -24,6 +24,7 @@ export interface ToastManagerProps {
   position?: Position;
   showCloseIcon: boolean;
   showProgressBar: boolean;
+  isRTL: boolean;
 }
 
 export interface ToastManagerState {

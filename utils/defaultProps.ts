@@ -16,10 +16,11 @@ export default {
   backdropTransitionOutTiming: 300,
   animationIn: "",
   animationOut: "",
-  animationStyle: "upInUpOut",
+  animationStyle: "slideInOut",
   hasBackdrop: false,
   backdropColor: "black",
   backdropOpacity: 0.2,
   showCloseIcon: true,
   showProgressBar: true,
+  isRTL: false,
 };

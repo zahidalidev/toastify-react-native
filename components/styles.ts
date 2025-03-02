@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+
 import { SCALE } from "../utils/helpers";
 
 const styles = StyleSheet.create({
@@ -34,6 +35,9 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: SCALE(16),
     fontWeight: "400",
+    flex: 1,
+    width: "auto",
+    maxWidth: "85%",
   },
 
   progressBarContainer: {

@@ -15,6 +15,7 @@ const { height } = Dimensions.get("window");
 class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
   private timer: NodeJS.Timeout;
   private isShow: boolean;
+  private isPaused: boolean = false;
   static defaultProps = defaultProps;
   static __singletonRef: ToastManager | null;
 
@@ -46,6 +47,14 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
         animationIn: "zoomInDown",
         animationOut: "zoomOutUp",
       },
+      fadeInOut: {
+        animationIn: "fadeIn",
+        animationOut: "fadeOut",
+      },
+      slideInOut: {
+        animationIn: "slideInUp",
+        animationOut: "slideOutDown",
+      },
     },
   };
 
@@ -66,8 +75,17 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
   };
 
   show = (text = "", barColor = Colors.default, icon: string, position?: ToastManagerProps["position"]) => {
-    const { duration } = this.props;
-    this.state.barWidth.setValue(this.props.width);
+    const { duration, isRTL } = this.props;
+
+    // Reset pause state
+    this.isPaused = false;
+
+    if (isRTL) {
+      this.state.barWidth.setValue(0);
+    } else {
+      this.state.barWidth.setValue(this.props.width);
+    }
+
     this.setState({
       isShow: true,
       duration,
@@ -96,16 +114,41 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
   };
 
   handleBar = () => {
-    Animated.timing(this.state.barWidth, {
-      toValue: 0,
-      duration: this.state.duration,
-      useNativeDriver: false,
-    }).start();
+    // Don't start a new animation if we're paused
+    if (this.isPaused) {
+      return;
+    }
+
+    const { isRTL } = this.props;
+
+    if (isRTL) {
+      // Only set to 0 when starting the animation, not during renders
+      if (this.state.barWidth._value === this.props.width) {
+        this.state.barWidth.setValue(0);
+      }
+
+      Animated.timing(this.state.barWidth, {
+        toValue: this.props.width,
+        duration: this.state.duration,
+        useNativeDriver: false,
+      }).start();
+    } else {
+      Animated.timing(this.state.barWidth, {
+        toValue: 0,
+        duration: this.state.duration,
+        useNativeDriver: false,
+      }).start();
+    }
   };
 
   pause = () => {
     clearTimeout(this.timer);
     this.setState({ oldDuration: this.state.duration, duration: Number.MAX_VALUE });
+
+    // Mark as paused
+    this.isPaused = true;
+
+    // Stop animation
     Animated.timing(this.state.barWidth, {
       toValue: 0,
       duration: Number.MAX_VALUE,
@@ -121,9 +164,26 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
       this.setState({ isShow: false });
     }, remainingDuration);
 
+    // No longer paused
+    this.isPaused = false;
+
+    // Get current value and calculate proper remaining duration
+    const currentValue = this.state.barWidth._value;
+    const targetValue = this.props.isRTL ? this.props.width : 0;
+
+    let adjustedDuration = remainingDuration;
+    if (this.props.isRTL) {
+      const progress = currentValue / this.props.width;
+      adjustedDuration = remainingDuration * (1 - progress);
+    } else {
+      const progress = 1 - (currentValue / this.props.width);
+      adjustedDuration = remainingDuration * (1 - progress);
+    }
+
+    // Resume animation from current position
     Animated.timing(this.state.barWidth, {
-      toValue: 0,
-      duration: remainingDuration,
+      toValue: targetValue,
+      duration: Math.max(100, adjustedDuration),
       useNativeDriver: false,
     }).start();
   };
@@ -159,9 +219,14 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
       theme,
       showCloseIcon,
       showProgressBar,
+      isRTL,
     } = this.props;
 
     const { isShow, animationStyle: stateAnimationStyle, barColor, icon, text, barWidth } = this.state;
+
+    const rtlContentStyle = isRTL ? { flexDirection: 'row-reverse' } : {};
+    const rtlHideButtonStyle = isRTL ? { right: undefined, left: SCALE(3.2) } : {};
+    const rtlIconWrapperStyle = isRTL ? { marginRight: 0, marginLeft: SCALE(4.48) } : {};
 
     return (
       <Modal
@@ -196,17 +261,53 @@ class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
           ]}
         >
           {showCloseIcon && (
-            <TouchableOpacity onPress={this.hideToast} activeOpacity={0.9} style={styles.hideButton}>
+            <TouchableOpacity
+              onPress={this.hideToast}
+              activeOpacity={0.9}
+              style={[styles.hideButton, rtlHideButtonStyle]}
+            >
               <Icon name="close-outline" size={22} color={Colors[theme].text} />
             </TouchableOpacity>
           )}
-          <View style={styles.content}>
-            <Icon name={icon} size={22} color={barColor} style={styles.iconWrapper} />
-            <Text style={[styles.textStyle, { color: Colors[theme].text, ...textStyle }]}>{text}</Text>
+          <View style={[styles.content, rtlContentStyle]}>
+            <Icon
+              name={icon}
+              size={22}
+              color={barColor}
+              style={[styles.iconWrapper, rtlIconWrapperStyle]}
+            />
+            <Text
+              style={[
+                styles.textStyle,
+                { color: Colors[theme].text, ...textStyle },
+                isRTL ? { textAlign: 'right' } : {}
+              ]}
+            >
+              {text}
+            </Text>
           </View>
           {showProgressBar && (
             <View style={styles.progressBarContainer}>
-              <Animated.View style={{ width: barWidth, backgroundColor: barColor }} />
+              {isRTL ? (
+                <Animated.View
+                  style={{
+                    position: 'absolute',
+                    right: 0,
+                    left: 'auto',
+                    width: barWidth,
+                    backgroundColor: barColor,
+                    height: '100%'
+                  }}
+                />
+              ) : (
+                <Animated.View
+                  style={{
+                    width: barWidth,
+                    backgroundColor: barColor,
+                    height: '100%'
+                  }}
+                />
+              )}
             </View>
           )}
         </View>

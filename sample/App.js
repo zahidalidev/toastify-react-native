@@ -4,18 +4,13 @@ import ToastManager, { Toast } from "toastify-react-native";
 import Another from "./Another";
 
 const App = () => {
-
   const showToasts = () => {
     Toast.success("Promised is resolved", "top");
   };
 
   return (
     <View style={styles.container}>
-      <ToastManager
-        duration={3000}
-        pauseOnPress={true}
-        showProgressBar={true}
-      />
+      <ToastManager duration={3000} pauseOnPress={true} showProgressBar={true} />
       <Another />
       <TouchableOpacity
         onPress={showToasts}
