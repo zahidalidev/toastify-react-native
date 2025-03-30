@@ -1,10 +1,12 @@
+import { DimensionValue, StyleProp, TextStyle, ViewStyle } from "react-native";
+
 type AnimationStyle = any;
 
 type Position = "top" | "center" | "bottom" | undefined;
 
 export interface ToastManagerProps {
   positionValue: number;
-  width: number | "auto";
+  width: DimensionValue;
   duration: number;
   end: number;
   animationIn?: any;
@@ -16,9 +18,9 @@ export interface ToastManagerProps {
   backdropColor: string;
   backdropOpacity: number;
   hasBackdrop: boolean;
-  height: number | "auto";
-  style: any;
-  textStyle: any;
+  height: DimensionValue;
+  style: StyleProp<ViewStyle>;
+  textStyle: TextStyle;
   theme: any;
   animationStyle?: AnimationStyle;
   position?: Position;
