@@ -1,6 +1,5 @@
 import React, { Component, createRef, ReactNode, forwardRef, RefObject } from "react";
-import { View, Text, Animated, Modal, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import { Animated, Modal, TouchableOpacity } from "react-native";
 
 import {
   ToastManagerProps,
@@ -12,9 +11,8 @@ import {
 } from "../utils/interfaces";
 import defaultProps from "../utils/defaultProps";
 import { Colors } from "../config/theme";
-import { SCALE } from "../utils/helpers";
-import styles from "./styles";
 import BaseToast from "./BaseToast";
+import styles from "./styles";
 
 class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
   private timerId: NodeJS.Timeout | null = null;

@@ -1,7 +1,8 @@
 import React from 'react';
-import BaseToast from './BaseToast';
-import { Colors } from '../config/theme';
+
 import { ToastConfigParams } from '../utils/interfaces';
+import { Colors } from '../config/theme';
+import BaseToast from './BaseToast';
 
 const WarnToast = ({
   text1,

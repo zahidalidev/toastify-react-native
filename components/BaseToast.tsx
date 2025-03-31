@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+
 import { Colors } from '../config/theme';
 import { SCALE } from '../utils/helpers';
 

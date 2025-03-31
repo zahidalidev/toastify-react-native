@@ -1,14 +1,15 @@
-import { StyleSheet } from "react-native";
-import { SCALE } from "../utils/helpers";
+import { StyleSheet } from 'react-native'
+
+import { SCALE } from '../utils/helpers'
 
 const styles = StyleSheet.create({
   containerRoot: {
-    position: "absolute",
+    position: 'absolute',
     left: 0,
     right: 0,
     zIndex: 10000,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   containerTop: {
     top: 0,
@@ -19,10 +20,10 @@ const styles = StyleSheet.create({
   mainContainer: {
     borderRadius: 8,
     margin: SCALE(10),
-    flexDirection: "column",
-    alignItems: "flex-start",
-    justifyContent: "center",
-    shadowColor: "#000",
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -32,45 +33,45 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   hideButton: {
-    position: "absolute",
+    position: 'absolute',
     top: SCALE(3.2),
     right: SCALE(3.2),
   },
   textStyle: {
     fontSize: SCALE(16),
-    fontWeight: "400",
+    fontWeight: '400',
     flex: 1,
-    width: "auto",
-    maxWidth: "85%",
+    width: 'auto',
+    maxWidth: '85%',
   },
   text2Style: {
     fontSize: SCALE(14),
-    fontWeight: "300",
+    fontWeight: '300',
     marginTop: SCALE(2),
   },
   progressBarContainer: {
-    flexDirection: "row",
-    position: "absolute",
+    flexDirection: 'row',
+    position: 'absolute',
     height: 4,
-    width: "100%",
+    width: '100%',
     bottom: 0,
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   content: {
-    width: "100%",
+    width: '100%',
     padding: SCALE(12),
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   iconWrapper: {
     marginRight: SCALE(8),
   },
   pressable: {
-    width: "100%",
+    width: '100%',
   },
-});
+})
 
-export default styles;
+export default styles

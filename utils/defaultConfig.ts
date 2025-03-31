@@ -1,9 +1,10 @@
-import React from "react";
-import SuccessToast from "../components/SuccessToast";
-import ErrorToast from "../components/ErrorToast";
-import InfoToast from "../components/InfoToast";
-import WarnToast from "../components/WarnToast";
-import { ToastConfig, ToastConfigParams } from "./interfaces";
+import React from 'react'
+
+import { ToastConfig, ToastConfigParams } from './interfaces'
+import SuccessToast from '../components/SuccessToast'
+import ErrorToast from '../components/ErrorToast'
+import InfoToast from '../components/InfoToast'
+import WarnToast from '../components/WarnToast'
 
 const defaultConfig: ToastConfig = {
   success: (props: ToastConfigParams) => React.createElement(SuccessToast, props),
@@ -11,6 +12,6 @@ const defaultConfig: ToastConfig = {
   info: (props: ToastConfigParams) => React.createElement(InfoToast, props),
   warn: (props: ToastConfigParams) => React.createElement(WarnToast, props),
   default: (props: ToastConfigParams) => React.createElement(InfoToast, props),
-};
+}
 
-export default defaultConfig;
+export default defaultConfig
