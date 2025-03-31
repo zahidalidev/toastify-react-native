@@ -47,7 +47,6 @@
   "author": "Zahid Ali <m.zahidalidev@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "react-native-modal": "*",
     "react-native-vector-icons": "*"
   }
 }
