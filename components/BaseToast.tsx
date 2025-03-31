@@ -121,12 +121,12 @@ const BaseToast = ({
           testID={`${testID}-progress-container`}
         >
           {isRTL ? (
+            // For RTL: Start from left (0%) and grow to right (100%)
             <Animated.View
               testID={`${testID}-progress-bar`}
               style={{
                 position: 'absolute',
-                right: 0,
-                left: 'auto',
+                left: 0,
                 width: barWidth.interpolate({
                   inputRange: [0, 100],
                   outputRange: ['0%', '100%']
@@ -136,6 +136,7 @@ const BaseToast = ({
               }}
             />
           ) : (
+            // For LTR: Start from left (100%) and shrink to left (0%)
             <Animated.View
               testID={`${testID}-progress-bar`}
               style={{
