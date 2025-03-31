@@ -61,7 +61,7 @@ export default function App() {
       />
 
       {/* Toast provider should be at the root level */}
-      <ToastManager animationStyle='fade' position='center' config={toastConfig} />
+      <ToastManager animationStyle='fade' position='bottom' config={toastConfig} />
     </View>
   )
 }

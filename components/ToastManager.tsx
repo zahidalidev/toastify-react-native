@@ -267,7 +267,10 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
         isRTL: isRTL,
         duration: duration,
         showProgressBar: showProgressBar,
-        progressBarColor: progressBarColor
+        progressBarColor: progressBarColor,
+        width: width,
+        height: height,
+        style: style,
       });
     }
 
@@ -289,6 +292,9 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
         textColor={Colors[theme || 'light'].text}
         showCloseIcon={showCloseIcon}
         testID={`toast-${type}`}
+        width={width}
+        height={height}
+        style={style}
       />
     );
   }

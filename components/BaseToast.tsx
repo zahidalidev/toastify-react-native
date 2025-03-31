@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Animated, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Animated, TouchableOpacity, StyleProp, ViewStyle, DimensionValue } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { Colors } from '../config/theme';
@@ -21,6 +21,9 @@ interface BaseToastProps {
   showCloseIcon?: boolean;
   duration?: number;
   testID?: string;
+  width?: number | string;
+  height?: number | string;
+  style?: StyleProp<ViewStyle>;
 }
 
 const BaseToast = ({
@@ -38,7 +41,10 @@ const BaseToast = ({
   isRTL = false,
   showCloseIcon = true,
   duration = 3000,
-  testID = 'toast-base'
+  testID = 'toast-base',
+  width,
+  height,
+  style,
 }: BaseToastProps) => {
   // Use a local animated value if no external one is provided
   const localBarWidth = React.useRef(new Animated.Value(100)).current;
@@ -69,9 +75,18 @@ const BaseToast = ({
     ? { marginLeft: SCALE(25), marginRight: 0 }
     : { marginRight: SCALE(25), marginLeft: 0 };
 
+  // Create container style with width and height
+  const containerStyle = [
+    styles.container,
+    { backgroundColor },
+    width !== undefined && { width: width as DimensionValue },
+    height !== undefined && { height: height as DimensionValue },
+    style
+  ].filter(Boolean);
+
   return (
     <View
-      style={[styles.container, { backgroundColor }]}
+      style={containerStyle}
       testID={testID}
     >
       {showCloseIcon && (
@@ -158,8 +173,7 @@ const BaseToast = ({
 const styles = StyleSheet.create({
   container: {
     width: '90%',
-    maxWidth: SCALE(350),
-    minHeight: SCALE(60),
+    height: SCALE(61),
     borderRadius: 8,
     shadowColor: "#000",
     shadowOffset: {
@@ -169,7 +183,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    margin: SCALE(10),
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   hideButton: {
     position: "absolute",
@@ -181,7 +196,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   contentInner: {
-    padding: SCALE(12),
+    paddingHorizontal: SCALE(12),
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",

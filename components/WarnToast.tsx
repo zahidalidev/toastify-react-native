@@ -13,7 +13,10 @@ const WarnToast = ({
   isRTL,
   duration,
   showProgressBar,
-  progressBarColor
+  progressBarColor,
+  width,
+  height,
+  style
 }: ToastConfigParams) => {
   return (
     <BaseToast
@@ -29,6 +32,9 @@ const WarnToast = ({
       duration={duration}
       showProgressBar={showProgressBar}
       testID="toast-warn"
+      width={width}
+      height={height}
+      style={style}
     />
   );
 };

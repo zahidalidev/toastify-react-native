@@ -13,7 +13,10 @@ const ErrorToast = ({
   isRTL,
   duration,
   showProgressBar,
-  progressBarColor
+  progressBarColor,
+  width,
+  height,
+  style
 }: ToastConfigParams) => {
   return (
     <BaseToast
@@ -29,6 +32,9 @@ const ErrorToast = ({
       duration={duration}
       showProgressBar={showProgressBar}
       testID="toast-error"
+      width={width}
+      height={height}
+      style={style}
     />
   );
 };

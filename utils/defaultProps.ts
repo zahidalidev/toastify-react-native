@@ -3,8 +3,8 @@ import { ToastManagerProps } from './interfaces'
 
 const defaultProps: ToastManagerProps = {
   theme: 'light',
-  width: SCALE(204.8),
-  height: SCALE(54.4),
+  width: '90%',
+  height: SCALE(61),
   style: {},
   textStyle: {},
   position: 'top',
@@ -17,7 +17,7 @@ const defaultProps: ToastManagerProps = {
   backdropTransitionOutTiming: 300,
   animationIn: '',
   animationOut: '',
-  animationStyle: 'slideInOut',
+  animationStyle: 'fade',
   hasBackdrop: false,
   backdropColor: 'black',
   backdropOpacity: 0.2,

@@ -13,7 +13,10 @@ const SuccessToast = ({
   isRTL,
   duration,
   showProgressBar,
-  progressBarColor
+  progressBarColor,
+  width,
+  height,
+  style
 }: ToastConfigParams) => {
   return (
     <BaseToast
@@ -29,6 +32,9 @@ const SuccessToast = ({
       duration={duration}
       showProgressBar={showProgressBar}
       testID="toast-success"
+      width={width}
+      height={height}
+      style={style}
     />
   );
 };

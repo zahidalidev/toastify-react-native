@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     borderRadius: 8,
-    margin: SCALE(10),
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'center',
@@ -44,11 +43,6 @@ const styles = StyleSheet.create({
     width: 'auto',
     maxWidth: '85%',
   },
-  text2Style: {
-    fontSize: SCALE(14),
-    fontWeight: '300',
-    marginTop: SCALE(2),
-  },
   progressBarContainer: {
     flexDirection: 'row',
     position: 'absolute',
@@ -61,7 +55,6 @@ const styles = StyleSheet.create({
   },
   content: {
     width: '100%',
-    padding: SCALE(12),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
