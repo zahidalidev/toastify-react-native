@@ -14,9 +14,14 @@ const InfoToast = ({
   duration,
   showProgressBar,
   progressBarColor,
+  backgroundColor,
+  textColor,
+  iconColor,
+  iconSize,
   width,
   height,
-  style
+  style,
+  theme = 'light'
 }: ToastConfigParams) => {
   return (
     <BaseToast
@@ -25,7 +30,10 @@ const InfoToast = ({
       text2={text2}
       hide={hide}
       onPress={onPress}
-      iconColor={Colors.info}
+      iconColor={iconColor || Colors.info}
+      backgroundColor={backgroundColor}
+      textColor={textColor}
+      iconSize={iconSize}
       progressBarColor={progressBarColor || Colors.info}
       barWidth={barWidth}
       isRTL={isRTL}
@@ -33,6 +41,7 @@ const InfoToast = ({
       showProgressBar={showProgressBar}
       testID="toast-info"
       width={width}
+      theme={theme}
       height={height}
       style={style}
     />

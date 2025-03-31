@@ -14,9 +14,14 @@ const WarnToast = ({
   duration,
   showProgressBar,
   progressBarColor,
+  backgroundColor,
+  textColor,
+  iconColor,
+  iconSize,
   width,
   height,
-  style
+  style,
+  theme = 'light'
 }: ToastConfigParams) => {
   return (
     <BaseToast
@@ -25,7 +30,10 @@ const WarnToast = ({
       text2={text2}
       hide={hide}
       onPress={onPress}
-      iconColor={Colors.warn}
+      iconColor={iconColor || Colors.warn}
+      iconSize={iconSize}
+      backgroundColor={backgroundColor}
+      textColor={textColor}
       progressBarColor={progressBarColor || Colors.warn}
       barWidth={barWidth}
       isRTL={isRTL}
@@ -33,6 +41,7 @@ const WarnToast = ({
       showProgressBar={showProgressBar}
       testID="toast-warn"
       width={width}
+      theme={theme}
       height={height}
       style={style}
     />

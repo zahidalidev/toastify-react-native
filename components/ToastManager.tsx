@@ -72,7 +72,12 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
     onShow,
     onHide,
     onPress,
-    progressBarColor
+    progressBarColor,
+    backgroundColor,
+    textColor,
+    iconColor,
+    iconSize,
+    theme
   }: ToastShowParams): void => {
     // Clear any existing timers
     this.hide();
@@ -98,7 +103,12 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
       onShow,
       onHide,
       onPress,
-      progressBarColor
+      progressBarColor,
+      backgroundColor,
+      textColor,
+      iconColor,
+      iconSize,
+      theme: theme || this.props.theme
     }, () => {
       // Call onShow callback if provided
       if (this.state.onShow) {
@@ -230,14 +240,15 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
   renderToastContent = (): ReactNode => {
     const {
       config,
-      theme,
+      theme = 'light',
       width,
       height,
       style,
       textStyle,
       showCloseIcon,
       showProgressBar,
-      isRTL
+      isRTL,
+      iconSize: propsIconSize
     } = this.props;
 
     const {
@@ -248,8 +259,19 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
       barWidth,
       duration,
       position,
-      progressBarColor
+      progressBarColor,
+      backgroundColor,
+      textColor,
+      iconColor,
+      iconSize: stateIconSize,
+      theme: stateTheme
     } = this.state;
+
+    // Use theme from state if provided, otherwise use theme from props
+    const finalTheme = stateTheme || theme;
+
+    // Use iconSize from state if provided, otherwise use from props
+    const finalIconSize = stateIconSize !== undefined ? stateIconSize : propsIconSize;
 
     // Check if there's a custom component for this toast type
     if (config && typeof config[type] === 'function') {
@@ -268,9 +290,14 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
         duration: duration,
         showProgressBar: showProgressBar,
         progressBarColor: progressBarColor,
+        backgroundColor: backgroundColor,
+        textColor: textColor,
+        iconColor: iconColor,
+        iconSize: finalIconSize,
         width: width,
         height: height,
         style: style,
+        theme: finalTheme,
       });
     }
 
@@ -282,15 +309,17 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
         text2={text2}
         hide={this.hide}
         onPress={this.handlePress}
-        iconColor={this.getColorForType(type)}
+        iconColor={iconColor || this.getColorForType(type)}
+        iconSize={finalIconSize}
         progressBarColor={progressBarColor || this.getColorForType(type)}
+        backgroundColor={backgroundColor}
+        textColor={textColor}
         barWidth={barWidth}
         isRTL={isRTL}
         duration={duration}
         showProgressBar={showProgressBar}
-        backgroundColor={Colors[theme || 'light'].back}
-        textColor={Colors[theme || 'light'].text}
         showCloseIcon={showCloseIcon}
+        theme={finalTheme}
         testID={`toast-${type}`}
         width={width}
         height={height}

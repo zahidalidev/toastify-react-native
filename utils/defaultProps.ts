@@ -1,5 +1,5 @@
-import { SCALE } from './helpers'
 import { ToastManagerProps } from './interfaces'
+import { SCALE } from './helpers'
 
 const defaultProps: ToastManagerProps = {
   theme: 'light',
@@ -26,6 +26,7 @@ const defaultProps: ToastManagerProps = {
   showCloseIcon: true,
   showProgressBar: true,
   isRTL: false,
+  iconSize: SCALE(22),
 }
 
 export default defaultProps

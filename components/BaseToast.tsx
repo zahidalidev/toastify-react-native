@@ -14,6 +14,7 @@ interface BaseToastProps {
   backgroundColor?: string;
   textColor?: string;
   iconColor?: string;
+  iconSize?: number;
   showProgressBar?: boolean;
   progressBarColor?: string;
   barWidth?: Animated.Value;
@@ -24,6 +25,7 @@ interface BaseToastProps {
   width?: number | string;
   height?: number | string;
   style?: StyleProp<ViewStyle>;
+  theme?: 'light' | 'dark'; // Add theme prop
 }
 
 const BaseToast = ({
@@ -32,9 +34,10 @@ const BaseToast = ({
   text2,
   onPress,
   hide,
-  backgroundColor = Colors.light.back,
-  textColor = Colors.light.text,
+  backgroundColor,
+  textColor,
   iconColor = Colors.success,
+  iconSize = SCALE(22),
   showProgressBar = true,
   progressBarColor,
   barWidth: externalBarWidth,
@@ -45,10 +48,15 @@ const BaseToast = ({
   width,
   height,
   style,
+  theme = 'light', // Default to light theme
 }: BaseToastProps) => {
   // Use a local animated value if no external one is provided
   const localBarWidth = React.useRef(new Animated.Value(100)).current;
   const barWidth = externalBarWidth || localBarWidth;
+
+  // Set background and text colors based on theme if not explicitly provided
+  const bgColor = backgroundColor || Colors[theme].back;
+  const txtColor = textColor || Colors[theme].text;
 
   // Start progress bar animation if none is provided externally
   useEffect(() => {
@@ -78,9 +86,14 @@ const BaseToast = ({
   // Create container style with width and height
   const containerStyle = [
     styles.container,
-    { backgroundColor },
+    { backgroundColor: bgColor },
     width !== undefined && { width: width as DimensionValue },
     height !== undefined && { height: height as DimensionValue },
+    // Add shadow color based on theme
+    {
+      shadowColor: theme === 'dark' ? "#fff" : "#000",
+      elevation: theme === 'dark' ? 8 : 5, // Slightly higher elevation for dark theme for better visibility
+    },
     style
   ].filter(Boolean);
 
@@ -96,7 +109,7 @@ const BaseToast = ({
           activeOpacity={0.7}
           testID={`${testID}-close-button`}
         >
-          <Icon name="close-outline" size={22} color={textColor} />
+          <Icon name="close-outline" size={SCALE(22)} color={txtColor} />
         </TouchableOpacity>
       )}
 
@@ -104,7 +117,7 @@ const BaseToast = ({
         <View style={[styles.contentInner, rtlContentStyle]}>
           <Icon
             name={icon}
-            size={22}
+            size={iconSize}
             color={iconColor}
             style={[styles.iconWrapper, rtlIconWrapperStyle]}
             testID={`${testID}-icon`}
@@ -112,7 +125,7 @@ const BaseToast = ({
           <View style={{ flex: 1 }} testID={`${testID}-text-container`}>
             {text1 ? (
               <Text
-                style={[styles.text1, { color: textColor }, rtlTextStyle, textMarginStyle]}
+                style={[styles.text1, { color: txtColor }, rtlTextStyle, textMarginStyle]}
                 testID={`${testID}-text1`}
               >
                 {text1}
@@ -120,7 +133,7 @@ const BaseToast = ({
             ) : null}
             {text2 ? (
               <Text
-                style={[styles.text2, { color: textColor }, rtlTextStyle, textMarginStyle]}
+                style={[styles.text2, { color: txtColor }, rtlTextStyle, textMarginStyle]}
                 testID={`${testID}-text2`}
               >
                 {text2}
@@ -175,7 +188,6 @@ const styles = StyleSheet.create({
     width: '90%',
     height: SCALE(61),
     borderRadius: 8,
-    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,

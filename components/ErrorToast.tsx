@@ -14,9 +14,14 @@ const ErrorToast = ({
   duration,
   showProgressBar,
   progressBarColor,
+  backgroundColor,
+  textColor,
+  iconColor,
+  iconSize,
   width,
   height,
-  style
+  style,
+  theme = 'light'
 }: ToastConfigParams) => {
   return (
     <BaseToast
@@ -25,13 +30,17 @@ const ErrorToast = ({
       text2={text2}
       hide={hide}
       onPress={onPress}
-      iconColor={Colors.error}
+      iconColor={iconColor || Colors.error}
+      backgroundColor={backgroundColor}
+      textColor={textColor}
+      iconSize={iconSize}
       progressBarColor={progressBarColor || Colors.error}
       barWidth={barWidth}
       isRTL={isRTL}
       duration={duration}
       showProgressBar={showProgressBar}
       testID="toast-error"
+      theme={theme}
       width={width}
       height={height}
       style={style}

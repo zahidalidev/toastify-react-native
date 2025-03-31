@@ -1,11 +1,11 @@
 export const Colors: any = {
   light: {
-    text: '#4c4c4c',
+    text: '#000',
     back: '#ffffff',
   },
   dark: {
     text: '#ffffff',
-    back: '#4c4c4c',
+    back: '#2B2D2E',
   },
   default: '#3498db',
   info: '#3498db',
