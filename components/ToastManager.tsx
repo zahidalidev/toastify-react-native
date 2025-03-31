@@ -1,321 +1,384 @@
-import React, { Component } from "react";
-import { View, Text, Animated, Dimensions, TouchableOpacity } from "react-native";
+import React, { Component, createRef, ReactNode, forwardRef, RefObject } from "react";
+import { View, Text, Animated, Modal, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import Modal from "react-native-modal";
 
-
-import { ToastManagerProps, ToastManagerState } from "../utils/interfaces";
+import {
+  ToastManagerProps,
+  ToastState,
+  ToastRef,
+  ToastPosition,
+  ToastShowParams,
+  ToastType
+} from "../utils/interfaces";
 import defaultProps from "../utils/defaultProps";
 import { Colors } from "../config/theme";
 import { SCALE } from "../utils/helpers";
 import styles from "./styles";
+import BaseToast from "./BaseToast";
 
-const { height } = Dimensions.get("window");
-
-class ToastManager extends Component<ToastManagerProps, ToastManagerState> {
-  private timer: NodeJS.Timeout;
-  private isShow: boolean;
-  private isPaused: boolean = false;
+class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
+  private timerId: NodeJS.Timeout | null = null;
+  private animationRef: Animated.CompositeAnimation | null = null;
+  static toastRef: RefObject<ToastRef> = createRef();
   static defaultProps = defaultProps;
-  static __singletonRef: ToastManager | null;
 
   constructor(props: ToastManagerProps) {
     super(props);
-    ToastManager.__singletonRef = this;
-    this.timer = setTimeout(() => { }, 0); // Initialize timer with a dummy value
-    this.isShow = false;
+    this.state = {
+      isVisible: false,
+      type: 'default',
+      text1: '',
+      text2: '',
+      position: props.position || 'top',
+      duration: props.duration || 3000,
+      barWidth: new Animated.Value(100),
+      isPaused: false,
+    };
   }
 
-  state: ToastManagerState = {
-    isShow: false,
-    text: "",
-    opacityValue: new Animated.Value(1),
-    barWidth: new Animated.Value(SCALE(204.8)),
-    barColor: Colors.default,
-    icon: "checkmark-circle",
-    position: this.props.position,
-    animationStyle: {
-      upInUpOut: {
-        animationIn: "slideInDown",
-        animationOut: "slideOutUp",
-      },
-      rightInOut: {
-        animationIn: "slideInRight",
-        animationOut: "slideOutRight",
-      },
-      zoomInOut: {
-        animationIn: "zoomInDown",
-        animationOut: "zoomOutUp",
-      },
-      fadeInOut: {
-        animationIn: "fadeIn",
-        animationOut: "fadeOut",
-      },
-      slideInOut: {
-        animationIn: "slideInUp",
-        animationOut: "slideOutDown",
-      },
-    },
-  };
-
-  static info = (text: string, position?: ToastManagerProps["position"]) => {
-    ToastManager.__singletonRef?.show(text, Colors.info, "information-circle", position);
-  };
-
-  static success = (text: string, position?: ToastManagerProps["position"]) => {
-    ToastManager.__singletonRef?.show(text, Colors.success, "checkmark-circle", position);
-  };
-
-  static warn = (text: string, position?: ToastManagerProps["position"]) => {
-    ToastManager.__singletonRef?.show(text, Colors.warn, "warning", position);
-  };
-
-  static error = (text: string, position?: ToastManagerProps["position"]) => {
-    ToastManager.__singletonRef?.show(text, Colors.error, "alert-circle", position);
-  };
-
-  show = (text = "", barColor = Colors.default, icon: string, position?: ToastManagerProps["position"]) => {
-    const { duration, isRTL } = this.props;
-
-    // Reset pause state
-    this.isPaused = false;
-
-    if (isRTL) {
-      this.state.barWidth.setValue(0);
-    } else {
-      this.state.barWidth.setValue(this.props.width);
+  getIconForType = (type: ToastType): string => {
+    switch (type) {
+      case 'success': return 'checkmark-circle';
+      case 'error': return 'alert-circle';
+      case 'info': return 'information-circle';
+      case 'warn': return 'warning';
+      default: return 'checkmark-circle';
     }
+  }
+
+  getColorForType = (type: ToastType): string => {
+    switch (type) {
+      case 'success': return Colors.success;
+      case 'error': return Colors.error;
+      case 'info': return Colors.info;
+      case 'warn': return Colors.warn;
+      default: return Colors.default;
+    }
+  }
+
+  // Map animation style to Modal's animationType
+  getAnimationType = (): 'none' | 'slide' | 'fade' => {
+    const { animationStyle } = this.props;
+
+    return animationStyle || 'fade';
+  }
+
+  show = ({
+    type = 'default',
+    text1 = '',
+    text2,
+    position,
+    visibilityTime,
+    autoHide = true,
+    props,
+    onShow,
+    onHide,
+    onPress,
+    progressBarColor
+  }: ToastShowParams): void => {
+    // Clear any existing timers
+    this.hide();
+
+    // Reset animation if needed
+    if (this.animationRef) {
+      this.animationRef.stop();
+      this.animationRef = null;
+    }
+
+    // Reset progress bar width
+    this.state.barWidth.setValue(100);
 
     this.setState({
-      isShow: true,
-      duration,
-      text,
-      barColor,
-      icon,
-    });
-    if (position) this.setState({ position });
-    this.isShow = true;
-    if (duration !== this.props.end) this.close(duration);
-  };
-
-  close = (duration: number) => {
-    if (!this.isShow && !this.state.isShow) return;
-    this.resetAll();
-    this.timer = setTimeout(() => {
-      this.setState({ isShow: false });
-    }, duration || this.state.duration);
-  };
-
-  position = () => {
-    const { position } = this.state;
-    if (position === "top") return this.props.positionValue;
-    if (position === "center") return height / 2 - SCALE(57.6);
-    return height - this.props.positionValue - SCALE(64);
-  };
-
-  handleBar = () => {
-    // Don't start a new animation if we're paused
-    if (this.isPaused) {
-      return;
-    }
-
-    const { isRTL } = this.props;
-
-    if (isRTL) {
-      // Only set to 0 when starting the animation, not during renders
-      if (this.state.barWidth._value === this.props.width) {
-        this.state.barWidth.setValue(0);
+      isVisible: true,
+      type: type || 'default',
+      text1,
+      text2,
+      position: position || this.props.position || 'top',
+      duration: visibilityTime || this.props.duration || 3000,
+      props,
+      isPaused: false,
+      onShow,
+      onHide,
+      onPress,
+      progressBarColor
+    }, () => {
+      // Call onShow callback if provided
+      if (this.state.onShow) {
+        this.state.onShow();
       }
 
-      Animated.timing(this.state.barWidth, {
-        toValue: this.props.width,
-        duration: this.state.duration,
-        useNativeDriver: false,
-      }).start();
+      // Start progress bar animation
+      this.startProgressBarAnimation();
+
+      // Set timer for auto-hide if enabled
+      if (autoHide) {
+        this.timerId = setTimeout(() => {
+          this.hide();
+        }, this.state.duration);
+      }
+    });
+  }
+
+  startProgressBarAnimation = (): void => {
+    if (!this.props.showProgressBar) return;
+
+    const { duration } = this.state;
+    const { isRTL } = this.props;
+
+    // Determine the start and end values based on RTL setting
+    const startValue = isRTL ? 0 : 100;
+    const endValue = isRTL ? 100 : 0;
+
+    // Set initial value
+    this.state.barWidth.setValue(startValue);
+
+    this.animationRef = Animated.timing(this.state.barWidth, {
+      toValue: endValue,
+      duration,
+      useNativeDriver: false
+    });
+
+    this.animationRef.start();
+  }
+
+  hide = (): void => {
+    if (this.timerId) {
+      clearTimeout(this.timerId);
+      this.timerId = null;
+    }
+
+    if (this.animationRef) {
+      this.animationRef.stop();
+      this.animationRef = null;
+    }
+
+    if (this.state.isVisible) {
+      this.setState({ isVisible: false }, () => {
+        if (this.state.onHide) {
+          this.state.onHide();
+        }
+      });
+    }
+  }
+
+  pause = (): void => {
+    if (this.timerId) {
+      clearTimeout(this.timerId);
+      this.timerId = null;
+    }
+
+    if (this.animationRef) {
+      this.animationRef.stop();
     } else {
       Animated.timing(this.state.barWidth, {
-        toValue: 0,
-        duration: this.state.duration,
-        useNativeDriver: false,
-      }).start();
+        toValue: this.state.barWidth._value,
+        duration: 1,
+        useNativeDriver: false
+      }).stop();
     }
-  };
 
-  pause = () => {
-    clearTimeout(this.timer);
-    this.setState({ oldDuration: this.state.duration, duration: Number.MAX_VALUE });
+    const currentValue = this.state.barWidth._value;
+    const totalDuration = this.state.duration;
+    const elapsedPercentage = this.props.isRTL
+      ? currentValue / 100
+      : 1 - (currentValue / 100);
 
-    // Mark as paused
-    this.isPaused = true;
+    const remainingDuration = totalDuration * (1 - elapsedPercentage);
 
-    // Stop animation
-    Animated.timing(this.state.barWidth, {
-      toValue: 0,
-      duration: Number.MAX_VALUE,
-      useNativeDriver: false,
-    }).stop();
-  };
+    this.setState({
+      isPaused: true,
+      pausedDuration: remainingDuration
+    });
+  }
 
-  resume = () => {
-    const remainingDuration = this.state.oldDuration;
-    this.setState({ duration: remainingDuration, oldDuration: 0 });
+  resume = (): void => {
+    if (!this.state.isPaused) return;
 
-    this.timer = setTimeout(() => {
-      this.setState({ isShow: false });
+    const remainingDuration = this.state.pausedDuration || 0;
+
+    this.animationRef = Animated.timing(this.state.barWidth, {
+      toValue: this.props.isRTL ? 100 : 0,
+      duration: remainingDuration,
+      useNativeDriver: false
+    });
+
+    this.animationRef.start();
+
+    this.timerId = setTimeout(() => {
+      this.hide();
     }, remainingDuration);
 
-    // No longer paused
-    this.isPaused = false;
+    this.setState({ isPaused: false, pausedDuration: undefined });
+  }
 
-    // Get current value and calculate proper remaining duration
-    const currentValue = this.state.barWidth._value;
-    const targetValue = this.props.isRTL ? this.props.width : 0;
-
-    let adjustedDuration = remainingDuration;
-    if (this.props.isRTL) {
-      const progress = currentValue / this.props.width;
-      adjustedDuration = remainingDuration * (1 - progress);
-    } else {
-      const progress = 1 - (currentValue / this.props.width);
-      adjustedDuration = remainingDuration * (1 - progress);
+  handlePress = (): void => {
+    if (this.state.onPress) {
+      this.state.onPress();
     }
+  }
 
-    // Resume animation from current position
-    Animated.timing(this.state.barWidth, {
-      toValue: targetValue,
-      duration: Math.max(100, adjustedDuration),
-      useNativeDriver: false,
-    }).start();
-  };
+  getPositionStyle = (): object => {
+    const { position } = this.state;
+    const { topOffset, bottomOffset } = this.props;
 
-  hideToast = () => {
-    this.resetAll();
-    this.setState({ isShow: false });
-    this.isShow = false;
-    if (!this.isShow && !this.state.isShow) return;
-  };
+    switch (position) {
+      case 'top': return { top: topOffset || 40 };
+      case 'bottom': return { bottom: bottomOffset || 40 };
+      case 'center': return { top: 0, bottom: 0, justifyContent: 'center' };
+      default: return { top: topOffset || 40 };
+    }
+  }
 
-  resetAll = () => {
-    clearTimeout(this.timer);
-  };
-
-  render() {
-    this.handleBar();
+  renderToastContent = (): ReactNode => {
     const {
-      animationIn,
-      animationStyle,
-      animationOut,
-      backdropTransitionOutTiming,
-      backdropTransitionInTiming,
-      animationInTiming,
-      animationOutTiming,
-      backdropColor,
-      backdropOpacity,
-      hasBackdrop,
+      config,
+      theme,
       width,
       height,
       style,
       textStyle,
-      theme,
       showCloseIcon,
       showProgressBar,
-      isRTL,
+      isRTL
     } = this.props;
 
-    const { isShow, animationStyle: stateAnimationStyle, barColor, icon, text, barWidth } = this.state;
+    const {
+      type,
+      text1,
+      text2,
+      props: customProps,
+      barWidth,
+      duration,
+      position,
+      progressBarColor
+    } = this.state;
 
-    const rtlContentStyle = isRTL ? { flexDirection: 'row-reverse' } : {};
-    const rtlHideButtonStyle = isRTL ? { right: undefined, left: SCALE(3.2) } : {};
-    const rtlIconWrapperStyle = isRTL ? { marginRight: 0, marginLeft: SCALE(4.48) } : {};
+    // Check if there's a custom component for this toast type
+    if (config && typeof config[type] === 'function') {
+      return config[type]({
+        text1,
+        text2,
+        props: customProps,
+        type,
+        position,
+        hide: this.hide,
+        show: this.show,
+        isVisible: this.state.isVisible,
+        onPress: this.state.onPress,
+        barWidth: barWidth,
+        isRTL: isRTL,
+        duration: duration,
+        showProgressBar: showProgressBar,
+        progressBarColor: progressBarColor
+      });
+    }
+
+    // Use default BaseToast component if no custom component is provided
+    return (
+      <BaseToast
+        icon={this.getIconForType(type)}
+        text1={text1}
+        text2={text2}
+        hide={this.hide}
+        onPress={this.handlePress}
+        iconColor={this.getColorForType(type)}
+        progressBarColor={progressBarColor || this.getColorForType(type)}
+        barWidth={barWidth}
+        isRTL={isRTL}
+        duration={duration}
+        showProgressBar={showProgressBar}
+        backgroundColor={Colors[theme || 'light'].back}
+        textColor={Colors[theme || 'light'].text}
+        showCloseIcon={showCloseIcon}
+        testID={`toast-${type}`}
+      />
+    );
+  }
+
+  render() {
+    const { isVisible, position } = this.state;
 
     return (
       <Modal
-        animationIn={animationIn || stateAnimationStyle[animationStyle].animationIn}
-        animationOut={animationOut || stateAnimationStyle[animationStyle].animationOut}
-        backdropTransitionOutTiming={backdropTransitionOutTiming}
-        backdropTransitionInTiming={backdropTransitionInTiming}
-        animationInTiming={animationInTiming}
-        animationOutTiming={animationOutTiming}
-        onTouchEnd={this.resume}
-        onTouchStart={this.pause}
-        swipeDirection={["up", "down", "left", "right"]}
-        onSwipeComplete={this.hideToast}
-        onModalHide={this.resetAll}
-        isVisible={isShow}
-        coverScreen={false}
-        backdropColor={backdropColor}
-        backdropOpacity={backdropOpacity}
-        hasBackdrop={hasBackdrop}
-        style={styles.modalContainer}
+        visible={isVisible}
+        transparent={true}
+        animationType={this.getAnimationType()}
+        onRequestClose={this.hide}
+        testID="toast-modal"
       >
-        <View
+        <TouchableOpacity
+          activeOpacity={1}
+          onPressIn={() => this.pause()}
+          onPressOut={() => this.resume()}
           style={[
-            styles.mainContainer,
-            {
-              width,
-              height,
-              backgroundColor: Colors[theme].back,
-              top: this.position(),
-              ...style,
-            },
+            styles.containerRoot,
+            position === 'top' ? styles.containerTop :
+              position === 'bottom' ? styles.containerBottom : {},
+            this.getPositionStyle(),
           ]}
+          testID="toast-container"
         >
-          {showCloseIcon && (
-            <TouchableOpacity
-              onPress={this.hideToast}
-              activeOpacity={0.9}
-              style={[styles.hideButton, rtlHideButtonStyle]}
-            >
-              <Icon name="close-outline" size={22} color={Colors[theme].text} />
-            </TouchableOpacity>
-          )}
-          <View style={[styles.content, rtlContentStyle]}>
-            <Icon
-              name={icon}
-              size={22}
-              color={barColor}
-              style={[styles.iconWrapper, rtlIconWrapperStyle]}
-            />
-            <Text
-              style={[
-                styles.textStyle,
-                { color: Colors[theme].text, ...textStyle },
-                isRTL ? { textAlign: 'right' } : {}
-              ]}
-            >
-              {text}
-            </Text>
-          </View>
-          {showProgressBar && (
-            <View style={styles.progressBarContainer}>
-              {isRTL ? (
-                <Animated.View
-                  style={{
-                    position: 'absolute',
-                    right: 0,
-                    left: 'auto',
-                    width: barWidth,
-                    backgroundColor: barColor,
-                    height: '100%'
-                  }}
-                />
-              ) : (
-                <Animated.View
-                  style={{
-                    width: barWidth,
-                    backgroundColor: barColor,
-                    height: '100%'
-                  }}
-                />
-              )}
-            </View>
-          )}
-        </View>
+          {this.renderToastContent()}
+        </TouchableOpacity>
       </Modal>
     );
   }
 }
 
-ToastManager.defaultProps = defaultProps;
+const ToastManager = forwardRef((props: ToastManagerProps, ref) => {
+  return <ToastManagerComponent {...props} ref={ref} />;
+});
+
+// Add the static methods to the forwarded ref component
+ToastManager.setRef = (ref: any) => {
+  ToastManagerComponent.toastRef = ref;
+};
+
+ToastManager.getRef = () => {
+  ToastManagerComponent.toastRef;
+};
+
+ToastManager.show = (options: ToastShowParams) => {
+  ToastManagerComponent.toastRef?.current?.show(options);
+};
+
+ToastManager.hide = () => {
+  ToastManagerComponent.toastRef?.current?.hide();
+};
+
+ToastManager.success = (text: string, position?: ToastPosition) => {
+  ToastManagerComponent.toastRef?.current?.show({
+    type: 'success',
+    text1: text,
+    position
+  });
+};
+
+ToastManager.error = (text: string, position?: ToastPosition) => {
+  ToastManagerComponent.toastRef?.current?.show({
+    type: 'error',
+    text1: text,
+    position
+  });
+};
+
+ToastManager.info = (text: string, position?: ToastPosition) => {
+  ToastManagerComponent.toastRef?.current?.show({
+    type: 'info',
+    text1: text,
+    position
+  });
+};
+
+ToastManager.warn = (text: string, position?: ToastPosition) => {
+  ToastManagerComponent.toastRef?.current?.show({
+    type: 'warn',
+    text1: text,
+    position
+  });
+};
+
+// Copy defaultProps to the forwarded ref component
+ToastManager.defaultProps = ToastManagerComponent.defaultProps;
 
 export default ToastManager;

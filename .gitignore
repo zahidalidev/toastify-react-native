@@ -9,3 +9,4 @@ dist
 
 # Dependency directory
 node_modules
+react-native-toast-message-main

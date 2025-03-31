@@ -1,49 +1,117 @@
-import { DimensionValue, StyleProp, TextStyle, ViewStyle } from "react-native";
+import { ReactNode } from 'react'
+import { StyleProp, TextStyle, ViewStyle } from 'react-native'
 
-type AnimationStyle = any;
+export type ToastPosition = 'top' | 'center' | 'bottom'
+export type ToastType = 'success' | 'error' | 'info' | 'warn' | 'default'
+export type AnimationStyle = 'none' | 'slide' | 'fade'
 
-type Position = "top" | "center" | "bottom" | undefined;
-
-export interface ToastManagerProps {
-  positionValue: number;
-  width: DimensionValue;
-  duration: number;
-  end: number;
-  animationIn?: any;
-  animationOut?: any;
-  backdropTransitionOutTiming: number;
-  backdropTransitionInTiming: number;
-  animationInTiming: number;
-  animationOutTiming: number;
-  backdropColor: string;
-  backdropOpacity: number;
-  hasBackdrop: boolean;
-  height: DimensionValue;
-  style: StyleProp<ViewStyle>;
-  textStyle: TextStyle;
-  theme: any;
-  animationStyle?: AnimationStyle;
-  position?: Position;
-  showCloseIcon: boolean;
-  showProgressBar: boolean;
-  isRTL: boolean;
+export interface ToastShowParams {
+  type?: ToastType
+  text1?: string
+  text2?: string
+  position?: ToastPosition
+  visibilityTime?: number
+  autoHide?: boolean
+  topOffset?: number
+  bottomOffset?: number
+  props?: Record<string, any>
+  onShow?: () => void
+  onHide?: () => void
+  onPress?: () => void
+  progressBarColor?: string
+  backgroundColor?: string
+  textColor?: string
+  iconColor?: string
+  iconSize?: number
+  theme?: 'light' | 'dark'
+  testID?: string
 }
 
-export interface ToastManagerState {
-  isShow: boolean;
-  text: string;
-  opacityValue: any;
-  barWidth: any;
-  barColor: string;
-  icon: string;
-  position: Position;
-  duration?: number;
-  oldDuration?: number;
-  animationStyle: Record<
-    AnimationStyle,
-    {
-      animationIn: string;
-      animationOut: string;
-    }
-  >;
+export interface ToastConfig {
+  [key: string]: (props: ToastConfigParams) => ReactNode
+}
+
+export interface ToastConfigParams {
+  text1?: string
+  text2?: string
+  type?: ToastType
+  props?: any
+  position?: ToastPosition
+  hide?: () => void
+  show?: (options: ToastShowParams) => void
+  isVisible?: boolean
+  onPress?: () => void
+  barWidth?: any
+  isRTL?: boolean
+  duration?: number
+  showProgressBar?: boolean
+  showCloseIcon?: boolean
+  progressBarColor?: string
+  backgroundColor?: string
+  textColor?: string
+  iconColor?: string
+  iconSize?: number
+  testID?: string
+  width?: number | string
+  height?: number | string
+  style?: StyleProp<ViewStyle>
+  theme?: 'light' | 'dark'
+}
+
+export interface ToastManagerProps {
+  width?: number | string | 'auto'
+  height?: number | string | 'auto'
+  duration?: number
+  style?: StyleProp<ViewStyle>
+  textStyle?: StyleProp<TextStyle>
+  theme?: 'light' | 'dark'
+  animationStyle?: AnimationStyle
+  position?: ToastPosition
+  showCloseIcon?: boolean
+  showProgressBar?: boolean
+  isRTL?: boolean
+  config?: ToastConfig
+  ref?: any
+  topOffset?: number
+  bottomOffset?: number
+  testID?: string
+  iconSize?: number
+}
+
+export interface ToastRef {
+  show: (options: ToastShowParams) => void
+  hide: () => void
+  success: (text: string, position?: ToastPosition) => void
+  error: (text: string, position?: ToastPosition) => void
+  info: (text: string, position?: ToastPosition) => void
+  warn: (text: string, position?: ToastPosition) => void
+}
+
+export interface ToastState {
+  isVisible: boolean
+  type: ToastType
+  text1: string
+  text2?: string
+  position: ToastPosition
+  props?: Record<string, any>
+  duration: number
+  barWidth: any
+  isPaused: boolean
+  pausedDuration?: number
+  onShow?: () => void
+  onHide?: () => void
+  onPress?: () => void
+  progressBarColor?: string
+  backgroundColor?: string
+  textColor?: string
+  iconColor?: string
+  iconSize?: number
+  theme?: 'light' | 'dark'
+}
+
+export interface AnimationConfig {
+  [key: string]: {
+    animateIn: any
+    animateOut: any
+  }
 }

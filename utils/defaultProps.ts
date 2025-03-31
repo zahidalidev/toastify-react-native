@@ -1,6 +1,7 @@
 import { SCALE } from "./helpers";
+import { ToastManagerProps } from "./interfaces";
 
-export default {
+const defaultProps: ToastManagerProps = {
   theme: "light",
   width: SCALE(204.8),
   height: SCALE(54.4),
@@ -20,7 +21,11 @@ export default {
   hasBackdrop: false,
   backdropColor: "black",
   backdropOpacity: 0.2,
+  topOffset: 40,
+  bottomOffset: 40,
   showCloseIcon: true,
   showProgressBar: true,
   isRTL: false,
 };
+
+export default defaultProps;
