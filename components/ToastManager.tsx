@@ -34,7 +34,13 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
     };
   }
 
-  getIconForType = (type: ToastType): string => {
+  getIconForType = (type: ToastType): string | ReactNode => {
+    // First check if custom icons are provided in props
+    if (this.props.icons && this.props.icons[type]) {
+      return this.props.icons[type];
+    }
+
+    // Otherwise use default icon names
     switch (type) {
       case 'success': return 'checkmark-circle';
       case 'error': return 'alert-circle';
@@ -77,6 +83,8 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
     textColor,
     iconColor,
     iconSize,
+    icon,
+    iconFamily,
     theme
   }: ToastShowParams): void => {
     // Clear any existing timers
@@ -108,6 +116,8 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
       textColor,
       iconColor,
       iconSize,
+      icon,
+      iconFamily: iconFamily || this.props.iconFamily,
       theme: theme || this.props.theme
     }, () => {
       // Call onShow callback if provided
@@ -248,7 +258,8 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
       showCloseIcon,
       showProgressBar,
       isRTL,
-      iconSize: propsIconSize
+      iconSize: propsIconSize,
+      iconFamily: propsIconFamily
     } = this.props;
 
     const {
@@ -264,6 +275,8 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
       textColor,
       iconColor,
       iconSize: stateIconSize,
+      icon: stateIcon,
+      iconFamily: stateIconFamily,
       theme: stateTheme
     } = this.state;
 
@@ -272,6 +285,12 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
 
     // Use iconSize from state if provided, otherwise use from props
     const finalIconSize = stateIconSize !== undefined ? stateIconSize : propsIconSize;
+
+    // Use icon from state if provided, otherwise get icon based on type
+    const finalIcon = stateIcon !== undefined ? stateIcon : this.getIconForType(type);
+
+    // Use iconFamily from state if provided, otherwise use from props
+    const finalIconFamily = stateIconFamily || propsIconFamily || 'Ionicons';
 
     // Check if there's a custom component for this toast type
     if (config && typeof config[type] === 'function') {
@@ -295,6 +314,8 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
         textColor: textColor,
         iconColor: iconColor,
         iconSize: finalIconSize,
+        icon: finalIcon,
+        iconFamily: finalIconFamily,
         width: width,
         minHeight: minHeight,
         style: style,
@@ -305,7 +326,8 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
     // Use default BaseToast component if no custom component is provided
     return (
       <BaseToast
-        icon={this.getIconForType(type)}
+        icon={finalIcon}
+        iconFamily={finalIconFamily}
         text1={text1}
         text2={text2}
         hide={this.hide}

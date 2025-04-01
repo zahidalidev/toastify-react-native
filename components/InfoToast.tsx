@@ -1,8 +1,7 @@
 import React from 'react';
-
-import { ToastConfigParams } from '../utils/interfaces';
-import { Colors } from '../config/theme';
 import BaseToast from './BaseToast';
+import { Colors } from '../config/theme';
+import { ToastConfigParams } from '../utils/interfaces';
 
 const InfoToast = ({
   text1,
@@ -19,6 +18,8 @@ const InfoToast = ({
   textColor,
   iconColor,
   iconSize,
+  icon,
+  iconFamily,
   width,
   minHeight,
   style,
@@ -26,24 +27,25 @@ const InfoToast = ({
 }: ToastConfigParams) => {
   return (
     <BaseToast
-      icon="information-circle"
+      icon={icon || "information-circle"}
+      iconFamily={iconFamily || "Ionicons"}
       text1={text1}
       text2={text2}
       hide={hide}
       onPress={onPress}
       iconColor={iconColor || Colors.info}
-      backgroundColor={backgroundColor}
-      textColor={textColor}
       iconSize={iconSize}
       progressBarColor={progressBarColor || Colors.info}
+      backgroundColor={backgroundColor}
+      textColor={textColor}
       barWidth={barWidth}
       isRTL={isRTL}
       duration={duration}
       showProgressBar={showProgressBar}
       showCloseIcon={showCloseIcon}
       testID="toast-info"
-      width={width}
       theme={theme}
+      width={width}
       minHeight={minHeight}
       style={style}
     />

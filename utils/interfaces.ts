@@ -4,6 +4,17 @@ import { StyleProp, TextStyle, ViewStyle } from 'react-native'
 export type ToastPosition = 'top' | 'center' | 'bottom'
 export type ToastType = 'success' | 'error' | 'info' | 'warn' | 'default'
 export type AnimationStyle = 'none' | 'slide' | 'fade'
+export type IconFamily =
+  | 'Ionicons'
+  | 'MaterialIcons'
+  | 'FontAwesome'
+  | 'FontAwesome5'
+  | 'MaterialCommunityIcons'
+  | 'Entypo'
+  | 'Feather'
+  | 'AntDesign'
+  | 'Octicons'
+  | 'SimpleLineIcons'
 
 export interface ToastShowParams {
   type?: ToastType
@@ -23,6 +34,8 @@ export interface ToastShowParams {
   textColor?: string
   iconColor?: string
   iconSize?: number
+  icon?: string | ReactNode
+  iconFamily?: IconFamily
   theme?: 'light' | 'dark'
   testID?: string
 }
@@ -51,6 +64,8 @@ export interface ToastConfigParams {
   textColor?: string
   iconColor?: string
   iconSize?: number
+  icon?: string | ReactNode
+  iconFamily?: IconFamily
   testID?: string
   width?: number | string
   minHeight?: number | string
@@ -76,6 +91,14 @@ export interface ToastManagerProps {
   bottomOffset?: number
   testID?: string
   iconSize?: number
+  icons?: {
+    success?: string | ReactNode
+    error?: string | ReactNode
+    info?: string | ReactNode
+    warn?: string | ReactNode
+    default?: string | ReactNode
+  }
+  iconFamily?: IconFamily
 }
 
 export interface ToastRef {
@@ -106,6 +129,8 @@ export interface ToastState {
   textColor?: string
   iconColor?: string
   iconSize?: number
+  icon?: string | ReactNode
+  iconFamily?: IconFamily
   theme?: 'light' | 'dark'
 }
 

@@ -14,12 +14,13 @@
 
 - 🚀 **Simple API**: Easy to use with minimal setup
 - 🎨 **Highly customizable**: Customize colors, icons, animations, and more
+- 🧩 **Custom components**: Create your own toast components
+- 🎭 **Custom icons**: Use different icon families, custom icon components, or JSX elements
 - 📱 **Responsive**: Adapts to different screen sizes
 - 🌓 **Dark & Light mode**: Built-in theme support
 - 🔄 **RTL support**: Right-to-left language support
 - ⏱️ **Progress bar**: Visual indicator of toast duration
 - 🖐️ **Interactive**: Pause on touch, resume on release
-- 🧩 **Custom components**: Create your own toast components
 - 🔄 **Animation options**: Choose from different animation styles
 - 📝 **Multiple lines**: Support for title and description
 - 🔍 **TypeScript support**: Full type definitions included
@@ -173,23 +174,25 @@ Toast.show({
 
 ### ToastManager Props
 
-| Prop            | Type                          | Default   | Description                                        |
-| --------------- | ----------------------------- | --------- | -------------------------------------------------- |
-| width           | number \| string \| 'auto'    | '90%'     | Width of the toast                                 |
-| minHeight       | number \| string \| 'auto'    | 61        | Minimum height of the toast                        |
-| style           | StyleProp<ViewStyle>          | {}        | Custom style for the toast container               |
-| textStyle       | StyleProp<TextStyle>          | {}        | Custom style for the toast text                    |
-| theme           | 'light' \| 'dark'             | 'light'   | Theme of the toast                                 |
-| animationStyle  | 'none' \| 'slide' \| 'fade'   | 'fade'    | Animation style for the toast                      |
-| position        | 'top' \| 'center' \| 'bottom' | 'top'     | Position of the toast                              |
-| duration        | number                        | 3000      | Duration in ms before the toast disappears         |
-| showCloseIcon   | boolean                       | true      | Whether to show the close icon                     |
-| showProgressBar | boolean                       | true      | Whether to show the progress bar                   |
-| isRTL           | boolean                       | false     | Right-to-left support                              |
-| topOffset       | number                        | 40        | Distance from the top when position is 'top'       |
-| bottomOffset    | number                        | 40        | Distance from the bottom when position is 'bottom' |
-| iconSize        | number                        | 22        | Size of the icon                                   |
-| config          | ToastConfig                   | undefined | Custom toast components configuration              |
+| Prop            | Type                          | Default    | Description                                        |
+| --------------- | ----------------------------- | ---------- | -------------------------------------------------- |
+| width           | number \| string \| 'auto'    | '90%'      | Width of the toast                                 |
+| minHeight       | number \| string \| 'auto'    | 61         | Minimum height of the toast                        |
+| style           | StyleProp<ViewStyle>          | {}         | Custom style for the toast container               |
+| textStyle       | StyleProp<TextStyle>          | {}         | Custom style for the toast text                    |
+| theme           | 'light' \| 'dark'             | 'light'    | Theme of the toast                                 |
+| animationStyle  | 'none' \| 'slide' \| 'fade'   | 'fade'     | Animation style for the toast                      |
+| position        | 'top' \| 'center' \| 'bottom' | 'top'      | Position of the toast                              |
+| duration        | number                        | 3000       | Duration in ms before the toast disappears         |
+| showCloseIcon   | boolean                       | true       | Whether to show the close icon                     |
+| showProgressBar | boolean                       | true       | Whether to show the progress bar                   |
+| isRTL           | boolean                       | false      | Right-to-left support                              |
+| topOffset       | number                        | 40         | Distance from the top when position is 'top'       |
+| bottomOffset    | number                        | 40         | Distance from the bottom when position is 'bottom' |
+| iconSize        | number                        | 22         | Size of the icon                                   |
+| iconFamily      | string                        | 'Ionicons' | Default icon family to use                         |
+| icons           | object                        | undefined  | Custom default icons for each toast type           |
+| config          | ToastConfig                   | undefined  | Custom toast components configuration              |
 
 ### Toast.show() Options
 
@@ -207,6 +210,8 @@ Toast.show({
 | progressBarColor | string                                                | undefined | Color of the progress bar                   |
 | backgroundColor  | string                                                | undefined | Background color of the toast               |
 | textColor        | string                                                | undefined | Color of the text                           |
+| icon             | string \| ReactNode                                   | undefined | Custom icon name or component               |
+| iconFamily       | string                                                | undefined | Icon family for the icon                    |
 | iconColor        | string                                                | undefined | Color of the icon                           |
 | iconSize         | number                                                | undefined | Size of the icon                            |
 | theme            | 'light' \| 'dark'                                     | undefined | Theme of the toast                          |
@@ -286,6 +291,89 @@ export default function App() {
     </View>
   )
 }
+```
+
+## Customizing Icons
+
+```jsx
+// Different icon name from the default family
+Toast.show({
+  type: 'success',
+  text1: 'Different Icon',
+  text2: 'Using a different icon name',
+  icon: 'check', // Different icon name according to default icon family
+})
+
+// Using a different icon family
+Toast.show({
+  type: 'error',
+  text1: 'FontAwesome Icon',
+  text2: 'Using a different icon family',
+  icon: 'exclamation-circle',
+  iconFamily: 'FontAwesome',
+})
+
+// Using a custom React component as icon
+const CustomIcon = ({ color }) => (
+  <View
+    style={{
+      width: 30,
+      height: 30,
+      borderRadius: 15,
+      backgroundColor: color || '#4CAF50',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+  >
+    <FontAwesome name='check' size={18} color='#FFFFFF' />
+  </View>
+)
+
+Toast.show({
+  type: 'info',
+  text1: 'Custom Component',
+  text2: 'Using a custom React component as icon',
+  icon: <CustomIcon color='#3498db' />,
+})
+
+// Using JSX directly as icon
+Toast.show({
+  type: 'success',
+  text1: 'JSX Icon',
+  text2: 'Using JSX directly as icon',
+  icon: (
+    <View style={{ flexDirection: 'row' }}>
+      <FontAwesome name='thumbs-up' size={22} color='#4CAF50' />
+      <FontAwesome
+        name='thumbs-up'
+        size={22}
+        color='#4CAF50'
+        style={{ marginLeft: -8, marginTop: 5 }}
+      />
+    </View>
+  ),
+})
+```
+
+```jsx
+// Setting default icons at the ToastManager level
+<ToastManager
+  config={toastConfig}
+  theme='light'
+  position='top'
+  // Custom default icons configuration
+  icons={{
+    success: 'check-circle',
+    error: 'error',
+    info: 'info',
+    warn: 'warning',
+    default: 'notifications',
+  }}
+  // Default icon family
+  iconFamily='MaterialIcons'
+  // Default icon size
+  iconSize={24}
+/>
 ```
 
 ## API Reference

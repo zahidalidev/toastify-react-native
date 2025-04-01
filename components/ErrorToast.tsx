@@ -1,8 +1,7 @@
 import React from 'react';
-
-import { ToastConfigParams } from '../utils/interfaces';
-import { Colors } from '../config/theme';
 import BaseToast from './BaseToast';
+import { Colors } from '../config/theme';
+import { ToastConfigParams } from '../utils/interfaces';
 
 const ErrorToast = ({
   text1,
@@ -19,6 +18,8 @@ const ErrorToast = ({
   textColor,
   iconColor,
   iconSize,
+  icon,
+  iconFamily,
   width,
   minHeight,
   style,
@@ -26,16 +27,17 @@ const ErrorToast = ({
 }: ToastConfigParams) => {
   return (
     <BaseToast
-      icon="alert-circle"
+      icon={icon || "alert-circle"}
+      iconFamily={iconFamily || "Ionicons"}
       text1={text1}
       text2={text2}
       hide={hide}
       onPress={onPress}
       iconColor={iconColor || Colors.error}
-      backgroundColor={backgroundColor}
-      textColor={textColor}
       iconSize={iconSize}
       progressBarColor={progressBarColor || Colors.error}
+      backgroundColor={backgroundColor}
+      textColor={textColor}
       barWidth={barWidth}
       isRTL={isRTL}
       duration={duration}

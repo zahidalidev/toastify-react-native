@@ -16,6 +16,14 @@ const defaultProps: ToastManagerProps = {
   showProgressBar: true,
   isRTL: false,
   iconSize: SCALE(22),
+  iconFamily: 'Ionicons',
+  icons: {
+    success: 'checkmark-circle',
+    error: 'alert-circle',
+    info: 'information-circle',
+    warn: 'warning',
+    default: 'checkmark-circle',
+  },
 }
 
 export default defaultProps
