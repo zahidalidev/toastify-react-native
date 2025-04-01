@@ -1,6 +1,6 @@
-import React, { createRef } from 'react'
+import React, { createRef, ReactNode } from 'react'
 import ToastManager from './components/ToastManager'
-import { ToastRef, ToastShowParams, ToastPosition } from './utils/interfaces'
+import { ToastRef, ToastShowParams, ToastPosition, IconFamily } from './utils/interfaces'
 import defaultConfig from './utils/defaultConfig'
 
 // Create a ref to the ToastManager
@@ -17,32 +17,60 @@ export const Toast = {
   hide: () => {
     toastRef.current?.hide()
   },
-  success: (text: string, position?: ToastPosition) => {
+  success: (
+    text: string,
+    position?: ToastPosition,
+    icon?: string | ReactNode,
+    iconFamily?: IconFamily,
+  ) => {
     toastRef.current?.show({
       type: 'success',
       text1: text,
       position,
+      icon,
+      iconFamily,
     })
   },
-  error: (text: string, position?: ToastPosition) => {
+  error: (
+    text: string,
+    position?: ToastPosition,
+    icon?: string | ReactNode,
+    iconFamily?: IconFamily,
+  ) => {
     toastRef.current?.show({
       type: 'error',
       text1: text,
       position,
+      icon,
+      iconFamily,
     })
   },
-  info: (text: string, position?: ToastPosition) => {
+  info: (
+    text: string,
+    position?: ToastPosition,
+    icon?: string | ReactNode,
+    iconFamily?: IconFamily,
+  ) => {
     toastRef.current?.show({
       type: 'info',
       text1: text,
       position,
+      icon,
+      iconFamily,
     })
   },
-  warn: (text: string, position?: ToastPosition) => {
+  warn: (
+    text: string,
+    position?: ToastPosition,
+    icon?: string | ReactNode,
+    iconFamily?: IconFamily,
+  ) => {
     toastRef.current?.show({
       type: 'warn',
       text1: text,
       position,
+      icon,
+      iconFamily,
     })
   },
 }

@@ -18,6 +18,8 @@ const SuccessToast = ({
   textColor,
   iconColor,
   iconSize,
+  icon,
+  iconFamily,
   width,
   minHeight,
   style,
@@ -25,7 +27,8 @@ const SuccessToast = ({
 }: ToastConfigParams) => {
   return (
     <BaseToast
-      icon="checkmark-circle"
+      icon={icon || "checkmark-circle"}
+      iconFamily={iconFamily || "Ionicons"}
       text1={text1}
       text2={text2}
       hide={hide}

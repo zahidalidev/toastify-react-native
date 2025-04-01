@@ -13,6 +13,23 @@ import {
 } from 'react-native'
 import ToastManager, { Toast } from 'toastify-react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+
+// Custom icon component example
+const CustomIconComponent = ({ color }) => (
+  <View
+    style={{
+      width: 30,
+      height: 30,
+      borderRadius: 15,
+      backgroundColor: color || '#4CAF50',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+  >
+    <FontAwesome name='check' size={18} color='#FFFFFF' />
+  </View>
+)
 
 // Custom toast component - simplified without progress bar
 const CustomToast = ({ text1, text2, hide, iconColor }) => (
@@ -136,10 +153,8 @@ export default function App() {
               onPress={() => {
                 Toast.show({
                   type: 'success',
-                  text1:
-                    'Main message',
-                  text2:
-                    'This is a secondary message',
+                  text1: 'Main message',
+                  text2: 'This is a secondary message',
                   position,
                 })
               }}
@@ -215,6 +230,101 @@ export default function App() {
               }}
             />
           </View>
+
+          <Text style={styles.sectionTitle}>Custom Icons</Text>
+          <View
+            style={{
+              flexWrap: 'wrap',
+              flexDirection: 'row',
+              gap: 10,
+              justifyContent: 'flex-start',
+              width: '100%',
+            }}
+          >
+            {/* Different icon name from same family */}
+            <Button
+              title='Different Icon Name'
+              onPress={() => {
+                Toast.show({
+                  type: 'success',
+                  text1: 'Different Icon',
+                  text2: 'Using a different icon name',
+                  position,
+                  icon: 'checkmark-circle-outline',
+                })
+              }}
+            />
+
+            {/* Different icon family */}
+            <Button
+              title='Different Icon Family'
+              onPress={() => {
+                Toast.show({
+                  type: 'error',
+                  text1: 'FontAwesome Icon',
+                  text2: 'Using a different icon family',
+                  position,
+                  icon: 'exclamation-circle',
+                  iconFamily: 'FontAwesome',
+                })
+              }}
+            />
+
+            {/* Custom icon component */}
+            <Button
+              title='Custom Icon Component'
+              onPress={() => {
+                Toast.show({
+                  type: 'info',
+                  text1: 'Custom Component',
+                  text2: 'Using a custom React component as icon',
+                  position,
+                  icon: <CustomIconComponent color='#3498db' />,
+                })
+              }}
+            />
+
+            {/* Ionicons example */}
+            <Button
+              title='Ionicons Example'
+              onPress={() => {
+                Toast.show({
+                  type: 'warn',
+                  text1: 'Ionicons Example',
+                  text2: 'Using Ionicons family explicitly',
+                  position,
+                  icon: 'alert',
+                  iconFamily: 'Ionicons',
+                  iconColor: '#FFC107',
+                })
+              }}
+            />
+
+            {/* Using JSX directly as icon */}
+            <Button
+              title='JSX Icon'
+              onPress={() => {
+                Toast.show({
+                  type: 'success',
+                  text1: 'JSX Icon',
+                  text2: 'Using JSX directly as icon',
+                  position,
+                  icon: (
+                    <View style={{ flexDirection: 'row' }}>
+                      <FontAwesome name='thumbs-up' size={22} color='#4CAF50' />
+                      <FontAwesome
+                        name='thumbs-up'
+                        size={22}
+                        color='#4CAF50'
+                        style={{ marginLeft: -8, marginTop: 5 }}
+                      />
+                    </View>
+                  ),
+                })
+              }}
+            />
+          </View>
+
           <Text style={styles.sectionTitle}>Custom Components</Text>
           <View
             style={{

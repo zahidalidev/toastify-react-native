@@ -1,12 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, ReactNode } from 'react';
 import { View, Text, StyleSheet, Animated, TouchableOpacity, StyleProp, ViewStyle, DimensionValue } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
+import Feather from 'react-native-vector-icons/Feather';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Octicons from 'react-native-vector-icons/Octicons';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 import { Colors } from '../config/theme';
 import { SCALE } from '../utils/helpers';
 
+// Map of icon families to their components
+const IconFamilies = {
+  Ionicons: Icon,
+  MaterialIcons,
+  FontAwesome,
+  FontAwesome5,
+  MaterialCommunityIcons,
+  Entypo,
+  Feather,
+  AntDesign,
+  Octicons,
+  SimpleLineIcons
+};
+
 interface BaseToastProps {
-  icon?: string;
+  icon?: string | ReactNode;
+  iconFamily?: keyof typeof IconFamilies | string;
   text1?: string;
   text2?: string;
   onPress?: () => void;
@@ -25,11 +49,12 @@ interface BaseToastProps {
   width?: number | string;
   minHeight?: number | string;
   style?: StyleProp<ViewStyle>;
-  theme?: 'light' | 'dark'; // Add theme prop
+  theme?: 'light' | 'dark';
 }
 
 const BaseToast = ({
   icon = 'checkmark-circle',
+  iconFamily = 'Ionicons',
   text1,
   text2,
   onPress,
@@ -48,7 +73,7 @@ const BaseToast = ({
   width,
   minHeight,
   style,
-  theme = 'light', // Default to light theme
+  theme = 'light',
 }: BaseToastProps) => {
   // Use a local animated value if no external one is provided
   const localBarWidth = React.useRef(new Animated.Value(100)).current;
@@ -97,12 +122,50 @@ const BaseToast = ({
     style
   ].filter(Boolean);
 
+  // Render the icon based on type (string or ReactNode)
+  const renderIcon = () => {
+    // If icon is a ReactNode (custom component), render it directly
+    if (React.isValidElement(icon)) {
+      return (
+        <View style={[styles.iconWrapper, rtlIconWrapperStyle]} testID={`${testID}-custom-icon`}>
+          {icon}
+        </View>
+      );
+    }
+
+    // If icon is a string, render the appropriate icon from the specified family
+    if (typeof icon === 'string') {
+      // Get the icon component for the specified family
+      const IconComponent = IconFamilies[iconFamily as keyof typeof IconFamilies] || Icon;
+
+      return (
+        <IconComponent
+          name={icon}
+          size={iconSize}
+          color={iconColor}
+          style={[styles.iconWrapper, rtlIconWrapperStyle]}
+          testID={`${testID}-icon`}
+        />
+      );
+    }
+
+    // Fallback to default icon if none provided
+    return (
+      <Icon
+        name="checkmark-circle"
+        size={iconSize}
+        color={iconColor}
+        style={[styles.iconWrapper, rtlIconWrapperStyle]}
+        testID={`${testID}-icon`}
+      />
+    );
+  };
+
   return (
     <View
       style={containerStyle}
       testID={testID}
     >
-
       {showCloseIcon && (
         <TouchableOpacity
           style={[styles.hideButton, rtlHideButtonStyle]}
@@ -116,13 +179,7 @@ const BaseToast = ({
 
       <View style={styles.content} testID={`${testID}-content`}>
         <View style={[styles.contentInner, rtlContentStyle]}>
-          <Icon
-            name={icon}
-            size={iconSize}
-            color={iconColor}
-            style={[styles.iconWrapper, rtlIconWrapperStyle]}
-            testID={`${testID}-icon`}
-          />
+          {renderIcon()}
           <View style={{ flex: 1 }} testID={`${testID}-text-container`}>
             {text1 ? (
               <Text
@@ -220,11 +277,11 @@ const styles = StyleSheet.create({
     marginRight: SCALE(8),
   },
   text1: {
-    fontSize: SCALE(16),
+    fontSize: SCALE(14),
     fontWeight: "500",
   },
   text2: {
-    fontSize: SCALE(14),
+    fontSize: SCALE(12),
     fontWeight: "400",
     marginTop: SCALE(4),
     opacity: 0.8,
