@@ -49,7 +49,7 @@ Follow the [react-native-vector-icons installation guide](https://github.com/obl
 ```jsx
 import React from 'react'
 import { View, Button } from 'react-native'
-import Toast, { Toast as ToastFunc } from 'toastify-react-native'
+import ToastManager, { Toast } from 'toastify-react-native'
 
 export default function App() {
   return (
@@ -57,33 +57,33 @@ export default function App() {
       <Button
         title='Show Success Toast'
         onPress={() => {
-          ToastFunc.success('Success message!')
+          Toast.success('Success message!')
         }}
       />
 
       <Button
         title='Show Error Toast'
         onPress={() => {
-          ToastFunc.error('Error message!')
+          Toast.error('Error message!')
         }}
       />
 
       <Button
         title='Show Info Toast'
         onPress={() => {
-          ToastFunc.info('Info message!')
+          Toast.info('Info message!')
         }}
       />
 
       <Button
         title='Show Warning Toast'
         onPress={() => {
-          ToastFunc.warn('Warning message!')
+          Toast.warn('Warning message!')
         }}
       />
 
       {/* Toast provider should be at the root level */}
-      <Toast />
+      <ToastManager />
     </View>
   )
 }
@@ -96,7 +96,7 @@ export default function App() {
 ```jsx
 import React from 'react'
 import { View, Button, Text } from 'react-native'
-import Toast, { Toast as ToastFunc } from 'toastify-react-native'
+import ToastManager, { Toast } from 'toastify-react-native'
 
 // Custom toast configuration
 const toastConfig = {
@@ -115,7 +115,7 @@ export default function App() {
       <Button
         title='Show Custom Toast'
         onPress={() => {
-          ToastFunc.show({
+          Toast.show({
             type: 'success',
             text1: 'Main message',
             text2: 'Secondary message',
@@ -130,7 +130,7 @@ export default function App() {
       />
 
       {/* Toast provider with custom config */}
-      <Toast config={toastConfig} />
+      <ToastManager config={toastConfig} />
     </View>
   )
 }
@@ -139,15 +139,15 @@ export default function App() {
 ### Toast Positions
 
 ```jsx
-ToastFunc.success('Top toast', 'top') // default
-ToastFunc.error('Center toast', 'center')
-ToastFunc.info('Bottom toast', 'bottom')
+Toast.success('Top toast', 'top') // default
+Toast.error('Center toast', 'center')
+Toast.info('Bottom toast', 'bottom')
 ```
 
 ### Customizing Individual Toasts
 
 ```jsx
-ToastFunc.show({
+Toast.show({
   type: 'success',
   text1: 'Custom Toast',
   text2: 'With many options',
@@ -212,7 +212,7 @@ You can create your own toast components by providing a custom configuration:
 ```jsx
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import Toast, { Toast as ToastFunc } from 'toastify-react-native'
+import ToastManager, { Toast } from 'toastify-react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 
 const CustomToast = ({ text1, text2, hide }) => {
@@ -268,7 +268,7 @@ export default function App() {
       <Button
         title='Show Custom Toast'
         onPress={() => {
-          ToastFunc.show({
+          Toast.show({
             type: 'custom',
             text1: 'Custom Component',
             text2: 'This is a fully custom toast component!',
@@ -276,7 +276,7 @@ export default function App() {
         }}
       />
 
-      <Toast config={toastConfig} />
+      <ToastManager config={toastConfig} />
     </View>
   )
 }
