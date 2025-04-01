@@ -34,6 +34,8 @@
 
 ```sh
 npm install toastify-react-native
+# or
+yarn add toastify-react-native
 ```
 
 ### Required Dependencies
@@ -42,6 +44,8 @@ This package requires `react-native-vector-icons`:
 
 ```sh
 npm install react-native-vector-icons
+# or
+yarn add react-native-vector-icons
 ```
 
 Follow the [react-native-vector-icons installation guide](https://github.com/oblador/react-native-vector-icons#installation) to complete the setup for your platform.
