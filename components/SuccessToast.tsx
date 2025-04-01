@@ -12,6 +12,7 @@ const SuccessToast = ({
   isRTL,
   duration,
   showProgressBar,
+  showCloseIcon,
   progressBarColor,
   backgroundColor,
   textColor,
@@ -38,6 +39,7 @@ const SuccessToast = ({
       isRTL={isRTL}
       duration={duration}
       showProgressBar={showProgressBar}
+      showCloseIcon={showCloseIcon}
       testID="toast-success"
       theme={theme}
       width={width}

@@ -13,6 +13,7 @@ const WarnToast = ({
   isRTL,
   duration,
   showProgressBar,
+  showCloseIcon,
   progressBarColor,
   backgroundColor,
   textColor,
@@ -39,6 +40,7 @@ const WarnToast = ({
       isRTL={isRTL}
       duration={duration}
       showProgressBar={showProgressBar}
+      showCloseIcon={showCloseIcon}
       testID="toast-warn"
       width={width}
       theme={theme}

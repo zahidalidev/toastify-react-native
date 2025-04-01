@@ -289,6 +289,7 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
         isRTL: isRTL,
         duration: duration,
         showProgressBar: showProgressBar,
+        showCloseIcon: showCloseIcon,
         progressBarColor: progressBarColor,
         backgroundColor: backgroundColor,
         textColor: textColor,

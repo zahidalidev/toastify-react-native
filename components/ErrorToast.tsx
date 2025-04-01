@@ -13,6 +13,7 @@ const ErrorToast = ({
   isRTL,
   duration,
   showProgressBar,
+  showCloseIcon,
   progressBarColor,
   backgroundColor,
   textColor,
@@ -39,6 +40,7 @@ const ErrorToast = ({
       isRTL={isRTL}
       duration={duration}
       showProgressBar={showProgressBar}
+      showCloseIcon={showCloseIcon}
       testID="toast-error"
       theme={theme}
       width={width}

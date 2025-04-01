@@ -44,6 +44,8 @@ export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [isRTL, setIsRTL] = useState(false)
   const [position, setPosition] = useState('bottom')
+  const [showProgressBar, setShowProgressBar] = useState(true)
+  const [showCloseIcon, setShowCloseIcon] = useState(true)
 
   // Toggle between positions
   const togglePosition = () => {
@@ -68,6 +70,16 @@ export default function App() {
             <View style={styles.settingRow}>
               <Text>RTL Support</Text>
               <Switch value={isRTL} onValueChange={setIsRTL} />
+            </View>
+
+            <View style={styles.settingRow}>
+              <Text>Show Progress Bar</Text>
+              <Switch value={showProgressBar} onValueChange={setShowProgressBar} />
+            </View>
+
+            <View style={styles.settingRow}>
+              <Text>Show Close Icon</Text>
+              <Switch value={showCloseIcon} onValueChange={setShowCloseIcon} />
             </View>
 
             <View style={styles.settingRow}>
@@ -110,140 +122,133 @@ export default function App() {
           </View>
 
           <Text style={styles.sectionTitle}>Advanced Features</Text>
-          <Button
-            title='With Secondary Text'
-            onPress={() => {
-              Toast.show({
-                type: 'success',
-                text1: 'Main message',
-                text2: 'This is a secondary message with more details',
-                position,
-              })
+          <View
+            style={{
+              flexWrap: 'wrap',
+              flexDirection: 'row',
+              gap: 10,
+              justifyContent: 'flex-start',
+              width: '100%',
             }}
-          />
+          >
+            <Button
+              title='With Secondary Text'
+              onPress={() => {
+                Toast.show({
+                  type: 'success',
+                  text1: 'Main message',
+                  text2: 'This is a secondary message with more details',
+                  position,
+                })
+              }}
+            />
 
-          <Button
-            title='Custom Colors'
-            onPress={() => {
-              Toast.show({
-                type: 'error',
-                text1: 'Custom Colors',
-                text2: 'With custom background and progress bar',
-                position,
-                backgroundColor: '#673AB7',
-                textColor: '#FFFFFF',
-                progressBarColor: '#FF9800',
-              })
-            }}
-          />
+            <Button
+              title='Custom Colors'
+              onPress={() => {
+                Toast.show({
+                  type: 'error',
+                  text1: 'Custom Colors',
+                  text2: 'With custom background and progress bar',
+                  position,
+                  backgroundColor: '#673AB7',
+                  textColor: '#FFFFFF',
+                  progressBarColor: '#FF9800',
+                })
+              }}
+            />
 
-          <Button
-            title='Custom Icon Size'
-            onPress={() => {
-              Toast.show({
-                type: 'info',
-                text1: 'Larger Icon',
-                text2: 'This toast has a larger icon',
-                position,
-                iconSize: 30,
-                iconColor: '#FF9800',
-              })
-            }}
-          />
+            <Button
+              title='Custom Icon Size'
+              onPress={() => {
+                Toast.show({
+                  type: 'info',
+                  text1: 'Larger Icon',
+                  text2: 'This toast has a larger icon',
+                  position,
+                  iconSize: 30,
+                  iconColor: '#FF9800',
+                })
+              }}
+            />
 
-          <Button
-            title='Long Duration (8s)'
-            onPress={() => {
-              Toast.show({
-                type: 'success',
-                text1: 'Long Duration',
-                text2: 'This toast will stay for 8 seconds',
-                position,
-                visibilityTime: 8000,
-              })
-            }}
-          />
+            <Button
+              title='Long Duration (8s)'
+              onPress={() => {
+                Toast.show({
+                  type: 'success',
+                  text1: 'Long Duration',
+                  text2: 'This toast will stay for 8 seconds',
+                  position,
+                  visibilityTime: 8000,
+                })
+              }}
+            />
 
-          <Button
-            title='No Auto Hide'
-            onPress={() => {
-              Toast.show({
-                type: 'warn',
-                text1: 'No Auto Hide',
-                text2: 'This toast will not hide automatically',
-                position,
-                autoHide: false,
-              })
-            }}
-          />
+            <Button
+              title='No Auto Hide'
+              onPress={() => {
+                Toast.show({
+                  type: 'warn',
+                  text1: 'No Auto Hide',
+                  text2: 'This toast will not hide automatically',
+                  position,
+                  autoHide: false,
+                })
+              }}
+            />
 
-          <Button
-            title='No Progress Bar'
-            onPress={() => {
-              Toast.show({
-                type: 'info',
-                text1: 'No Progress Bar',
-                text2: 'This toast has no progress bar',
-                position,
-                showProgressBar: false,
-              })
-            }}
-          />
-
-          <Button
-            title='No Close Icon'
-            onPress={() => {
-              Toast.show({
-                type: 'error',
-                text1: 'No Close Icon',
-                text2: 'This toast has no close icon',
-                position,
-                showCloseIcon: false,
-              })
-            }}
-          />
-
-          <Button
-            title='With Callbacks'
-            onPress={() => {
-              Toast.show({
-                type: 'success',
-                text1: 'With Callbacks',
-                text2: 'Check console for logs',
-                position,
-                onPress: () => console.log('Toast pressed'),
-                onShow: () => console.log('Toast shown'),
-                onHide: () => console.log('Toast hidden'),
-              })
-            }}
-          />
-
+            <Button
+              title='With Callbacks'
+              onPress={() => {
+                Toast.show({
+                  type: 'success',
+                  text1: 'With Callbacks',
+                  text2: 'Check console for logs',
+                  position,
+                  onPress: () => console.log('Toast pressed'),
+                  onShow: () => console.log('Toast shown'),
+                  onHide: () => console.log('Toast hidden'),
+                })
+              }}
+            />
+          </View>
           <Text style={styles.sectionTitle}>Custom Components</Text>
-          <Button
-            title='Custom Success Toast'
-            onPress={() => {
-              Toast.show({
-                type: 'success',
-                text1: 'Custom Success',
-                text2: 'Using the custom success component',
-                position,
-              })
+          <View
+            style={{
+              flexWrap: 'wrap',
+              flexDirection: 'row',
+              gap: 10,
+              justifyContent: 'flex-start',
+              width: '100%',
             }}
-          />
+          >
+            <Button
+              title='Custom Success Toast'
+              onPress={() => {
+                Toast.show({
+                  type: 'success',
+                  text1: 'Custom Success',
+                  text2: 'Using the custom success component',
+                  position,
+                })
+              }}
+            />
 
-          <Button
-            title='Fully Custom Toast'
-            onPress={() => {
-              Toast.show({
-                type: 'custom',
-                text1: 'Fully Custom',
-                text2: 'This is a completely custom component',
-                position,
-                iconColor: '#FF5722',
-                progressBarColor: '#4CAF50',
-              })
-            }}
-          />
+            <Button
+              title='Fully Custom Toast'
+              onPress={() => {
+                Toast.show({
+                  type: 'custom',
+                  text1: 'Fully Custom',
+                  text2: 'This is a completely custom component',
+                  position,
+                  iconColor: '#FF5722',
+                  progressBarColor: '#4CAF50',
+                })
+              }}
+            />
+          </View>
         </View>
       </ScrollView>
 
@@ -253,6 +258,8 @@ export default function App() {
         theme={isDarkMode ? 'dark' : 'light'}
         position={position}
         isRTL={isRTL}
+        showProgressBar={showProgressBar}
+        showCloseIcon={showCloseIcon}
         animationStyle='fade'
       />
     </SafeAreaView>

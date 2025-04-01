@@ -13,6 +13,7 @@ const InfoToast = ({
   isRTL,
   duration,
   showProgressBar,
+  showCloseIcon,
   progressBarColor,
   backgroundColor,
   textColor,
@@ -39,6 +40,7 @@ const InfoToast = ({
       isRTL={isRTL}
       duration={duration}
       showProgressBar={showProgressBar}
+      showCloseIcon={showCloseIcon}
       testID="toast-info"
       width={width}
       theme={theme}

@@ -102,6 +102,7 @@ const BaseToast = ({
       style={containerStyle}
       testID={testID}
     >
+
       {showCloseIcon && (
         <TouchableOpacity
           style={[styles.hideButton, rtlHideButtonStyle]}
