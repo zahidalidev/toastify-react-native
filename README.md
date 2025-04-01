@@ -312,7 +312,14 @@ For users of v6.x and below, refer to the [legacy documentation](./README-legacy
 
 ## Contributing
 
-Pull requests, feedback, and suggestions are welcome! Feel free to contribute to this project.
+We welcome contributions to make toastify-react-native even better!
+
+- Check out our [contribution guidelines](./CONTRIBUTING.md) for details on the process
+- Have questions? Open an issue or join the discussion
+- Found a bug? Submit a pull request
+- Have a feature request? Open an issue
+
+Thank you to all our contributors!
 
 ## License
 
