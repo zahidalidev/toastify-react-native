@@ -8,7 +8,7 @@
 
 ## [View examples on snack.expo.io](https://snack.expo.io/@zahidalidev/toastify-react-native)
 
-https://github.com/user-attachments/assets/14b6336e-44e5-41b5-83ea-94f8571f1eee
+<video src="https://github.com/user-attachments/assets/14b6336e-44e5-41b5-83ea-94f8571f1eee" autoplay loop muted playsinline></video>
 
 ## Features
 
