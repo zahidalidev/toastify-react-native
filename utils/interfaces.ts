@@ -53,14 +53,14 @@ export interface ToastConfigParams {
   iconSize?: number
   testID?: string
   width?: number | string
-  height?: number | string
+  minHeight?: number | string
   style?: StyleProp<ViewStyle>
   theme?: 'light' | 'dark'
 }
 
 export interface ToastManagerProps {
   width?: number | string | 'auto'
-  height?: number | string | 'auto'
+  minHeight?: number | string | 'auto'
   duration?: number
   style?: StyleProp<ViewStyle>
   textStyle?: StyleProp<TextStyle>

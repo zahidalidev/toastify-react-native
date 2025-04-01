@@ -20,7 +20,7 @@ const ErrorToast = ({
   iconColor,
   iconSize,
   width,
-  height,
+  minHeight,
   style,
   theme = 'light'
 }: ToastConfigParams) => {
@@ -44,7 +44,7 @@ const ErrorToast = ({
       testID="toast-error"
       theme={theme}
       width={width}
-      height={height}
+      minHeight={minHeight}
       style={style}
     />
   );

@@ -170,7 +170,7 @@ ToastFunc.show({
 | Prop            | Type                          | Default   | Description                                        |
 | --------------- | ----------------------------- | --------- | -------------------------------------------------- |
 | width           | number \| string \| 'auto'    | '90%'     | Width of the toast                                 |
-| height          | number \| string \| 'auto'    | 61        | Height of the toast                                |
+| minHeight       | number \| string \| 'auto'    | 61        | Minimum height of the toast                        |
 | style           | StyleProp<ViewStyle>          | {}        | Custom style for the toast container               |
 | textStyle       | StyleProp<TextStyle>          | {}        | Custom style for the toast text                    |
 | theme           | 'light' \| 'dark'             | 'light'   | Theme of the toast                                 |

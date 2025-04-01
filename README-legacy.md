@@ -50,16 +50,16 @@ $ npm install react-native-modal react-native-vector-icons
 ### App.js
 
 ```javascript
-import React from "react";
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
-import ToastManager, { Toast } from "toastify-react-native";
+import React from 'react'
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
+import ToastManager, { Toast } from 'toastify-react-native'
 
-import Another from "./Another";
+import Another from './Another'
 
 const App = () => {
   const showToasts = () => {
-    Toast.success("Promised is resolved");
-  };
+    Toast.success('Promised is resolved')
+  }
 
   return (
     <View style={styles.container}>
@@ -68,8 +68,8 @@ const App = () => {
       <TouchableOpacity
         onPress={showToasts}
         style={{
-          backgroundColor: "white",
-          borderColor: "green",
+          backgroundColor: 'white',
+          borderColor: 'green',
           borderWidth: 1,
           padding: 10,
         }}
@@ -77,51 +77,54 @@ const App = () => {
         <Text>SHOW SOME AWESOMENESS!</Text>
       </TouchableOpacity>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-});
+})
 
-export default App;
+export default App
 ```
 
 ### Another.js
 
 ```javascript
-import React from "react";
-import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
-import { Toast } from "toastify-react-native";
+import React from 'react'
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
+import { Toast } from 'toastify-react-native'
 const Another = () => (
   <View style={styles.container}>
-    <TouchableOpacity onPress={() => Toast.info("Lorem ipsum info", "bottom")} style={styles.buttonStyle}>
+    <TouchableOpacity
+      onPress={() => Toast.info('Lorem ipsum info', 'bottom')}
+      style={styles.buttonStyle}
+    >
       <Text>SHOW SOME AWESOMENESS!</Text>
     </TouchableOpacity>
   </View>
-);
+)
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonStyle: {
     marginTop: 10,
-    backgroundColor: "white",
-    borderColor: "green",
+    backgroundColor: 'white',
+    borderColor: 'green',
     borderWidth: 2,
     padding: 10,
   },
-});
+})
 
-export default Another;
+export default Another
 ```
 
 For a more complex example take a look at the `/example` directory.
@@ -131,7 +134,7 @@ For a more complex example take a look at the `/example` directory.
 | Name                        | Type                                           | Default        | Description                                     |
 | --------------------------- | ---------------------------------------------- | -------------- | ----------------------------------------------- |
 | width                       | number or 'auto'                               | 256            | Width of toast                                  |
-| height                      | number or 'auto'                               | 68             | Height of the toast                             |
+| minHeight                   | number or 'auto'                               | 68             | Minimum height of the toast                     |
 | style                       | any                                            | null           | Style applied to the toast                      |
 | textStyle                   | any                                            | null           | Style applied to the toast content              |
 | position                    | top, center or bottom                          | top            | Position of toast                               |

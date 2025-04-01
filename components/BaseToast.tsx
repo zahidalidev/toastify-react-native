@@ -23,7 +23,7 @@ interface BaseToastProps {
   duration?: number;
   testID?: string;
   width?: number | string;
-  height?: number | string;
+  minHeight?: number | string;
   style?: StyleProp<ViewStyle>;
   theme?: 'light' | 'dark'; // Add theme prop
 }
@@ -46,7 +46,7 @@ const BaseToast = ({
   duration = 3000,
   testID = 'toast-base',
   width,
-  height,
+  minHeight,
   style,
   theme = 'light', // Default to light theme
 }: BaseToastProps) => {
@@ -88,7 +88,7 @@ const BaseToast = ({
     styles.container,
     { backgroundColor: bgColor },
     width !== undefined && { width: width as DimensionValue },
-    height !== undefined && { height: height as DimensionValue },
+    minHeight !== undefined && { minHeight: minHeight as DimensionValue },
     // Add shadow color based on theme
     {
       shadowColor: theme === 'dark' ? "#fff" : "#000",
@@ -187,7 +187,7 @@ const BaseToast = ({
 const styles = StyleSheet.create({
   container: {
     width: '90%',
-    height: SCALE(61),
+    minHeight: SCALE(61),
     borderRadius: 8,
     shadowOffset: {
       width: 0,

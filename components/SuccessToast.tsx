@@ -19,7 +19,7 @@ const SuccessToast = ({
   iconColor,
   iconSize,
   width,
-  height,
+  minHeight,
   style,
   theme = 'light'
 }: ToastConfigParams) => {
@@ -43,7 +43,7 @@ const SuccessToast = ({
       testID="toast-success"
       theme={theme}
       width={width}
-      height={height}
+      minHeight={minHeight}
       style={style}
     />
   );

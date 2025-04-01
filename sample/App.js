@@ -136,8 +136,10 @@ export default function App() {
               onPress={() => {
                 Toast.show({
                   type: 'success',
-                  text1: 'Main message',
-                  text2: 'This is a secondary message with more details',
+                  text1:
+                    'Main message as da sd as d as d as d as d as d as f a sd as f asd asd  as d as fa s f as  das  f  as f  as d as    f asdas',
+                  text2:
+                    'This is a secondary message with more details as da s f as  da s fas ass   as dfaf  sad as a sfkj asjkdf as fkja ',
                   position,
                 })
               }}

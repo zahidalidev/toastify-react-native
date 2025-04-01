@@ -4,7 +4,7 @@ import { SCALE } from './helpers'
 const defaultProps: ToastManagerProps = {
   theme: 'light',
   width: '90%',
-  height: SCALE(61),
+  minHeight: SCALE(61),
   style: {},
   textStyle: {},
   position: 'top',

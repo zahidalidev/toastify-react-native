@@ -20,7 +20,7 @@ const WarnToast = ({
   iconColor,
   iconSize,
   width,
-  height,
+  minHeight,
   style,
   theme = 'light'
 }: ToastConfigParams) => {
@@ -44,7 +44,7 @@ const WarnToast = ({
       testID="toast-warn"
       width={width}
       theme={theme}
-      height={height}
+      minHeight={minHeight}
       style={style}
     />
   );

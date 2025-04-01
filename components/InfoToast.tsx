@@ -20,7 +20,7 @@ const InfoToast = ({
   iconColor,
   iconSize,
   width,
-  height,
+  minHeight,
   style,
   theme = 'light'
 }: ToastConfigParams) => {
@@ -44,7 +44,7 @@ const InfoToast = ({
       testID="toast-info"
       width={width}
       theme={theme}
-      height={height}
+      minHeight={minHeight}
       style={style}
     />
   );

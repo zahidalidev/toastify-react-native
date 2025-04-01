@@ -242,7 +242,7 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
       config,
       theme = 'light',
       width,
-      height,
+      minHeight,
       style,
       textStyle,
       showCloseIcon,
@@ -296,7 +296,7 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
         iconColor: iconColor,
         iconSize: finalIconSize,
         width: width,
-        height: height,
+        minHeight: minHeight,
         style: style,
         theme: finalTheme,
       });
@@ -323,7 +323,7 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
         theme={finalTheme}
         testID={`toast-${type}`}
         width={width}
-        height={height}
+        minHeight={minHeight}
         style={style}
       />
     );
