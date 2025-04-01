@@ -1,6 +1,6 @@
 {
   "name": "toastify-react-native",
-  "version": "6.0.0",
+  "version": "7.0.0",
   "description": "🎉 toastify-react-native allows you to add notifications to your react-native app (ios, android) with ease. No more nonsense!",
   "main": "index.ts",
   "scripts": {
@@ -47,7 +47,6 @@
   "author": "Zahid Ali <m.zahidalidev@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "react-native-modal": "*",
     "react-native-vector-icons": "*"
   }
 }

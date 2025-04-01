@@ -1,22 +1,28 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
 
-import { SCALE } from "../utils/helpers";
+import { SCALE } from '../utils/helpers'
 
 const styles = StyleSheet.create({
-  modalContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    zIndex: 200,
+  containerRoot: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    zIndex: 10000,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-
+  containerTop: {
+    top: 0,
+  },
+  containerBottom: {
+    bottom: 0,
+  },
   mainContainer: {
-    borderRadius: 6,
-    position: "absolute",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    justifyContent: "center",
-    shadowColor: "#000",
+    borderRadius: 8,
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -25,40 +31,40 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-
   hideButton: {
-    position: "absolute",
+    position: 'absolute',
     top: SCALE(3.2),
     right: SCALE(3.2),
   },
-
   textStyle: {
     fontSize: SCALE(16),
-    fontWeight: "400",
+    fontWeight: '400',
     flex: 1,
-    width: "auto",
-    maxWidth: "85%",
+    width: 'auto',
+    maxWidth: '85%',
   },
-
   progressBarContainer: {
-    flexDirection: "row",
-    position: "absolute",
+    flexDirection: 'row',
+    position: 'absolute',
     height: 4,
-    width: "100%",
+    width: '100%',
     bottom: 0,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
+    overflow: 'hidden',
   },
-
   content: {
-    width: "100%",
-    padding: SCALE(9.6),
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
-
   iconWrapper: {
-    marginRight: SCALE(4.48),
+    marginRight: SCALE(8),
   },
-});
+  pressable: {
+    width: '100%',
+  },
+})
 
-export default styles;
+export default styles

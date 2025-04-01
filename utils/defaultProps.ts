@@ -1,26 +1,21 @@
-import { SCALE } from "./helpers";
+import { ToastManagerProps } from './interfaces'
+import { SCALE } from './helpers'
 
-export default {
-  theme: "light",
-  width: SCALE(204.8),
-  height: SCALE(54.4),
+const defaultProps: ToastManagerProps = {
+  theme: 'light',
+  width: '90%',
+  minHeight: SCALE(61),
   style: {},
   textStyle: {},
-  position: "top",
-  positionValue: 50,
-  end: 0,
+  position: 'top',
   duration: 3000,
-  animationInTiming: 300,
-  animationOutTiming: 300,
-  backdropTransitionInTiming: 300,
-  backdropTransitionOutTiming: 300,
-  animationIn: "",
-  animationOut: "",
-  animationStyle: "slideInOut",
-  hasBackdrop: false,
-  backdropColor: "black",
-  backdropOpacity: 0.2,
+  animationStyle: 'fade',
+  topOffset: 40,
+  bottomOffset: 40,
   showCloseIcon: true,
   showProgressBar: true,
   isRTL: false,
-};
+  iconSize: SCALE(22),
+}
+
+export default defaultProps
