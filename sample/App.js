@@ -28,7 +28,7 @@ const CustomToast = ({ text1, text2, hide, iconColor }) => (
 
 // Custom toast configuration
 const toastConfig = {
-  success: (props) => (
+  customSuccess: (props) => (
     <View style={styles.customSuccessToast}>
       <Icon name='check-circle' size={24} color='#fff' />
       <View style={styles.textContainer}>
@@ -227,7 +227,7 @@ export default function App() {
               title='Custom Success Toast'
               onPress={() => {
                 Toast.show({
-                  type: 'success',
+                  type: 'customSuccess',
                   text1: 'Custom Success',
                   text2: 'Using the custom success component',
                   position,
