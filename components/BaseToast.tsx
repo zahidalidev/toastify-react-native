@@ -126,6 +126,7 @@ const BaseToast = ({
           <View style={{ flex: 1 }} testID={`${testID}-text-container`}>
             {text1 ? (
               <Text
+                allowFontScaling={false}
                 style={[styles.text1, { color: txtColor }, rtlTextStyle, textMarginStyle]}
                 testID={`${testID}-text1`}
               >
@@ -134,6 +135,7 @@ const BaseToast = ({
             ) : null}
             {text2 ? (
               <Text
+                allowFontScaling={false}
                 style={[styles.text2, { color: txtColor }, rtlTextStyle, textMarginStyle]}
                 testID={`${testID}-text2`}
               >
