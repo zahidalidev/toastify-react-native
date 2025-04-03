@@ -1,5 +1,5 @@
 import React, { Component, createRef, ReactNode, forwardRef, RefObject } from "react";
-import { Animated, Modal, TouchableOpacity } from "react-native";
+import { Animated, Modal, TouchableOpacity, View } from "react-native";
 
 import {
   ToastManagerProps,
@@ -355,28 +355,30 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
     const { isVisible, position } = this.state;
 
     return (
-      <Modal
-        visible={isVisible}
-        transparent={true}
-        animationType={this.getAnimationType()}
-        onRequestClose={this.hide}
-        testID="toast-modal"
-      >
-        <TouchableOpacity
-          activeOpacity={1}
-          onPressIn={() => this.pause()}
-          onPressOut={() => this.resume()}
-          style={[
-            styles.containerRoot,
-            position === 'top' ? styles.containerTop :
-              position === 'bottom' ? styles.containerBottom : {},
-            this.getPositionStyle(),
-          ]}
-          testID="toast-container"
+      <View>
+        <Modal
+          visible={isVisible}
+          transparent={true}
+          animationType={this.getAnimationType()}
+          onRequestClose={this.hide}
+          testID="toast-modal"
         >
-          {this.renderToastContent()}
-        </TouchableOpacity>
-      </Modal>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPressIn={() => this.pause()}
+            onPressOut={() => this.resume()}
+            style={[
+              styles.containerRoot,
+              position === 'top' ? styles.containerTop :
+                position === 'bottom' ? styles.containerBottom : {},
+              this.getPositionStyle(),
+            ]}
+            testID="toast-container"
+          >
+            {this.renderToastContent()}
+          </TouchableOpacity>
+        </Modal>
+      </View>
     );
   }
 }
