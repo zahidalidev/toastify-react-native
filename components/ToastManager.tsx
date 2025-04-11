@@ -15,8 +15,8 @@ import BaseToast from "./BaseToast";
 import styles from "./styles";
 
 class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
-  private timerId: NodeJS.Timeout | null = null;
-  private animationRef: Animated.CompositeAnimation | null = null;
+  timerId: NodeJS.Timeout | null = null;
+  animationRef: Animated.CompositeAnimation | null = null;
   static toastRef: RefObject<ToastRef> = createRef();
   static defaultProps = defaultProps;
 
@@ -384,27 +384,41 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
 }
 
 const ToastManager = forwardRef((props: ToastManagerProps, ref) => {
-  return <ToastManagerComponent {...props} ref={ref} />;
+  return <ToastManagerComponent {...props} ref={ref as any} />;
 });
 
-// Add the static methods to the forwarded ref component
-ToastManager.setRef = (ref: any) => {
+// Define the type for the ToastManager component with static methods
+interface ToastManagerType extends React.ForwardRefExoticComponent<
+  ToastManagerProps & React.RefAttributes<ToastManagerComponent>
+> {
+  setRef: (ref: any) => void;
+  getRef: () => RefObject<ToastRef>;
+  show: (options: ToastShowParams) => void;
+  hide: () => void;
+  success: (text: string, position?: ToastPosition) => void;
+  error: (text: string, position?: ToastPosition) => void;
+  info: (text: string, position?: ToastPosition) => void;
+  warn: (text: string, position?: ToastPosition) => void;
+  defaultProps: ToastManagerProps;
+}
+
+(ToastManager as ToastManagerType).setRef = (ref: any) => {
   ToastManagerComponent.toastRef = ref;
 };
 
-ToastManager.getRef = () => {
-  ToastManagerComponent.toastRef;
+(ToastManager as ToastManagerType).getRef = () => {
+  return ToastManagerComponent.toastRef;
 };
 
-ToastManager.show = (options: ToastShowParams) => {
+(ToastManager as ToastManagerType).show = (options: ToastShowParams) => {
   ToastManagerComponent.toastRef?.current?.show(options);
 };
 
-ToastManager.hide = () => {
+(ToastManager as ToastManagerType).hide = () => {
   ToastManagerComponent.toastRef?.current?.hide();
 };
 
-ToastManager.success = (text: string, position?: ToastPosition) => {
+(ToastManager as ToastManagerType).success = (text: string, position?: ToastPosition) => {
   ToastManagerComponent.toastRef?.current?.show({
     type: 'success',
     text1: text,
@@ -412,7 +426,7 @@ ToastManager.success = (text: string, position?: ToastPosition) => {
   });
 };
 
-ToastManager.error = (text: string, position?: ToastPosition) => {
+(ToastManager as ToastManagerType).error = (text: string, position?: ToastPosition) => {
   ToastManagerComponent.toastRef?.current?.show({
     type: 'error',
     text1: text,
@@ -420,7 +434,7 @@ ToastManager.error = (text: string, position?: ToastPosition) => {
   });
 };
 
-ToastManager.info = (text: string, position?: ToastPosition) => {
+(ToastManager as ToastManagerType).info = (text: string, position?: ToastPosition) => {
   ToastManagerComponent.toastRef?.current?.show({
     type: 'info',
     text1: text,
@@ -428,7 +442,7 @@ ToastManager.info = (text: string, position?: ToastPosition) => {
   });
 };
 
-ToastManager.warn = (text: string, position?: ToastPosition) => {
+(ToastManager as ToastManagerType).warn = (text: string, position?: ToastPosition) => {
   ToastManagerComponent.toastRef?.current?.show({
     type: 'warn',
     text1: text,
@@ -437,6 +451,6 @@ ToastManager.warn = (text: string, position?: ToastPosition) => {
 };
 
 // Copy defaultProps to the forwarded ref component
-ToastManager.defaultProps = ToastManagerComponent.defaultProps;
+(ToastManager as ToastManagerType).defaultProps = ToastManagerComponent.defaultProps;
 
-export default ToastManager;
+export default ToastManager as ToastManagerType;
