@@ -98,10 +98,10 @@ const BaseToast = ({
     }
   }, [externalBarWidth, showProgressBar, isRTL, duration, localBarWidth]);
 
-  const rtlContentStyle = isRTL ? { flexDirection: 'row-reverse' } : {};
+  const rtlContentStyle = isRTL ? { flexDirection: 'row-reverse' as 'row-reverse' } : {};
   const rtlHideButtonStyle = isRTL ? { right: undefined, left: SCALE(3.2) } : {};
   const rtlIconWrapperStyle = isRTL ? { marginRight: 0, marginLeft: SCALE(8) } : {};
-  const rtlTextStyle = isRTL ? { textAlign: 'right' } : {};
+  const rtlTextStyle = isRTL ? { textAlign: 'right' as 'right' } : {};
 
   // Adjust margin based on RTL
   const textMarginStyle = isRTL
