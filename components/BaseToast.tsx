@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: SCALE(3.2),
     right: SCALE(3.2),
-    zIndex: 10,
+    zIndex: 9999999,
   },
   content: {
     width: '100%',

@@ -24,6 +24,7 @@ const defaultProps: ToastManagerProps = {
     warn: 'warning',
     default: 'checkmark-circle',
   },
+  useModal: true,
 }
 
 export default defaultProps

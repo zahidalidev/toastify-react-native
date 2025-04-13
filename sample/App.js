@@ -63,6 +63,7 @@ export default function App() {
   const [position, setPosition] = useState('bottom')
   const [showProgressBar, setShowProgressBar] = useState(true)
   const [showCloseIcon, setShowCloseIcon] = useState(true)
+  const [useModal, setUseModal] = useState(false)
 
   // Toggle between positions
   const togglePosition = () => {
@@ -97,6 +98,11 @@ export default function App() {
             <View style={styles.settingRow}>
               <Text>Show Close Icon</Text>
               <Switch value={showCloseIcon} onValueChange={setShowCloseIcon} />
+            </View>
+
+            <View style={styles.settingRow}>
+              <Text>Use Modal</Text>
+              <Switch value={useModal} onValueChange={setUseModal} />
             </View>
 
             <View style={styles.settingRow}>
@@ -227,6 +233,73 @@ export default function App() {
                   onShow: () => console.log('Toast shown'),
                   onHide: () => console.log('Toast hidden'),
                 })
+              }}
+            />
+          </View>
+
+          <Text style={styles.sectionTitle}>
+            Modal Options - For Interactive and Non-Interactive Background
+          </Text>
+          <View
+            style={{
+              flexWrap: 'wrap',
+              flexDirection: 'row',
+              gap: 10,
+              justifyContent: 'flex-start',
+              width: '100%',
+            }}
+          >
+            <Button
+              title='With Modal'
+              onPress={() => {
+                Toast.show({
+                  type: 'success',
+                  text1: 'Using Modal',
+                  text2: 'Background is not interactive',
+                  position,
+                  useModal: true,
+                })
+              }}
+            />
+
+            <Button
+              title='Without Modal'
+              onPress={() => {
+                Toast.show({
+                  type: 'error',
+                  text1: 'No Modal',
+                  text2: 'Background remains interactive',
+                  position,
+                  useModal: false,
+                })
+              }}
+            />
+
+            <Button
+              title='Success with Modal'
+              onPress={() => {
+                // Using the shorthand success method with useModal parameter
+                Toast.success(
+                  'Success with Modal!',
+                  position,
+                  undefined, // icon
+                  undefined, // iconFamily
+                  true, // useModal
+                )
+              }}
+            />
+
+            <Button
+              title='Error without Modal'
+              onPress={() => {
+                // Using the shorthand error method with useModal parameter
+                Toast.error(
+                  'Error without Modal!',
+                  position,
+                  undefined, // icon
+                  undefined, // iconFamily
+                  false, // useModal
+                )
               }}
             />
           </View>
@@ -373,6 +446,7 @@ export default function App() {
         showProgressBar={showProgressBar}
         showCloseIcon={showCloseIcon}
         animationStyle='fade'
+        useModal={useModal} // Use the state value to control modal usage
       />
     </SafeAreaView>
   )

@@ -31,6 +31,7 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
       duration: props.duration || 3000,
       barWidth: new Animated.Value(100),
       isPaused: false,
+      useModal: props.useModal !== undefined ? props.useModal : true, // Default to true for backward compatibility
     };
   }
 
@@ -63,7 +64,6 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
   // Map animation style to Modal's animationType
   getAnimationType = (): 'none' | 'slide' | 'fade' => {
     const { animationStyle } = this.props;
-
     return animationStyle || 'fade';
   }
 
@@ -85,7 +85,8 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
     iconSize,
     icon,
     iconFamily,
-    theme
+    theme,
+    useModal
   }: ToastShowParams): void => {
     // Clear any existing timers
     this.hide();
@@ -118,7 +119,8 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
       iconSize,
       icon,
       iconFamily: iconFamily || this.props.iconFamily,
-      theme: theme || this.props.theme
+      theme: theme || this.props.theme,
+      useModal: useModal !== undefined ? useModal : this.props.useModal
     }, () => {
       // Call onShow callback if provided
       if (this.state.onShow) {
@@ -351,9 +353,38 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
     );
   }
 
-  render() {
-    const { isVisible, position } = this.state;
+  // Render the toast content with a TouchableOpacity wrapper
+  renderToastWithTouchable = () => {
+    const { position } = this.state;
 
+    return (
+      <TouchableOpacity
+        activeOpacity={1}
+        onPressIn={() => this.pause()}
+        onPressOut={() => this.resume()}
+        style={[
+          styles.containerRoot,
+          position === 'top' ? styles.containerTop :
+            position === 'bottom' ? styles.containerBottom : {},
+          this.getPositionStyle(),
+          styles.toastContainer, // Add high zIndex
+        ]}
+        testID="toast-container"
+      >
+        {this.renderToastContent()}
+      </TouchableOpacity>
+    );
+  }
+
+  render() {
+    const { isVisible, position, useModal } = this.state;
+
+    // If not using Modal, render directly in the component tree with high zIndex
+    if (!useModal) {
+      return isVisible ? this.renderToastWithTouchable() : null;
+    }
+
+    // Otherwise use Modal for backward compatibility
     return (
       <View>
         <Modal

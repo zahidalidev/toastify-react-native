@@ -22,6 +22,7 @@ export const Toast = {
     position?: ToastPosition,
     icon?: string | ReactNode,
     iconFamily?: IconFamily,
+    useModal?: boolean,
   ) => {
     toastRef.current?.show({
       type: 'success',
@@ -29,6 +30,7 @@ export const Toast = {
       position,
       icon,
       iconFamily,
+      useModal,
     })
   },
   error: (
@@ -36,6 +38,7 @@ export const Toast = {
     position?: ToastPosition,
     icon?: string | ReactNode,
     iconFamily?: IconFamily,
+    useModal?: boolean,
   ) => {
     toastRef.current?.show({
       type: 'error',
@@ -43,6 +46,7 @@ export const Toast = {
       position,
       icon,
       iconFamily,
+      useModal,
     })
   },
   info: (
@@ -50,6 +54,7 @@ export const Toast = {
     position?: ToastPosition,
     icon?: string | ReactNode,
     iconFamily?: IconFamily,
+    useModal?: boolean,
   ) => {
     toastRef.current?.show({
       type: 'info',
@@ -57,6 +62,7 @@ export const Toast = {
       position,
       icon,
       iconFamily,
+      useModal,
     })
   },
   warn: (
@@ -64,6 +70,7 @@ export const Toast = {
     position?: ToastPosition,
     icon?: string | ReactNode,
     iconFamily?: IconFamily,
+    useModal?: boolean,
   ) => {
     toastRef.current?.show({
       type: 'warn',
@@ -71,6 +78,7 @@ export const Toast = {
       position,
       icon,
       iconFamily,
+      useModal,
     })
   },
 }
