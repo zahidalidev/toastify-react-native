@@ -4,6 +4,22 @@
 
 🎉 toastify-react-native allows you to add notifications to your React Native app (iOS, Android) with ease. No more nonsense!
 
+## Table of Contents
+
+- [Demo](#demo)
+- [Features](#features)
+- [Installation](#installation)
+- [Basic Usage](#basic-usage)
+- [Advanced Usage](#advanced-usage)
+- [Modal Behavior](#modal-behavior) 👈 **NEW**
+- [Available Props](#available-props)
+- [Custom Components](#custom-components)
+- [Customizing Icons](#customizing-icons)
+- [API Reference](#api-reference)
+- [Upgrading from v6.x](#upgrading-from-v6x)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Demo
 
 ## [View examples on snack.expo.io](https://snack.expo.io/@zahidalidev/toastify-react-native)
@@ -170,6 +186,94 @@ Toast.show({
 })
 ```
 
+## Modal Behavior
+
+The `useModal` prop controls whether the toast uses a modal overlay that blocks interaction with the background screen. This is particularly important when working with modals in your app.
+
+### Why is this important?
+
+- **With Modal (`useModal: true`)**: The toast appears with a modal overlay, making the background screen non-interactive. This ensures the toast is always visible, even over other modals, but prevents users from interacting with content behind it.
+
+- **Without Modal (`useModal: false`)**: The toast appears without blocking interaction with the background screen. Users can still interact with your app while the toast is displayed, but the toast might not appear over other modal components.
+
+### Usage Examples
+
+#### Setting at ToastManager level (affects all toasts)
+
+```jsx
+// All toasts will use modal behavior by default
+<ToastManager useModal={true} />
+
+// All toasts will NOT use modal behavior by default
+<ToastManager useModal={false} />
+```
+
+#### Setting for individual toasts with Toast.show()
+
+```jsx
+// This toast will use modal behavior
+Toast.show({
+  type: 'success',
+  text1: 'Using Modal',
+  text2: 'Background is not interactive',
+  useModal: true,
+})
+
+// This toast will NOT use modal behavior
+Toast.show({
+  type: 'error',
+  text1: 'No Modal',
+  text2: 'Background remains interactive',
+  useModal: false,
+})
+```
+
+#### Using with shorthand methods
+
+```jsx
+// Success toast with modal behavior
+Toast.success(
+  'Success with Modal!',
+  'bottom', // position
+  undefined, // icon
+  undefined, // iconFamily
+  true, // useModal
+)
+
+// Error toast without modal behavior
+Toast.error(
+  'Error without Modal!',
+  'bottom', // position
+  undefined, // icon
+  undefined, // iconFamily
+  false, // useModal
+)
+```
+
+#### Conditional usage based on context
+
+```jsx
+// Inside a modal component
+const showToastInModal = () => {
+  Toast.show({
+    type: 'info',
+    text1: 'Modal Context',
+    text2: 'This toast appears over the modal',
+    useModal: true, // Ensure it appears over the modal
+  })
+}
+
+// In regular app context
+const showRegularToast = () => {
+  Toast.show({
+    type: 'success',
+    text1: 'Regular Context',
+    text2: 'Allow interaction with the app',
+    useModal: false, // Allow background interaction
+  })
+}
+```
+
 ## Available Props
 
 ### ToastManager Props
@@ -193,6 +297,7 @@ Toast.show({
 | iconFamily      | string                        | 'Ionicons' | Default icon family to use                         |
 | icons           | object                        | undefined  | Custom default icons for each toast type           |
 | config          | ToastConfig                   | undefined  | Custom toast components configuration              |
+| useModal        | boolean                       | true       | Whether to use modal overlay for toasts            |
 
 ### Toast.show() Options
 
@@ -215,6 +320,7 @@ Toast.show({
 | iconColor        | string                                                | undefined | Color of the icon                           |
 | iconSize         | number                                                | undefined | Size of the icon                            |
 | theme            | 'light' \| 'dark'                                     | undefined | Theme of the toast                          |
+| useModal         | boolean                                               | undefined | Whether to use modal overlay for this toast |
 
 ## Custom Components
 
@@ -381,10 +487,10 @@ Toast.show({
 ### Toast Functions
 
 - `Toast.show(options)`: Show a toast with custom options
-- `Toast.success(message, position?)`: Show a success toast
-- `Toast.error(message, position?)`: Show an error toast
-- `Toast.info(message, position?)`: Show an info toast
-- `Toast.warn(message, position?)`: Show a warning toast
+- `Toast.success(message, position?, icon?, iconFamily?, useModal?)`: Show a success toast
+- `Toast.error(message, position?, icon?, iconFamily?, useModal?)`: Show an error toast
+- `Toast.info(message, position?, icon?, iconFamily?, useModal?)`: Show an info toast
+- `Toast.warn(message, position?, icon?, iconFamily?, useModal?)`: Show a warning toast
 - `Toast.hide()`: Hide the current toast
 
 ## Upgrading from v6.x

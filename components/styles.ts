@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    zIndex: 10000,
+    zIndex: 9999999,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -64,6 +64,14 @@ const styles = StyleSheet.create({
   },
   pressable: {
     width: '100%',
+  },
+  toastContainer: {
+    position: 'absolute',
+    zIndex: 9999, // Very high zIndex to ensure it's on top of other elements
+    elevation: 9999, // For Android
+    left: 0,
+    right: 0,
+    alignItems: 'center',
   },
 })
 
