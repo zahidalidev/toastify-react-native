@@ -15,9 +15,9 @@ import BaseToast from "./BaseToast";
 import styles from "./styles";
 
 class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
-  timerId: NodeJS.Timeout | null = null;
+  timerId: ReturnType<typeof setTimeout> | null = null;
   animationRef: Animated.CompositeAnimation | null = null;
-  static toastRef: RefObject<ToastRef> = createRef();
+  static toastRef = createRef<ToastRef>();
   static defaultProps = defaultProps;
 
   constructor(props: ToastManagerProps) {
@@ -423,7 +423,7 @@ interface ToastManagerType extends React.ForwardRefExoticComponent<
   ToastManagerProps & React.RefAttributes<ToastManagerComponent>
 > {
   setRef: (ref: any) => void;
-  getRef: () => RefObject<ToastRef>;
+  getRef: () => RefObject<ToastRef | null>;
   show: (options: ToastShowParams) => void;
   hide: () => void;
   success: (text: string, position?: ToastPosition) => void;
