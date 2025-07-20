@@ -183,6 +183,11 @@ Toast.show({
   iconSize: 24,
   progressBarColor: '#4CAF50',
   theme: 'dark',
+  // Custom close icon options
+  closeIcon: 'times-circle',
+  closeIconFamily: 'FontAwesome',
+  closeIconSize: 20,
+  closeIconColor: '#fff',
 })
 ```
 
@@ -278,26 +283,30 @@ const showRegularToast = () => {
 
 ### ToastManager Props
 
-| Prop            | Type                          | Default    | Description                                        |
-| --------------- | ----------------------------- | ---------- | -------------------------------------------------- |
-| width           | number \| string \| 'auto'    | '90%'      | Width of the toast                                 |
-| minHeight       | number \| string \| 'auto'    | 61         | Minimum height of the toast                        |
-| style           | StyleProp<ViewStyle>          | {}         | Custom style for the toast container               |
-| textStyle       | StyleProp<TextStyle>          | {}         | Custom style for the toast text                    |
-| theme           | 'light' \| 'dark'             | 'light'    | Theme of the toast                                 |
-| animationStyle  | 'none' \| 'slide' \| 'fade'   | 'fade'     | Animation style for the toast                      |
-| position        | 'top' \| 'center' \| 'bottom' | 'top'      | Position of the toast                              |
-| duration        | number                        | 3000       | Duration in ms before the toast disappears         |
-| showCloseIcon   | boolean                       | true       | Whether to show the close icon                     |
-| showProgressBar | boolean                       | true       | Whether to show the progress bar                   |
-| isRTL           | boolean                       | false      | Right-to-left support                              |
-| topOffset       | number                        | 40         | Distance from the top when position is 'top'       |
-| bottomOffset    | number                        | 40         | Distance from the bottom when position is 'bottom' |
-| iconSize        | number                        | 22         | Size of the icon                                   |
-| iconFamily      | string                        | 'Ionicons' | Default icon family to use                         |
-| icons           | object                        | undefined  | Custom default icons for each toast type           |
-| config          | ToastConfig                   | undefined  | Custom toast components configuration              |
-| useModal        | boolean                       | true       | Whether to use modal overlay for toasts            |
+| Prop            | Type                          | Default         | Description                                        |
+| --------------- | ----------------------------- | --------------- | -------------------------------------------------- |
+| width           | number \| string \| 'auto'    | '90%'           | Width of the toast                                 |
+| minHeight       | number \| string \| 'auto'    | 61              | Minimum height of the toast                        |
+| style           | StyleProp<ViewStyle>          | {}              | Custom style for the toast container               |
+| textStyle       | StyleProp<TextStyle>          | {}              | Custom style for the toast text                    |
+| theme           | 'light' \| 'dark'             | 'light'         | Theme of the toast                                 |
+| animationStyle  | 'none' \| 'slide' \| 'fade'   | 'fade'          | Animation style for the toast                      |
+| position        | 'top' \| 'center' \| 'bottom' | 'top'           | Position of the toast                              |
+| duration        | number                        | 3000            | Duration in ms before the toast disappears         |
+| showCloseIcon   | boolean                       | true            | Whether to show the close icon                     |
+| showProgressBar | boolean                       | true            | Whether to show the progress bar                   |
+| isRTL           | boolean                       | false           | Right-to-left support                              |
+| topOffset       | number                        | 40              | Distance from the top when position is 'top'       |
+| bottomOffset    | number                        | 40              | Distance from the bottom when position is 'bottom' |
+| iconSize        | number                        | 22              | Size of the icon                                   |
+| iconFamily      | string                        | 'Ionicons'      | Default icon family to use                         |
+| icons           | object                        | undefined       | Custom default icons for each toast type           |
+| config          | ToastConfig                   | undefined       | Custom toast components configuration              |
+| useModal        | boolean                       | true            | Whether to use modal overlay for toasts            |
+| closeIcon       | string \| ReactNode           | 'close-outline' | Default close icon name or custom component        |
+| closeIconSize   | number                        | 22              | Size of the close icon                             |
+| closeIconColor  | string                        | undefined       | Color of the close icon                            |
+| closeIconFamily | string                        | 'Ionicons'      | Icon family for the close icon                     |
 
 ### Toast.show() Options
 
@@ -321,6 +330,10 @@ const showRegularToast = () => {
 | iconSize         | number                                                | undefined | Size of the icon                            |
 | theme            | 'light' \| 'dark'                                     | undefined | Theme of the toast                          |
 | useModal         | boolean                                               | undefined | Whether to use modal overlay for this toast |
+| closeIcon        | string \| ReactNode                                   | undefined | Custom close icon name or component         |
+| closeIconSize    | number                                                | undefined | Size of the close icon                      |
+| closeIconColor   | string                                                | undefined | Color of the close icon                     |
+| closeIconFamily  | string                                                | undefined | Icon family for the close icon              |
 
 ## Custom Components
 
@@ -480,6 +493,116 @@ Toast.show({
   // Default icon size
   iconSize={24}
 />
+```
+
+## Customizing Close Icons
+
+You can customize the close icon just like the main toast icons, using different icon names, families, or custom React components.
+
+### Using Different Close Icon Names
+
+```jsx
+// Different close icon from the same family
+Toast.show({
+  type: 'success',
+  text1: 'Custom Close Icon',
+  text2: 'Using a different close icon',
+  closeIcon: 'times', // Different icon name
+  closeIconFamily: 'FontAwesome',
+  closeIconSize: 18,
+  closeIconColor: '#ff0000',
+})
+
+// Using MaterialIcons close icon
+Toast.show({
+  type: 'info',
+  text1: 'Material Close Icon',
+  text2: 'Using MaterialIcons family',
+  closeIcon: 'close',
+  closeIconFamily: 'MaterialIcons',
+  closeIconSize: 20,
+})
+```
+
+### Using Custom Close Icon Components
+
+```jsx
+// Custom close icon component
+const CustomCloseIcon = ({ color }) => (
+  <View
+    style={{
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      backgroundColor: color || '#FF5722',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+  >
+    <FontAwesome name='times' size={14} color='#FFFFFF' />
+  </View>
+)
+
+Toast.show({
+  type: 'warn',
+  text1: 'Custom Close Component',
+  text2: 'Using a custom React component as close icon',
+  closeIcon: <CustomCloseIcon color='#9C27B0' />,
+})
+
+// Using JSX directly as close icon
+Toast.show({
+  type: 'error',
+  text1: 'JSX Close Icon',
+  text2: 'Using JSX directly as close icon',
+  closeIcon: (
+    <View style={{ flexDirection: 'row' }}>
+      <FontAwesome name='times' size={16} color='#FF5722' />
+      <FontAwesome name='times' size={16} color='#FF5722' style={{ marginLeft: -4 }} />
+    </View>
+  ),
+})
+```
+
+### Setting Global Close Icon Defaults
+
+```jsx
+// Setting default close icons at the ToastManager level
+<ToastManager
+  config={toastConfig}
+  theme='light'
+  position='top'
+  // Custom default close icon configuration
+  closeIcon='times'
+  closeIconFamily='FontAwesome'
+  closeIconSize={18}
+  closeIconColor='#666'
+/>
+```
+
+### Accessibility and Size Options
+
+```jsx
+// Larger close icon for better accessibility
+Toast.show({
+  type: 'success',
+  text1: 'Accessible Close Icon',
+  text2: 'Larger close button for better touch targets',
+  closeIcon: 'close-outline',
+  closeIconFamily: 'Ionicons',
+  closeIconSize: 28,
+  closeIconColor: '#333',
+})
+
+// Disable close icon entirely
+Toast.show({
+  type: 'info',
+  text1: 'No Close Icon',
+  text2: 'This toast has no close button',
+  showCloseIcon: false,
+  autoHide: true,
+  visibilityTime: 3000,
+})
 ```
 
 ## API Reference

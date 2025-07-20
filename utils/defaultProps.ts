@@ -25,6 +25,9 @@ const defaultProps: ToastManagerProps = {
     default: 'checkmark-circle',
   },
   useModal: true,
+  closeIcon: 'close-outline',
+  closeIconSize: SCALE(22),
+  closeIconFamily: 'Ionicons',
 }
 
 export default defaultProps

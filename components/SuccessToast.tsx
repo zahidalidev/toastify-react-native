@@ -23,7 +23,11 @@ const SuccessToast = ({
   width,
   minHeight,
   style,
-  theme = 'light'
+  theme = 'light',
+  closeIcon,
+  closeIconSize,
+  closeIconColor,
+  closeIconFamily
 }: ToastConfigParams) => {
   return (
     <BaseToast
@@ -48,6 +52,10 @@ const SuccessToast = ({
       width={width}
       minHeight={minHeight}
       style={style}
+      closeIcon={closeIcon}
+      closeIconSize={closeIconSize}
+      closeIconColor={closeIconColor}
+      closeIconFamily={closeIconFamily}
     />
   );
 };

@@ -39,6 +39,10 @@ export interface ToastShowParams {
   theme?: 'light' | 'dark'
   testID?: string
   useModal?: boolean
+  closeIcon?: string | ReactNode
+  closeIconSize?: number
+  closeIconColor?: string
+  closeIconFamily?: IconFamily
 }
 
 export interface ToastConfig {
@@ -73,6 +77,10 @@ export interface ToastConfigParams {
   style?: StyleProp<ViewStyle>
   theme?: 'light' | 'dark'
   useModal?: boolean
+  closeIcon?: string | ReactNode
+  closeIconSize?: number
+  closeIconColor?: string
+  closeIconFamily?: IconFamily
 }
 
 export interface ToastManagerProps {
@@ -102,6 +110,10 @@ export interface ToastManagerProps {
   }
   iconFamily?: IconFamily
   useModal?: boolean
+  closeIcon?: string | ReactNode
+  closeIconSize?: number
+  closeIconColor?: string
+  closeIconFamily?: IconFamily
 }
 
 export interface ToastRef {
@@ -136,6 +148,10 @@ export interface ToastState {
   iconFamily?: IconFamily
   theme?: 'light' | 'dark'
   useModal?: boolean
+  closeIcon?: string | ReactNode
+  closeIconSize?: number
+  closeIconColor?: string
+  closeIconFamily?: IconFamily
 }
 
 export interface AnimationConfig {
