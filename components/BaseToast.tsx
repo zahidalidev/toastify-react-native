@@ -1,36 +1,59 @@
 import React, { useEffect, ReactNode } from 'react';
 import { View, Text, StyleSheet, Animated, TouchableOpacity, StyleProp, ViewStyle, DimensionValue } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Entypo from 'react-native-vector-icons/Entypo';
-import Feather from 'react-native-vector-icons/Feather';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import Octicons from 'react-native-vector-icons/Octicons';
-import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 import { Colors } from '../config/theme';
 import { SCALE } from '../utils/helpers';
 
-// Map of icon families to their components
-const IconFamilies = {
-  Ionicons: Icon,
-  MaterialIcons,
-  FontAwesome,
-  FontAwesome5,
-  MaterialCommunityIcons,
-  Entypo,
-  Feather,
-  AntDesign,
-  Octicons,
-  SimpleLineIcons
+// Dynamic icon loader function
+const loadIconFamily = (familyName: string) => {
+  try {
+    switch (familyName) {
+      case 'Ionicons':
+        return require('react-native-vector-icons/Ionicons').default;
+      case 'MaterialIcons':
+        return require('react-native-vector-icons/MaterialIcons').default;
+      case 'FontAwesome':
+        return require('react-native-vector-icons/FontAwesome').default;
+      case 'FontAwesome5':
+        return require('react-native-vector-icons/FontAwesome5').default;
+      case 'MaterialCommunityIcons':
+        return require('react-native-vector-icons/MaterialCommunityIcons').default;
+      case 'Entypo':
+        return require('react-native-vector-icons/Entypo').default;
+      case 'Feather':
+        return require('react-native-vector-icons/Feather').default;
+      case 'AntDesign':
+        return require('react-native-vector-icons/AntDesign').default;
+      case 'Octicons':
+        return require('react-native-vector-icons/Octicons').default;
+      case 'SimpleLineIcons':
+        return require('react-native-vector-icons/SimpleLineIcons').default;
+      default:
+        throw new Error(`Icon family ${familyName} not found`);
+    }
+  } catch (error) {
+    console.warn(`Icon family ${familyName} not found. Please install react-native-vector-icons or use custom icons.`);
+    return null;
+  }
 };
+
+// Available icon families
+const IconFamilies = [
+  'Ionicons',
+  'MaterialIcons',
+  'FontAwesome',
+  'FontAwesome5',
+  'MaterialCommunityIcons',
+  'Entypo',
+  'Feather',
+  'AntDesign',
+  'Octicons',
+  'SimpleLineIcons'
+] as const;
 
 interface BaseToastProps {
   icon?: string | ReactNode;
-  iconFamily?: keyof typeof IconFamilies | string;
+  iconFamily?: typeof IconFamilies[number] | string;
   text1?: string;
   text2?: string;
   onPress?: () => void;
@@ -50,6 +73,10 @@ interface BaseToastProps {
   minHeight?: number | string;
   style?: StyleProp<ViewStyle>;
   theme?: 'light' | 'dark';
+  closeIcon?: string | ReactNode;
+  closeIconSize?: number;
+  closeIconColor?: string;
+  closeIconFamily?: typeof IconFamilies[number] | string;
 }
 
 const BaseToast = ({
@@ -74,6 +101,10 @@ const BaseToast = ({
   minHeight,
   style,
   theme = 'light',
+  closeIcon = 'close-outline',
+  closeIconSize = SCALE(22),
+  closeIconColor,
+  closeIconFamily = 'Ionicons',
 }: BaseToastProps) => {
   // Use a local animated value if no external one is provided
   const localBarWidth = React.useRef(new Animated.Value(100)).current;
@@ -135,8 +166,20 @@ const BaseToast = ({
 
     // If icon is a string, render the appropriate icon from the specified family
     if (typeof icon === 'string') {
-      // Get the icon component for the specified family
-      const IconComponent = IconFamilies[iconFamily as keyof typeof IconFamilies] || Icon;
+      // Dynamically load the icon component for the specified family
+      const IconComponent = loadIconFamily(iconFamily);
+
+      // If icon component couldn't be loaded, show a fallback or nothing
+      if (!IconComponent) {
+        return (
+          <View
+            style={[styles.iconWrapper, rtlIconWrapperStyle, styles.iconFallback]}
+            testID={`${testID}-icon-fallback`}
+          >
+            <Text style={{ color: iconColor, fontSize: iconSize, marginTop: -SCALE(2) }}>!</Text>
+          </View>
+        );
+      }
 
       return (
         <IconComponent
@@ -149,14 +192,56 @@ const BaseToast = ({
       );
     }
 
-    // Fallback to default icon if none provided
+    // If no icon is provided, don't render anything
+    return null;
+  };
+
+  // Render close icon dynamically as well
+  const renderCloseIcon = () => {
+    // Use closeIconColor if provided, otherwise use text color
+    const finalCloseIconColor = closeIconColor || txtColor;
+
+    // If closeIcon is a ReactNode (custom component), render it directly
+    if (React.isValidElement(closeIcon)) {
+      return closeIcon;
+    }
+
+    // If closeIcon is a string, render the appropriate icon from the specified family
+    if (typeof closeIcon === 'string') {
+      const CloseIconComponent = loadIconFamily(closeIconFamily);
+
+      if (!CloseIconComponent) {
+        return (
+          <View style={styles.closeFallback}>
+            <Text style={{ color: finalCloseIconColor, fontSize: closeIconSize }}>×</Text>
+          </View>
+        );
+      }
+
+      return (
+        <CloseIconComponent
+          name={closeIcon}
+          size={closeIconSize}
+          color={finalCloseIconColor}
+        />
+      );
+    }
+
+    // Fallback to default close icon
+    const DefaultCloseIconComponent = loadIconFamily('Ionicons');
+    if (!DefaultCloseIconComponent) {
+      return (
+        <View style={styles.closeFallback}>
+          <Text style={{ color: finalCloseIconColor, fontSize: closeIconSize }}>×</Text>
+        </View>
+      );
+    }
+
     return (
-      <Icon
-        name="checkmark-circle"
-        size={iconSize}
-        color={iconColor}
-        style={[styles.iconWrapper, rtlIconWrapperStyle]}
-        testID={`${testID}-icon`}
+      <DefaultCloseIconComponent
+        name="close-outline"
+        size={closeIconSize}
+        color={finalCloseIconColor}
       />
     );
   };
@@ -173,7 +258,7 @@ const BaseToast = ({
           activeOpacity={0.7}
           testID={`${testID}-close-button`}
         >
-          <Icon name="close-outline" size={SCALE(22)} color={txtColor} />
+          {renderCloseIcon()}
         </TouchableOpacity>
       )}
 
@@ -275,6 +360,20 @@ const styles = StyleSheet.create({
   },
   iconWrapper: {
     marginRight: SCALE(8),
+  },
+  iconFallback: {
+    width: SCALE(22),
+    height: SCALE(22),
+    borderRadius: SCALE(11),
+    backgroundColor: 'rgba(255, 0, 0, 0.1)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  closeFallback: {
+    width: SCALE(22),
+    height: SCALE(22),
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   text1: {
     fontSize: SCALE(14),

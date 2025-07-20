@@ -32,6 +32,10 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
       barWidth: new Animated.Value(100),
       isPaused: false,
       useModal: props.useModal !== undefined ? props.useModal : true, // Default to true for backward compatibility
+      closeIcon: undefined,
+      closeIconSize: undefined,
+      closeIconColor: undefined,
+      closeIconFamily: undefined,
     };
   }
 
@@ -86,7 +90,11 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
     icon,
     iconFamily,
     theme,
-    useModal
+    useModal,
+    closeIcon,
+    closeIconSize,
+    closeIconColor,
+    closeIconFamily
   }: ToastShowParams): void => {
     // Clear any existing timers
     this.hide();
@@ -120,7 +128,11 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
       icon,
       iconFamily: iconFamily || this.props.iconFamily,
       theme: theme || this.props.theme,
-      useModal: useModal !== undefined ? useModal : this.props.useModal
+      useModal: useModal !== undefined ? useModal : this.props.useModal,
+      closeIcon,
+      closeIconSize,
+      closeIconColor,
+      closeIconFamily
     }, () => {
       // Call onShow callback if provided
       if (this.state.onShow) {
@@ -261,7 +273,11 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
       showProgressBar,
       isRTL,
       iconSize: propsIconSize,
-      iconFamily: propsIconFamily
+      iconFamily: propsIconFamily,
+      closeIcon: propsCloseIcon,
+      closeIconSize: propsCloseIconSize,
+      closeIconColor: propsCloseIconColor,
+      closeIconFamily: propsCloseIconFamily
     } = this.props;
 
     const {
@@ -279,7 +295,11 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
       iconSize: stateIconSize,
       icon: stateIcon,
       iconFamily: stateIconFamily,
-      theme: stateTheme
+      theme: stateTheme,
+      closeIcon: stateCloseIcon,
+      closeIconSize: stateCloseIconSize,
+      closeIconColor: stateCloseIconColor,
+      closeIconFamily: stateCloseIconFamily
     } = this.state;
 
     // Use theme from state if provided, otherwise use theme from props
@@ -293,6 +313,12 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
 
     // Use iconFamily from state if provided, otherwise use from props
     const finalIconFamily = stateIconFamily || propsIconFamily || 'Ionicons';
+
+    // Use close icon from state if provided, otherwise use from props
+    const finalCloseIcon = stateCloseIcon !== undefined ? stateCloseIcon : propsCloseIcon;
+    const finalCloseIconSize = stateCloseIconSize !== undefined ? stateCloseIconSize : propsCloseIconSize;
+    const finalCloseIconColor = stateCloseIconColor !== undefined ? stateCloseIconColor : propsCloseIconColor;
+    const finalCloseIconFamily = stateCloseIconFamily || propsCloseIconFamily || 'Ionicons';
 
     // Check if there's a custom component for this toast type
     if (config && typeof config[type] === 'function') {
@@ -322,6 +348,10 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
         minHeight: minHeight,
         style: style,
         theme: finalTheme,
+        closeIcon: finalCloseIcon,
+        closeIconSize: finalCloseIconSize,
+        closeIconColor: finalCloseIconColor,
+        closeIconFamily: finalCloseIconFamily,
       });
     }
 
@@ -349,6 +379,10 @@ class ToastManagerComponent extends Component<ToastManagerProps, ToastState> {
         width={width}
         minHeight={minHeight}
         style={style}
+        closeIcon={finalCloseIcon}
+        closeIconSize={finalCloseIconSize}
+        closeIconColor={finalCloseIconColor}
+        closeIconFamily={finalCloseIconFamily}
       />
     );
   }

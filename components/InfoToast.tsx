@@ -23,7 +23,11 @@ const InfoToast = ({
   width,
   minHeight,
   style,
-  theme = 'light'
+  theme = 'light',
+  closeIcon,
+  closeIconSize,
+  closeIconColor,
+  closeIconFamily
 }: ToastConfigParams) => {
   return (
     <BaseToast
@@ -48,6 +52,10 @@ const InfoToast = ({
       width={width}
       minHeight={minHeight}
       style={style}
+      closeIcon={closeIcon}
+      closeIconSize={closeIconSize}
+      closeIconColor={closeIconColor}
+      closeIconFamily={closeIconFamily}
     />
   );
 };

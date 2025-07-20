@@ -57,6 +57,21 @@ const toastConfig = {
   custom: (props) => <CustomToast {...props} />,
 }
 
+const CustomCloseIcon = ({ color }) => (
+  <View
+    style={{
+      width: 24,
+      height: 24,
+      borderRadius: 12,
+      backgroundColor: color || '#FF5722',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}
+  >
+    <FontAwesome name='times' size={14} color='#FFFFFF' />
+  </View>
+)
+
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [isRTL, setIsRTL] = useState(false)
@@ -434,6 +449,76 @@ export default function App() {
               }}
             />
           </View>
+
+          <Text style={styles.sectionTitle}>Custom Close Icons</Text>
+          <View
+            style={{
+              flexWrap: 'wrap',
+              flexDirection: 'row',
+              gap: 10,
+              justifyContent: 'flex-start',
+              width: '100%',
+            }}
+          >
+            <Button
+              title='Different Close Icon'
+              onPress={() => {
+                Toast.show({
+                  type: 'success',
+                  text1: 'Different Close Icon',
+                  text2: 'Using times icon from FontAwesome',
+                  position,
+                  closeIcon: 'times',
+                  closeIconFamily: 'FontAwesome',
+                  closeIconSize: 18,
+                })
+              }}
+            />
+
+            <Button
+              title='Custom Close Component'
+              onPress={() => {
+                Toast.show({
+                  type: 'warn',
+                  text1: 'Custom Close Component',
+                  text2: 'Using a custom React component as close icon',
+                  position,
+                  closeIcon: <CustomCloseIcon color='#9C27B0' />,
+                })
+              }}
+            />
+
+            <Button
+              title='Large Close Icon'
+              onPress={() => {
+                Toast.show({
+                  type: 'error',
+                  text1: 'Large Close Icon',
+                  text2: 'Bigger close button for better accessibility',
+                  position,
+                  closeIcon: 'close-outline',
+                  closeIconFamily: 'Ionicons',
+                  closeIconSize: 28,
+                  closeIconColor: '#E91E63',
+                })
+              }}
+            />
+
+            <Button
+              title='No Close Icon'
+              onPress={() => {
+                Toast.show({
+                  type: 'success',
+                  text1: 'No Close Icon',
+                  text2: 'This toast has no close button',
+                  position,
+                  showCloseIcon: false,
+                  autoHide: true,
+                  visibilityTime: 2000,
+                })
+              }}
+            />
+          </View>
         </View>
       </ScrollView>
 
@@ -447,6 +532,11 @@ export default function App() {
         showCloseIcon={showCloseIcon}
         animationStyle='fade'
         useModal={useModal} // Use the state value to control modal usage
+        // Global close icon defaults
+        closeIcon='close-outline'
+        closeIconFamily='Ionicons'
+        closeIconSize={20}
+        closeIconColor={isDarkMode ? '#fff' : '#666'}
       />
     </SafeAreaView>
   )
